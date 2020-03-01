@@ -2,6 +2,11 @@
   "name": "tyelui",
   "version": "0.1.2",
   "private": false,
+  "main": "lib/tyelui.common.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
@@ -11,11 +16,6 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
-  "main": "lib/tyelui.common.js",
-  "files": [
-    "dist",
-    "src"
-  ],
   "dependencies": {
     "core-js": "^3.6.4",
     "element-ui": "^2.4.5",
@@ -26,7 +26,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.2.0",
     "@vue/cli-plugin-eslint": "^4.2.0",
-    "@vue/cli-plugin-router": "^4.2.3",
+    "@vue/cli-plugin-router": "^4.2.0",
     "@vue/cli-service": "^4.2.0",
     "@vue/eslint-config-standard": "^5.1.0",
     "babel-eslint": "^10.0.3",
@@ -37,7 +37,6 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.1.2",
-    "lint-staged": "^9.5.0",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
     "stylus": "^0.54.7",
@@ -64,15 +63,5 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ],
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "license": "MIT",
-  "lint-staged": {
-    "*.{js,jsx,vue}": [
-      "vue-cli-service lint",
-      "git add"
-    ]
-  }
+  ]
 }

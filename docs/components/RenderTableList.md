@@ -1,43 +1,40 @@
-# 图表
-
-图表组件基于[Charts](http://charts.jiaminghi.com)封装，只需要将对应图表`option`数据传入组件即可。<react-page-btn />
+# 列表组件 RenderTableList
 
 ::: tip TIP
-当窗口发生**resize**时，图表组件会重新计算宽高以便于自适应。
+搜索 + 表格分页 通过简单的配置参数。可以快速的配置业务系统不同的列表页面
 :::
 
-相关示例请移步[Charts实例](http://charts.jiaminghi.com/example/)
+<!-- 相关示例请移步[Charts实例](http://charts.jiaminghi.com/example/)
 
-相关配置项请移步[Charts配置项](http://charts.jiaminghi.com/config/)
+相关配置项请移步[Charts配置项](http://charts.jiaminghi.com/config/) -->
 
 <div class="demo-container">
-  <dv-charts :option="option" />
+  样例效果
+  <!-- <dv-charts :option="option" /> -->
 </div>
 
 ```html
+  样例代码
 <dv-charts :option="option" />
 ```
-<click-to-copy :info="html" />
+<!-- <click-to-copy :info="html" /> -->
 
-<fold-box title="点击以展示/隐藏option数据">
-<<< @/docs/guide/codeData/charts/demo.js
+<fold-box title="点击以展示/隐藏代码">
+<<< @/docs/guide/codeData/RenderTableList.vue
 </fold-box>
 
 <script>
-import option from './codeData/charts/demo.js'
 
 export default {
   data () {
     return {
-      option,
-
       html: '<dv-charts :option="option" />'
     }
   }
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .demo-container {
   width: 100%;
   height: 300px;

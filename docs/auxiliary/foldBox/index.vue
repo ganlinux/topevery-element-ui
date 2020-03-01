@@ -1,6 +1,9 @@
 <template>
   <div class="fold-box">
-    <div class="tip" @click="fold = !fold">{{title || '点击以展开或折叠'}}</div>
+    <div
+      class="tip"
+      @click="fold = !fold"
+    >{{title || '点击以展开或折叠'}}</div>
     <div :class="`fold-container ${fold && 'fold'}`">
       <slot></slot>
     </div>
@@ -20,16 +23,16 @@ export default {
 </script>
 
 <style lang="scss">
-
 .fold-box {
   margin: 10px 0px;
-
   .tip {
     height: 40px;
     line-height: 40px;
     text-align: center;
     color: #3eaf7c;
     cursor: pointer;
+    border: 1px solid #42b983;
+    border-radius: 4px;
   }
 
   .fold-container {
