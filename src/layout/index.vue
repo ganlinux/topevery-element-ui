@@ -1,0 +1,120 @@
+<template>
+  <el-container class="layout">
+
+    <el-aside width="200px">
+      <el-menu
+        router
+        :default-active="$route.name"
+      >
+        <el-menu-item
+          v-for="(item,index) in routesList"
+          :index="item.path"
+          :key="index"
+        >
+          <!-- <i class="el-icon-menu"></i> -->
+          <span slot="title">{{item.meta.title}}</span>
+        </el-menu-item>
+      </el-menu>
+    </el-aside>
+
+    <el-container>
+      <el-header
+        class="layout-header"
+        height="56px"
+      >
+
+      </el-header>
+
+      <el-main>
+        <transition
+          name="fade-transform"
+          mode="out-in"
+        >
+          <keep-alive>
+            <router-view />
+          </keep-alive>
+        </transition>
+      </el-main>
+    </el-container>
+  </el-container>
+</template>
+
+<script>
+
+import { routesList } from '@/router'
+
+export default {
+  data () {
+    const item = {
+      date: '2016-05-02',
+      name: '王小虎',
+      address: '上海市普陀区金沙江路 1518 弄'
+    }
+    return {
+      routesList,
+      tableData: Array(20).fill(item)
+    }
+  },
+  mounted () {
+    console.log(this.$route)
+  }
+}
+</script>
+
+<style lang="scss">
+.layout {
+  height: 100vh;
+
+  .logo {
+    height: 56px;
+    width: 100%;
+  }
+
+  /deep/.el-menu {
+    height: 100%;
+  }
+  /deep/.el-container {
+    .el-header {
+      z-index: 6;
+      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
+      background: #2f86f6;
+    }
+  }
+
+  .el-menu-item {
+    &:after {
+      display: none;
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 4px;
+      height: 100%;
+      background: #2f86f6;
+    }
+    &.is-active:after {
+      display: block;
+    }
+    &.is-active {
+      background-color: #ecf5ff;
+    }
+  }
+}
+
+/* mac chrome开启滚动条样式调试 */
+::-webkit-scrollbar {
+  background: rgba(0, 0, 0, 0);
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(37, 36, 36, 0.57);
+}
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+</style>
