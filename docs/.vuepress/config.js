@@ -9,14 +9,13 @@ module.exports = {
     themeConfig: {
       nav: [
         { text: 'Home', link: '/' },
-        { text: 'Github', link: 'https://github.com/Firenzia/sakura-ui/' },
+        { text: 'Github', link: 'https://github.com/shiliangL/ty-el-ui' },
       ],
       sidebar: [
           {
               title: '开发指南',
               collapsable: false,
               children: [
-                // 'guide/install.md',
                 // 'guide/get-started.md'
               ]
             },

@@ -12,7 +12,6 @@ features:
   details: 组合搭配
 footer: MIT Licensed | Copyright © 2020-present TY-WEB
 ---
-
-<ClientOnly>
+<!-- <ClientOnly>
   <ty-el-ui-home/>
-</ClientOnly>
+</ClientOnly> -->

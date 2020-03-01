@@ -20,7 +20,7 @@
 <!-- <click-to-copy :info="html" /> -->
 
 <fold-box title="点击以展示/隐藏代码">
-<<< @/docs/guide/codeData/RenderTableList.vue
+<<< @/docs/guide/codeData/RenderTableList.md
 </fold-box>
 
 <script>

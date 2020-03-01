@@ -1,3 +1,4 @@
+```html
 <template>
   <div class="CubeTableRender">
 
@@ -340,3 +341,5 @@ export default {
   background: #cccccc;
 }
 </style>
+
+```

@@ -1,59 +1,29 @@
 # 介绍
 
-* **边框**
-
-带有不同边框的容器
-
-* **装饰**
-
-用来点缀页面效果，增加视觉效果
-
-* **图表**
-
-图表组件基于[Charts](http://charts.jiaminghi.com)封装，轻量，易用
-
-* **其他**
-
 ::: tip TIP
 建议使用Chrome浏览器。
 :::
-
-::: danger 用前必看
-避免你的组件更新了数据后，状态却不刷新，也就是没变化，请务必看这里
-
-组件props均未设置`deep`监听，刷新props时，请直接生成**新的props**，请勿直接更新props下某一个属性，这样组件将无法刷新状态。
-
-`this.someProps.someAttr = ['foo', 'foo']`是无效的
-
-`this.someProps = { someAttr: ['foo', 'foo'] }`才是有效的
-:::
-
-**建议的更新数据的方式**
-
-<!-- <fold-box title="点击以展示/隐藏示例">
-<<< @/docs/guide/vueDemo/update.vue
-</fold-box> -->
 
 ## 安装
 
 * npm安装
 
 ```sh
-npm install @jiaminghi/data-view
+npm install tyelui -S
 ```
 
 * yarn安装
 ```sh
-yarn add @jiaminghi/data-view
+yarn add tyelui -S
 ```
 
-## 使用
+## 全局使用
 
 ```js
 // 将自动注册所有组件为全局组件
-import dataV from '@jiaminghi/data-view'
+import tyelui from 'tyelui'
 
-Vue.use(dataV)
+Vue.use(tyelui)
 ```
 
 ## 按需引入
@@ -61,9 +31,9 @@ Vue.use(dataV)
 按需引入仅支持基于**ES module**的**tree shaking**，按需引入示例如下：
 
 ```js
-import { borderBox1 } from '@jiaminghi/data-view'
+import { MaxHeight } from 'tyelui'
 
-Vue.use(borderBox1)
+Vue.use(MaxHeight)
 ```
 
 ## UMD版
