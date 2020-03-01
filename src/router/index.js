@@ -8,8 +8,8 @@ export const routesList = [
   {
     path: 'Dashboard',
     name: 'Dashboard',
-    meta: { title: '首页', icon: 'dashboard', affix: true },
-    component: () => import('@/views/dashboard/index')
+    meta: { title: '首页', icon: 'Dashboard', affix: true },
+    component: () => import('@/views/Dashboard/index')
   },
   {
     path: 'RenderTable',

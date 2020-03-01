@@ -2,16 +2,18 @@
   <el-container class="layout">
 
     <el-aside width="200px">
+      <!-- <div @click="isCollapse = !isCollapse"> {{ isCollapse ? '展开' : '收起' }}</div> -->
       <el-menu
         router
         :default-active="$route.name"
+        :collapse="isCollapse"
       >
         <el-menu-item
           v-for="(item,index) in routesList"
           :index="item.path"
           :key="index"
         >
-          <!-- <i class="el-icon-menu"></i> -->
+          <i class="el-icon-menu"></i>
           <span slot="title">{{item.meta.title}}</span>
         </el-menu-item>
       </el-menu>
@@ -52,6 +54,7 @@ export default {
     }
     return {
       routesList,
+      isCollapse: false,
       tableData: Array(20).fill(item)
     }
   },
