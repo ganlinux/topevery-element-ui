@@ -2,11 +2,13 @@
 import CubeDialog from './CubeDialog'
 import Progress from './Progress'
 import MaxHeight from './MaxHeight'
+import CubeSelect from './CubeSelect'
 
 export const components = {
   CubeDialog,
   Progress,
-  MaxHeight
+  MaxHeight,
+  CubeSelect
 }
 
 // Define plugin installation method
@@ -36,7 +38,8 @@ export {
   install,
   CubeDialog,
   Progress,
-  MaxHeight
+  MaxHeight,
+  CubeSelect
 }
 export default {
   install

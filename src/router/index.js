@@ -14,7 +14,7 @@ export const routesList = [
   {
     path: 'RenderTable',
     name: 'RenderTable',
-    meta: { title: '表格列表组件', icon: 'RenderTable', affix: true },
+    meta: { title: '表格组件', icon: 'RenderTable', affix: true },
     component: () => import('@/views/RenderTable/index')
   },
   {
@@ -51,6 +51,18 @@ export const routesList = [
     path: 'CubeDialog',
     name: 'CubeDialog',
     meta: { title: '弹层', icon: 'CubeDialog', affix: true },
+    component: () => import('@/views/CubeDialog/index')
+  },
+  {
+    path: 'CubeDialog',
+    name: 'CubeDialog',
+    meta: { title: '业务搜索组件', icon: 'CubeDialog', affix: true },
+    component: () => import('@/views/CubeDialog/index')
+  },
+  {
+    path: 'CubeDialog',
+    name: 'CubeDialog',
+    meta: { title: '业务选择组件', icon: 'CubeDialog', affix: true },
     component: () => import('@/views/CubeDialog/index')
   }
 ]

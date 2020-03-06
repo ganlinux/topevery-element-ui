@@ -1,12 +1,18 @@
 <template>
   <div>
-    CubeDialog
+    <markdown />
   </div>
 </template>
 
 <script>
+
+import markdown from './markdown.md'
+
 export default {
-  name: 'CubeDialog'
+  name: 'CubeDialog',
+  components: {
+    markdown
+  }
 }
 </script>
 

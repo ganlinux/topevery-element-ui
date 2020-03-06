@@ -1,32 +1,28 @@
 <template>
   <el-container class="layout">
-
-    <el-aside width="200px">
-      <!-- <div @click="isCollapse = !isCollapse"> {{ isCollapse ? '展开' : '收起' }}</div> -->
-      <el-menu
-        router
-        :default-active="$route.name"
-        :collapse="isCollapse"
-      >
-        <el-menu-item
-          v-for="(item,index) in routesList"
-          :index="item.path"
-          :key="index"
-        >
-          <i class="el-icon-menu"></i>
-          <span slot="title">{{item.meta.title}}</span>
-        </el-menu-item>
-      </el-menu>
-    </el-aside>
-
     <el-container>
       <el-header
         class="layout-header"
         height="56px"
       >
-
       </el-header>
-
+      <el-aside width="200px">
+        <!-- <div @click="isCollapse = !isCollapse"> {{ isCollapse ? '展开' : '收起' }}</div> -->
+        <el-menu
+          router
+          :default-active="$route.name"
+          :collapse="isCollapse"
+        >
+          <el-menu-item
+            v-for="(item,index) in routesList"
+            :index="item.path"
+            :key="index"
+          >
+            <i class="el-icon-menu"></i>
+            <span slot="title">{{item.meta.title}}</span>
+          </el-menu-item>
+        </el-menu>
+      </el-aside>
       <el-main>
         <transition
           name="fade-transform"
@@ -73,33 +69,45 @@ export default {
     width: 100%;
   }
 
+  /deep/.el-aside {
+    width: 200px;
+    position: fixed;
+    top: 60px;
+    height: 90vh;
+    overflow-y: auto;
+    .el-menu-item {
+      &:after {
+        display: none;
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background: #2f86f6;
+      }
+      &.is-active:after {
+        display: block;
+      }
+      &.is-active {
+        background-color: #ecf5ff;
+      }
+    }
+  }
+
+  /deep/.el-main {
+    padding-left: 220px;
+  }
+
   /deep/.el-menu {
     height: 100%;
   }
+
   /deep/.el-container {
     .el-header {
       z-index: 6;
       box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
       background: #2f86f6;
-    }
-  }
-
-  .el-menu-item {
-    &:after {
-      display: none;
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 4px;
-      height: 100%;
-      background: #2f86f6;
-    }
-    &.is-active:after {
-      display: block;
-    }
-    &.is-active {
-      background-color: #ecf5ff;
     }
   }
 }
