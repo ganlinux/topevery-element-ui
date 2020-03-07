@@ -1,12 +1,32 @@
 const path = require('path')
+const port = process.env.port || process.env.npm_config_port || 8066 // dev port
 
 module.exports = {
+
+  devServer: {
+    port: port,
+    open: true,
+    overlay: {
+      warnings: false,
+      errors: true
+    },
+    proxy: {
+    // detail: https://cli.vuejs.org/config/#devserver-proxy
+      [process.env.VUE_APP_BASE_API]: {
+        target: `http://127.0.0.1:${port}/mock`,
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        }
+      }
+    }
+  },
+
   chainWebpack: config => {
     // 别名配置
     config.resolve.alias
       .set('@', path.resolve('src'))
       .set('~', path.resolve('packages'))
-      .set('~d', path.resolve('docsText'))
     // lib目录是组件库最终打包好存放的地方，不需要eslint检查
     // docs是存放md文档的地方，也不需要eslint检查
     config.module
@@ -28,7 +48,8 @@ module.exports = {
       .end()
       .use('markdown-loader')
       .loader(
-        require('path').resolve(__dirname, './webpack/markdown-loader.js')
+        // require('path').resolve(__dirname, './webpack/markdown-loader.js')
+        require('path').resolve(__dirname, './webpack/md-loader/index.js')
       )
       .end()
   }

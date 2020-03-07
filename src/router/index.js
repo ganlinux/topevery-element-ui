@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import hljs from 'highlight.js'
 import VueRouter from 'vue-router'
 import Layout from '@/layout'
 
@@ -54,15 +55,9 @@ export const routesList = [
     component: () => import('@/views/CubeDialog/index')
   },
   {
-    path: 'CubeDialog',
-    name: 'CubeDialog',
-    meta: { title: '业务搜索组件', icon: 'CubeDialog', affix: true },
-    component: () => import('@/views/CubeDialog/index')
-  },
-  {
-    path: 'CubeDialog',
-    name: 'CubeDialog',
-    meta: { title: '业务选择组件', icon: 'CubeDialog', affix: true },
+    path: 'CubeSelect',
+    name: 'CubeSelect',
+    meta: { title: '业务选择组件', icon: 'CubeSelect', affix: true },
     component: () => import('@/views/CubeDialog/index')
   }
 ]
@@ -89,6 +84,14 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+router.afterEach(route => {
+  // https://github.com/highlightjs/highlight.js/issues/909#issuecomment-131686186
+  Vue.nextTick(() => {
+    const blocks = document.querySelectorAll('pre code:not(.hljs)')
+    Array.prototype.forEach.call(blocks, hljs.highlightBlock)
+  })
 })
 
 export default router

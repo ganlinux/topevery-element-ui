@@ -1,5 +1,8 @@
 import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 import 'highlight.js/styles/atom-one-dark.css'
+import './style/index.scss'
+import './assets/styles/fonts/style.css'
+import 'element-ui/lib/theme-chalk/index.css'
 
 import Vue from 'vue'
 import App from './App.vue'
@@ -10,10 +13,10 @@ import App from './App.vue'
 import router from './router'
 import Element from 'element-ui'
 
-import CodeSnippet from './components/code-snippet'
+import demoBlock from './components/demo-block'
 
 Vue.config.productionTip = false
-Vue.component('code-snippet', CodeSnippet)
+Vue.component('demo-block', demoBlock)
 
 // Vue.use(tyelui)
 

@@ -29,7 +29,7 @@
           mode="out-in"
         >
           <keep-alive>
-            <router-view />
+            <router-view class="page-container" />
           </keep-alive>
         </transition>
       </el-main>
