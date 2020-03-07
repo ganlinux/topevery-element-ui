@@ -293,9 +293,7 @@ table {
   width: 100%;
   background-color: #fff;
   font-size: 14px;
-  margin-bottom: 45px;
   line-height: 1.5em;
-  box-shadow: 0 6px 12px -2px rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
 
   thead {
     display: table-header-group;
