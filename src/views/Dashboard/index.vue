@@ -14,11 +14,11 @@ export default {
   components: {
     CubeSelect
   },
+  mounted() {
+    console.log(document.cookie, 'cookie')
+  },
   methods: {
 
-  },
-  mounted () {
-    console.log(document.cookie, 'cookie')
   }
 }
 </script>

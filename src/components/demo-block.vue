@@ -6,29 +6,29 @@
     @mouseleave="hovering = false"
   >
     <div class="source">
-      <slot name="source"></slot>
+      <slot name="source" />
     </div>
     <div
-      class="meta"
       ref="meta"
+      class="meta"
     >
       <div
-        class="description"
         v-if="$slots.default"
+        class="description"
       >
-        <slot></slot>
+        <slot />
       </div>
       <div class="highlight">
-        <slot name="highlight"></slot>
+        <slot name="highlight" />
       </div>
     </div>
     <div
-      class="demo-block-control"
       ref="control"
+      class="demo-block-control"
       @click="isExpanded = !isExpanded"
     >
       <transition name="arrow-slide">
-        <i :class="[iconClass, { 'hovering': hovering }]"></i>
+        <i :class="[iconClass, { 'hovering': hovering }]" />
       </transition>
       <transition name="text-slide">
         <span v-show="hovering">{{ controlText }}</span>
@@ -42,7 +42,7 @@
 import { stripScript, stripStyle, stripTemplate } from './util'
 
 export default {
-  data () {
+  data() {
     return {
       codepen: {
         script: '',
@@ -56,27 +56,27 @@ export default {
     }
   },
   computed: {
-    lang () {
+    lang() {
       return this.$route.path.split('/')[1]
     },
 
-    blockClass () {
+    blockClass() {
       return `demo-${this.lang} demo-${this.$router.currentRoute.path.split('/').pop()}`
     },
 
-    iconClass () {
+    iconClass() {
       return this.isExpanded ? 'el-icon-caret-top' : 'el-icon-caret-bottom'
     },
 
-    controlText () {
+    controlText() {
       return this.isExpanded ? '隐藏代码' : '展开代码'
     },
 
-    codeArea () {
+    codeArea() {
       return this.$el.getElementsByClassName('meta')[0]
     },
 
-    codeAreaHeight () {
+    codeAreaHeight() {
       if (this.$el.getElementsByClassName('description').length > 0) {
         return this.$el.getElementsByClassName('description')[0].clientHeight +
           this.$el.getElementsByClassName('highlight')[0].clientHeight + 20
@@ -84,19 +84,8 @@ export default {
       return this.$el.getElementsByClassName('highlight')[0].clientHeight
     }
   },
-  methods: {
-    scrollHandler () {
-      const { top, bottom } = this.$refs.meta.getBoundingClientRect()
-      this.fixedControl = bottom > document.documentElement.clientHeight &&
-        top + 44 <= document.documentElement.clientHeight
-      this.$refs.control.style.left = this.fixedControl ? `${0}px` : '0'
-    },
-    removeScrollHandler () {
-      this.scrollParent && this.scrollParent.removeEventListener('scroll', this.scrollHandler)
-    }
-  },
   watch: {
-    isExpanded (val) {
+    isExpanded(val) {
       this.codeArea.style.height = val ? `${this.codeAreaHeight + 1}px` : '0'
       if (!val) {
         this.fixedControl = false
@@ -111,7 +100,7 @@ export default {
       }, 200)
     }
   },
-  created () {
+  created() {
     const highlight = this.$slots.highlight
     if (highlight && highlight[0]) {
       let code = ''
@@ -130,7 +119,7 @@ export default {
     }
   },
 
-  mounted () {
+  mounted() {
     this.$nextTick(() => {
       const highlight = this.$el.getElementsByClassName('highlight')[0]
       if (this.$el.getElementsByClassName('description').length === 0) {
@@ -140,8 +129,19 @@ export default {
     })
   },
 
-  beforeDestroy () {
+  beforeDestroy() {
     this.removeScrollHandler()
+  },
+  methods: {
+    scrollHandler() {
+      const { top, bottom } = this.$refs.meta.getBoundingClientRect()
+      this.fixedControl = bottom > document.documentElement.clientHeight &&
+        top + 44 <= document.documentElement.clientHeight
+      this.$refs.control.style.left = this.fixedControl ? `${0}px` : '0'
+    },
+    removeScrollHandler() {
+      this.scrollParent && this.scrollParent.removeEventListener('scroll', this.scrollHandler)
+    }
   }
 }
 </script>

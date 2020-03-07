@@ -35,6 +35,8 @@ module.exports = {
       .end()
       .exclude.add(path.resolve('docs'))
       .end()
+      .exclude.add(path.resolve('packages'))
+      .end()
     // 处理 markdown 文件
     config.module.rule('md')
       .test(/\.md/)

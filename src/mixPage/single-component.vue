@@ -1,7 +1,7 @@
 <template>
   <div class="SingleComponent">
     <div class="SingleComponent-wrapper">
-      <demo></demo>
+      <demo />
     </div>
   </div>
 </template>
@@ -13,7 +13,7 @@ export default {
   components: {
     // demo: () => import(`../components/${this.componentName}/demo`),
   },
-  data () {
+  data() {
     return {
       componentName: ''
     }

@@ -1,10 +1,8 @@
 <template>
   <el-container class="layout">
     <el-container>
-      <el-header
-        class="layout-header"
-        height="56px"
-      >
+      <el-header height="56px">
+        <logo /> TopEvery Ui
       </el-header>
       <el-aside width="200px">
         <!-- <div @click="isCollapse = !isCollapse"> {{ isCollapse ? '展开' : '收起' }}</div> -->
@@ -15,11 +13,11 @@
         >
           <el-menu-item
             v-for="(item,index) in routesList"
-            :index="item.path"
             :key="index"
+            :index="item.path"
           >
-            <i class="el-icon-menu"></i>
-            <span slot="title">{{item.meta.title}}</span>
+            <i class="el-icon-menu" />
+            <span slot="title">{{ item.meta.title }}</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -40,7 +38,8 @@
       :bottom="20"
       :right="20"
     >
-      <div style="{
+      <div
+        style="{
         height: 100%;
         width: 100%;
         background-color: #f2f5f6;
@@ -48,7 +47,8 @@
         text-align: center;
         line-height: 40px;
         color: #1989fa;
-      }">
+      }"
+      >
         UP
       </div>
     </el-backtop>
@@ -58,9 +58,13 @@
 <script>
 
 import { routesList } from '@/router'
+import logo from './logo'
 
 export default {
-  data () {
+  components: {
+    logo
+  },
+  data() {
     const item = {
       date: '2016-05-02',
       name: '王小虎',
@@ -72,7 +76,7 @@ export default {
       tableData: Array(20).fill(item)
     }
   },
-  mounted () {
+  mounted() {
     console.log(this.$route)
   }
 }
@@ -81,12 +85,6 @@ export default {
 <style lang="scss">
 .layout {
   height: 100vh;
-
-  .logo {
-    height: 56px;
-    width: 100%;
-  }
-
   /deep/.el-aside {
     width: 200px;
     position: fixed;
@@ -112,15 +110,18 @@ export default {
       }
     }
   }
-
+  /deep/.el-header {
+    line-height: 56px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+  }
   /deep/.el-main {
     padding-left: 220px;
   }
-
   /deep/.el-menu {
     height: 100%;
   }
-
   /deep/.el-container {
     .el-header {
       z-index: 6;
