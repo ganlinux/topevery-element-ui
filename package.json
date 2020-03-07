@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "private": false,
   "main": "lib/tyelui.common.js",
+  "style": "lib/tyelui.css",
   "files": [
     "dist",
     "src"

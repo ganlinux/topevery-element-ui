@@ -1,5 +1,5 @@
-import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 import 'highlight.js/styles/atom-one-dark.css'
+import 'normalize.css/normalize.css'
 import './style/index.scss'
 import './assets/styles/fonts/style.css'
 import 'element-ui/lib/theme-chalk/index.css'
