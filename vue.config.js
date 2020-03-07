@@ -48,8 +48,7 @@ module.exports = {
       .end()
       .use('markdown-loader')
       .loader(
-        // require('path').resolve(__dirname, './webpack/markdown-loader.js')
-        require('path').resolve(__dirname, './webpack/md-loader/index.js')
+        require('path').resolve(__dirname, './webpack/index.js')
       )
       .end()
   }
