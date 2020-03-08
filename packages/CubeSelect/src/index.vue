@@ -1,38 +1,38 @@
 <template>
   <div
-    class="CubeSelect"
     v-clickOutside="miss"
+    class="CubeSelect"
   >
     <el-input
-      placeholder="请输选择"
       v-model.trim="selectValue"
+      placeholder="请输选择"
       @focus="focus"
       @blur="blur"
       @keyup.enter.native="inputChangeText"
     >
       <div
-        slot="append"
         v-if="appendVisible"
+        slot="append"
         @click.stop="visible=!visible"
       > 选择 </div>
     </el-input>
 
     <el-popover
+      v-model="visible"
       class="popover"
       placement="bottom"
-      v-model="visible"
     >
       <div style="text-align: right; margin: 0">
         <el-table
+          v-loading="loading"
           :data="tableData"
           style="width: 100%"
           size="mini"
-          v-loading="loading"
           :height="tableHeight"
           highlight-current-row
           :row-style="rowStyle"
-          @row-click="rowClick"
           element-loading-text="数据加载中..."
+          @row-click="rowClick"
         >
           <el-table-column
             label="序号"
@@ -60,8 +60,7 @@
           :page-size="pagination.size"
           :total="pagination.total"
           @current-change="handleCurrentChange"
-        >
-        </el-pagination>
+        />
       </div>
     </el-popover>
   </div>
@@ -72,6 +71,32 @@
 
 export default {
   name: 'CubeSelect',
+  directives: {
+    clickOutside: {
+      bind(el, binding, vnode) {
+        function clickHandler(e) {
+          // 这里判断点击的元素是否是本身，是本身，则返回
+          if (el.contains(e.target)) {
+            return false
+          }
+          // 判断指令中是否绑定了函数
+          if (binding.expression) {
+            // 如果绑定了函数 则调用那个函数，此处binding.value就是handleClose方法
+            binding.value(e)
+          }
+        }
+        // 给当前元素绑定个私有变量，方便在unbind中可以解除事件监听
+        el.__vueClickOutside__ = clickHandler
+        document.addEventListener('click', clickHandler)
+      },
+      update() { },
+      unbind(el, binding) {
+        // 解除事件监听
+        document.removeEventListener('click', el.__vueClickOutside__)
+        delete el.__vueClickOutside__
+      }
+    }
+  },
   props: {
     appendVisible: { // 是否显示 选 字
       type: Boolean,
@@ -82,7 +107,7 @@ export default {
       default: () => 250
     }
   },
-  data () {
+  data() {
     return {
       visible: false,
       loading: false,
@@ -106,62 +131,36 @@ export default {
       }
     }
   },
-  directives: {
-    clickOutside: {
-      bind (el, binding, vnode) {
-        function clickHandler (e) {
-          // 这里判断点击的元素是否是本身，是本身，则返回
-          if (el.contains(e.target)) {
-            return false
-          }
-          // 判断指令中是否绑定了函数
-          if (binding.expression) {
-            // 如果绑定了函数 则调用那个函数，此处binding.value就是handleClose方法
-            binding.value(e)
-          }
-        }
-        // 给当前元素绑定个私有变量，方便在unbind中可以解除事件监听
-        el.__vueClickOutside__ = clickHandler
-        document.addEventListener('click', clickHandler)
-      },
-      update () { },
-      unbind (el, binding) {
-        // 解除事件监听
-        document.removeEventListener('click', el.__vueClickOutside__)
-        delete el.__vueClickOutside__
-      }
-    }
-  },
   methods: {
-    focus () {
+    focus() {
       this.visible = true
     },
-    blur () {
+    blur() {
       // this.visible = false
     },
-    miss () {
+    miss() {
       this.visible = false
     },
-    handleCurrentChange (value) {
+    handleCurrentChange(value) {
       console.log(value)
       this.pagination.currentPage = value
       // this.fetchList()
     },
-    rowStyle () {
+    rowStyle() {
       return {
         cursor: 'pointer'
       }
     },
-    indexMethod (index) {
+    indexMethod(index) {
       return index + 1
       // <span>{{ scope.$index+(pagination.currentPage-1) *pagination.size + 1 }}</span>
     },
-    rowClick (row) {
+    rowClick(row) {
       console.log(row)
       this.selectValue = row.name
       this.$emit('input', row)
     },
-    inputChangeText (item) {
+    inputChangeText(item) {
       console.log(item, 'inputChangeText')
     }
   }

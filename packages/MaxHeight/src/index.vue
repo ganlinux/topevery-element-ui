@@ -1,92 +1,70 @@
 <template>
-  <div :style="{height:height+'px',zIndex:zIndex}">
-    <div
-      :class="className"
-      :style="{top:(isSticky ? stickyTop +'px' : ''),zIndex:zIndex,position:position,width:width,height:height+'px'}"
-    >
-    {{ height }}
-      <slot>
-        <div>sticky</div>
-      </slot>
-    </div>
+  <div class="MaxHeight" :style="{height: heightPx }">
+    <slot>
+      <div>content</div>
+    </slot>
   </div>
 </template>
 
 <script>
+
+import { debounce } from '~pu'
+
 export default {
-  name: 'Sticky',
+  name: 'MaxHeight',
   props: {
-    stickyTop: {
+    prefix: {
+      type: Number,
+      default: 20
+    },
+    minHeight: {
+      type: Number,
+      default: 120
+    },
+    value: {
       type: Number,
       default: 0
-    },
-    zIndex: {
-      type: Number,
-      default: 1
-    },
-    className: {
-      type: String,
-      default: ''
     }
   },
-  data () {
+  data() {
     return {
-      active: false,
-      position: '',
-      width: undefined,
-      height: undefined,
-      isSticky: false
+      height: 200
     }
   },
-  mounted () {
-    this.height = this.$el.getBoundingClientRect().height
-    window.addEventListener('scroll', this.handleScroll)
-    window.addEventListener('resize', this.handleResize)
+  computed: {
+    heightPx() {
+      return `${this.height}px`
+    }
   },
-  activated () {
-    this.handleScroll()
+  mounted() {
+    this.resizeHeight()
+    window.addEventListener('resize', this.resizeHeight)
   },
-  destroyed () {
-    window.removeEventListener('scroll', this.handleScroll)
-    window.removeEventListener('resize', this.handleResize)
+  created() {
+    this.resizeHeight = debounce(() => {
+      this.computedHeight()
+    }, 400)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.resizeHeight)
   },
   methods: {
-    sticky () {
-      if (this.active) {
-        return
-      }
-      this.position = 'fixed'
-      this.active = true
-      this.width = this.width + 'px'
-      this.isSticky = true
-    },
-    handleReset () {
-      if (!this.active) {
-        return
-      }
-      this.reset()
-    },
-    reset () {
-      this.position = ''
-      this.width = 'auto'
-      this.active = false
-      this.isSticky = false
-    },
-    handleScroll () {
-      const width = this.$el.getBoundingClientRect().width
-      this.width = width || 'auto'
-      const offsetTop = this.$el.getBoundingClientRect().top
-      if (offsetTop < this.stickyTop) {
-        this.sticky()
-        return
-      }
-      this.handleReset()
-    },
-    handleResize () {
-      if (this.isSticky) {
-        this.width = this.$el.getBoundingClientRect().width + 'px'
-      }
+    computedHeight() {
+      console.log('xxxx')
+      const boxTop = this.$el.getBoundingClientRect().top || 0
+      const innerHieght = window.innerHeight || 0
+      this.height = Math.abs(innerHieght - boxTop - this.prefix) > this.minHeight ? Math.abs(innerHieght - boxTop - this.prefix) : this.minHeight
+      setTimeout(() => {
+        this.$emit('input', this.height)
+      }, 200)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.MaxHeight{
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+</style>

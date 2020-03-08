@@ -1,14 +1,15 @@
 <template>
   <div>
-    RenderTable
+    CubeTableList
   </div>
 </template>
 
 <script>
 export default {
-  name: 'RenderTable'
+  name: 'CubeTableList'
 }
 </script>
 
 <style lang="scss" scoped>
+
 </style>

@@ -1,19 +1,17 @@
 <template>
   <div>
-    <div v-for="item in 1" :key="item.id">
-      <markdown />
-    </div>
+    <Md />
   </div>
 </template>
 
 <script>
 
-import markdown from './markdown.md'
+import Md from '~packages/CubeDialog/index.md'
 
 export default {
-  name: 'CubeDialog',
+  name: 'CubeDialogX',
   components: {
-    markdown
+    Md
   }
 }
 </script>

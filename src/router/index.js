@@ -13,10 +13,16 @@ export const routesList = [
     component: () => import('@/views/Dashboard/index')
   },
   {
-    path: 'RenderTable',
-    name: 'RenderTable',
-    meta: { title: '表格组件', icon: 'RenderTable', affix: true },
-    component: () => import('@/views/RenderTable/index')
+    path: 'CubeTable',
+    name: 'CubeTable',
+    meta: { title: 'CubeTable表格', icon: 'CubeTable', affix: true },
+    component: () => import('@/views/CubeTable/index')
+  },
+  {
+    path: 'CubeTableList',
+    name: 'CubeTableList',
+    meta: { title: 'CubeTableList列表', icon: 'CubeTableList', affix: true },
+    component: () => import('@/views/CubeTableList/index')
   },
   {
     path: 'SearchBar',
@@ -59,6 +65,12 @@ export const routesList = [
     name: 'CubeSelect',
     meta: { title: '业务选择组件', icon: 'CubeSelect', affix: true },
     component: () => import('@/views/CubeDialog/index')
+  },
+  {
+    path: 'CubeMap',
+    name: 'CubeMap',
+    meta: { title: '地图相关', icon: 'CubeMap', affix: true },
+    component: () => import('@/views/CubeMap/index')
   }
 ]
 
@@ -66,8 +78,8 @@ const menus = routesList.map(item => {
   return {
     path: item.path,
     component: item.component,
-    name: 'Dashboard',
-    meta: { title: '首页', icon: 'dashboard', affix: true }
+    name: item.name,
+    meta: item.meta
   }
 })
 

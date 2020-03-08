@@ -9,7 +9,8 @@ import App from './App.vue'
 
 // import './plugins/element.js'
 
-// import tyelui from 'tyelui'
+import tyelui from '../packages'
+
 import router from './router'
 import Element from 'element-ui'
 
@@ -18,7 +19,7 @@ import demoBlock from './components/demo-block'
 Vue.config.productionTip = false
 Vue.component('demo-block', demoBlock)
 
-// Vue.use(tyelui)
+Vue.use(tyelui)
 
 Vue.use(Element, {
   size: 'small'

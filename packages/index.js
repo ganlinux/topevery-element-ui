@@ -3,16 +3,18 @@ import CubeDialog from './CubeDialog'
 import Progress from './Progress'
 import MaxHeight from './MaxHeight'
 import CubeSelect from './CubeSelect'
+import CubeTable from './CubeTable'
 
 export const components = {
   CubeDialog,
   Progress,
   MaxHeight,
-  CubeSelect
+  CubeSelect,
+  CubeTable
 }
 
 // Define plugin installation method
-const install = function (Vue) {
+const install = function(Vue) {
   if (!Vue || install.installed) {
     return
   }
@@ -39,7 +41,8 @@ export {
   CubeDialog,
   Progress,
   MaxHeight,
-  CubeSelect
+  CubeSelect,
+  CubeTable
 }
 export default {
   install

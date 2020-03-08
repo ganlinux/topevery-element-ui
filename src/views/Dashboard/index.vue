@@ -1,21 +1,18 @@
 <template>
   <div>
-    Dashboard
-    <CubeSelect />
+    <md />
   </div>
 </template>
 
 <script>
 
-import { CubeSelect } from '~'
-
+import md from './index.md'
 export default {
   name: 'Dashboard',
   components: {
-    CubeSelect
+    md
   },
   mounted() {
-    console.log(document.cookie, 'cookie')
   },
   methods: {
 
