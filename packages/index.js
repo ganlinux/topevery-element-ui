@@ -1,13 +1,12 @@
+import { transformCamelCase } from './uitls'
 
 import CubeDialog from './CubeDialog'
-import Progress from './Progress'
 import MaxHeight from './MaxHeight'
 import CubeSelect from './CubeSelect'
 import CubeTable from './CubeTable'
 
 export const components = {
   CubeDialog,
-  Progress,
   MaxHeight,
   CubeSelect,
   CubeTable
@@ -24,6 +23,8 @@ const install = function(Vue) {
     const component = components[name]
     if (component.name) {
       Vue.component(component.name, component) // kebab-case
+      Vue.component(transformCamelCase(`-${component.name}`), component) // PascalCase
+      console.log(transformCamelCase(`-${component.name}`))
     }
   })
 
@@ -39,7 +40,6 @@ if (typeof window !== 'undefined' && window.Vue) {
 export {
   install,
   CubeDialog,
-  Progress,
   MaxHeight,
   CubeSelect,
   CubeTable

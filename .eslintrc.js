@@ -41,9 +41,9 @@ module.exports = {
       'brace-style': [2, '1tbs', {
         'allowSingleLine': true
       }],
-      'camelcase': [0, {
-        'properties': 'always'
-      }],
+      // 'camelcase': [0, {
+      //   'properties': 'always'
+      // }],
       'comma-dangle': [2, 'never'],
       'comma-spacing': [2, {
         'before': false,

@@ -435,3 +435,12 @@ export function dellTreeEmptyChildren(data = [], newArr = []) {
   return newArr
 }
 
+/**
+ *  MaxHeight -> maxHeight
+ */
+export function transformCamelCase(str) {
+  var re = /-(\w)/g
+  return str.replace(re, function($0, $1) {
+    return $1.toLowerCase()
+  })
+}

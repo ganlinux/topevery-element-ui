@@ -1,7 +1,7 @@
 const { stripScript, stripTemplate, genInlineComponentText } = require('./util')
 const md = require('./config')
 
-module.exports = function (source) {
+module.exports = function(source) {
   const content = md.render(source)
 
   const startTag = '<!--element-demo:'

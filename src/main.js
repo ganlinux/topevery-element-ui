@@ -1,13 +1,13 @@
 import 'normalize.css/normalize.css'
 import './style/index.scss'
 import './assets/styles/fonts/style.css'
-import 'element-ui/lib/theme-chalk/index.css'
 import 'highlight.js/styles/atom-one-dark.css'
+import 'element-ui/lib/theme-chalk/index.css'
 
 import Vue from 'vue'
 import App from './App.vue'
 
-// import './plugins/element.js'
+import './plugins/element.js'
 
 import tyelui from '../packages'
 

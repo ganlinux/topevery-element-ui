@@ -4,14 +4,14 @@ const VueTemplateComplier = require('vue-template-compiler')
 const hljs = require('highlight.js')
 const { parse, compileTemplate } = require('@vue/component-compiler-utils')
 
-module.exports = function (source) {
+module.exports = function(source) {
   // 需要解析成vue代码块集合
   const componentCodeList = []
   let styleCodeList = []
   // 初始还MarkdownIt用于转换md文件为html
   const markdownIt = MarkdownIt({
     // 将markdown中的代码块用hljs高亮显示
-    highlight: function (str, lang) {
+    highlight: function(str, lang) {
       if (lang && hljs.getLanguage(lang)) {
         return `<pre class="hljs"><code>${
           hljs.highlight(lang, str, true).value
@@ -25,11 +25,11 @@ module.exports = function (source) {
   // 使用【markdown-it-container】插件解析【:::snippet :::】代码块为vue渲染
   markdownIt.use(MarkdownItContainer, 'snippet', {
     // 验证代码块为【:::snippet :::】才进行渲染
-    validate (params) {
+    validate(params) {
       return params.trim().match(/^snippet\s*(.*)$/)
     },
     // 代码块渲染
-    render (tokens, index) {
+    render(tokens, index) {
       const token = tokens[index]
       const tokenInfo = token.info.trim().match(/^snippet\s*(.*)$/)
       if (token.nesting === 1) {

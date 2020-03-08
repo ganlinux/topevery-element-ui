@@ -27,43 +27,37 @@ export const routesList = [
   {
     path: 'SearchBar',
     name: 'SearchBar',
-    meta: { title: '搜索组件', icon: 'SearchBar', affix: true },
+    meta: { title: '业务组件', icon: 'SearchBar', affix: true },
     component: () => import('@/views/SearchBar/index')
   },
   {
     path: 'MaxHeight',
     name: 'MaxHeight',
-    meta: { title: '计算高度容器组件', icon: 'MaxHeight', affix: true },
+    meta: { title: '业务组件', icon: 'MaxHeight', affix: true },
     component: () => import('@/views/MaxHeight/index')
   },
   {
     path: 'RenderTableList',
     name: 'RenderTableList',
-    meta: { title: '表格列表组件', icon: 'RenderTableList', affix: true },
+    meta: { title: '业务组件', icon: 'RenderTableList', affix: true },
     component: () => import('@/views/RenderTableList/index')
   },
   {
     path: 'SelectBar',
     name: 'SelectBar',
-    meta: { title: '下拉选择组件', icon: 'SelectBar', affix: true },
+    meta: { title: '业务组件', icon: 'SelectBar', affix: true },
     component: () => import('@/views/SelectBar/index')
   },
   {
     path: 'SelectTree',
     name: 'SelectTree',
-    meta: { title: '树形选择', icon: 'SelectTree', affix: true },
+    meta: { title: '业务组件', icon: 'SelectTree', affix: true },
     component: () => import('@/views/SelectTree/index')
   },
   {
     path: 'CubeDialog',
     name: 'CubeDialog',
-    meta: { title: '弹层', icon: 'CubeDialog', affix: true },
-    component: () => import('@/views/CubeDialog/index')
-  },
-  {
-    path: 'CubeSelect',
-    name: 'CubeSelect',
-    meta: { title: '业务选择组件', icon: 'CubeSelect', affix: true },
+    meta: { title: '业务组件', icon: 'CubeDialog', affix: true },
     component: () => import('@/views/CubeDialog/index')
   },
   {
@@ -71,6 +65,12 @@ export const routesList = [
     name: 'CubeMap',
     meta: { title: '地图相关', icon: 'CubeMap', affix: true },
     component: () => import('@/views/CubeMap/index')
+  },
+  {
+    path: 'CubeSelect',
+    name: 'CubeSelect',
+    meta: { title: '其他', icon: 'CubeSelect', affix: true },
+    component: () => import('@/views/CubeDialog/index')
   }
 ]
 

@@ -2,7 +2,7 @@
   <el-container class="layout">
     <el-container>
       <el-header height="56px">
-        <logo /> TopEvery Ui
+        <logo v-if="false" /> TopEvery Ui
       </el-header>
       <el-aside width="200px">
         <!-- <div @click="isCollapse = !isCollapse"> {{ isCollapse ? '展开' : '收起' }}</div> -->
@@ -67,7 +67,7 @@ export default {
   data() {
     const item = {
       date: '2016-05-02',
-      name: '王小虎',
+      name: '王富贵',
       address: '上海市普陀区金沙江路 1518 弄'
     }
     return {

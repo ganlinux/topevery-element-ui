@@ -1,17 +1,20 @@
-    <!-- CubeTable  组件 - 表格 -->
+<!-- CubeTable  组件 - 表格 -->
 <template>
   <el-table
     slot="table"
     :ref="name"
     v-loadMore="loadMore"
-    border
+    class="cube-table"
+    :border="border"
     style="width: 100%;"
     :data="rebuildData"
-    :height="height?height:'auto'"
+    :height="height"
     highlight-current-row
     element-loading-text="数据加载中..."
     :row-style="rowStyle"
     :header-cell-style="headerCellStyle"
+    :row-class-name="rowClassName"
+    :cell-class-name="cellClassName"
     @row-click="rowClick"
   >
     <template v-for="(column, index) in columns">
@@ -51,17 +54,8 @@
             :type="column.type"
             :fixed="column.fixed"
             :width="column.width ? column.width : 50 "
-          >
-            <template
-              v-if="column.type==='index'"
-              slot-scope="scope"
-            >
-              <template v-if="column.type==='index'">
-                {{ scope.$index+1 }}
-                <!-- <span>{{ scope.$index+(pagination.currentPage-1) *pagination.size + 1 }}</span> -->
-              </template>
-            </template>
-          </el-table-column>
+            :index="indexMethod"
+          />
         </template>
         <template v-else>
           <!-- selection -->
@@ -113,6 +107,9 @@
 
 <script>
 
+import { deepClone } from '../../uitls'
+import { Table, TableColumn } from 'element-ui'
+
 export default {
   name: 'CubeTable',
   directives: {
@@ -136,6 +133,8 @@ export default {
     }
   },
   components: {
+    ElTable: Table,
+    ElTableColumn: TableColumn,
     render: {
       functional: true,
       props: {
@@ -158,6 +157,10 @@ export default {
     }
   },
   props: {
+    border: {
+      type: Boolean,
+      default: true
+    },
     data: {
       type: Array,
       default: () => []
@@ -174,9 +177,9 @@ export default {
         }
       ]
     },
+    // eslint-disable-next-line vue/require-default-prop
     height: {
-      type: [Number, String],
-      default: () => 0
+      type: [Number, String]
     },
     rowStyle: {
       type: Function,
@@ -184,10 +187,28 @@ export default {
         return { cursor: 'pointer' }
       }
     },
+    // eslint-disable-next-line vue/require-default-prop
+    loadMore: {
+      type: Function
+    },
+    // eslint-disable-next-line vue/require-default-prop
+    rowClassName: {
+      type: Function
+    },
+    // eslint-disable-next-line vue/require-default-prop
+    cellClassName: {
+      type: Function
+    },
+    indexMethod: {
+      type: Function,
+      default: (index) => {
+        return index + 1
+      }
+    },
     headerCellStyle: {
       type: Function,
       default: () => {
-        // return { background: 'gainsboro' }
+        return { background: '#EDF5FF' }
       }
     }
   },
@@ -213,11 +234,10 @@ export default {
     }
   },
   methods: {
-    getRandomID(length = 36) {
-      return Number(Math.random().toString().substr(3, length) + Date.now()).toString(36)
-    },
-    loadMore() {
-      console.log('滚动到底部')
+    getTableSelection() {
+      // 获取表格勾选项目
+      const TableSelection = this.$refs[this.name] && this.$refs[this.name].selection || []
+      return deepClone(TableSelection)
     },
     rowClick() {
       this.$emit('rowClick')
