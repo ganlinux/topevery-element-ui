@@ -1,5 +1,8 @@
 <template>
-  <cube-Table :data="tableData" :columns="columns" />
+  <div>
+    <Notice-Bar> 前端必学必会-多媒体-本地存储-浏览器与服务器的交互-通信功能 </Notice-Bar>
+    <cube-Table :data="tableData" :columns="columns" />
+  </div>
 </template>
 <script>
 export default {

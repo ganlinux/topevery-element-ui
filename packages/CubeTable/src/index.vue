@@ -4,6 +4,7 @@
     slot="table"
     :ref="name"
     v-loadMore="loadMore"
+    v-loading="loading"
     class="cube-table"
     :border="border"
     style="width: 100%;"
@@ -71,14 +72,14 @@
 
         </template>
       </template>
-
+      <!-- 常规 -->
       <template v-else>
         <el-table-column
           :key="column._rowKey ? column._rowKey : index"
           :align="column.align ? column.align : 'center' "
           :label="column.label"
           :prop="column.key"
-          :width="column.label ==='操作' ? 140: column.width"
+          :width="column.label ==='操作' ? column.width ? column.width : 140: 'auto'"
           :fixed="column.fixed"
           tooltip-effec="light"
           :show-overflow-tooltip="!column.tooltip"
@@ -157,6 +158,14 @@ export default {
     }
   },
   props: {
+    // eslint-disable-next-line vue/require-default-prop
+    rowKey: {
+      type: String
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
     border: {
       type: Boolean,
       default: true

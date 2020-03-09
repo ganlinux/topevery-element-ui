@@ -288,44 +288,6 @@ export default {
   }
 }
 
-table {
-  border-collapse: collapse;
-  width: 100%;
-  background-color: #fff;
-  font-size: 14px;
-  line-height: 1.5em;
-
-  thead {
-    display: table-header-group;
-    vertical-align: middle;
-    border-color: inherit;
-    tr {
-      display: table-row;
-      vertical-align: inherit;
-      border-color: inherit;
-    }
-    th {
-      text-align: left;
-      white-space: nowrap;
-      color: #3689f3;
-      font-weight: 400;
-      border-bottom: 1px solid #dcdfe6;
-      padding: 10px;
-    }
-  }
-  tbody {
-    display: table-row-group;
-    vertical-align: middle;
-    border-color: inherit;
-    tr {
-      td {
-        border-bottom: 1px solid #dcdfe6;
-        padding: 10px;
-      }
-    }
-  }
-}
-
 .el-row {
   margin-bottom: 20px;
 }

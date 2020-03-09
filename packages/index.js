@@ -4,12 +4,14 @@ import CubeDialog from './CubeDialog'
 import MaxHeight from './MaxHeight'
 import CubeSelect from './CubeSelect'
 import CubeTable from './CubeTable'
+import NoticeBar from './NoticeBar'
 
 export const components = {
   CubeDialog,
   MaxHeight,
   CubeSelect,
-  CubeTable
+  CubeTable,
+  NoticeBar
 }
 
 // Define plugin installation method
@@ -42,7 +44,8 @@ export {
   CubeDialog,
   MaxHeight,
   CubeSelect,
-  CubeTable
+  CubeTable,
+  NoticeBar
 }
 export default {
   install

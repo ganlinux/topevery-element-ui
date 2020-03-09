@@ -1,8 +1,8 @@
 import 'normalize.css/normalize.css'
 import './style/index.scss'
 import './assets/styles/fonts/style.css'
-import 'highlight.js/styles/atom-one-dark.css'
 import 'element-ui/lib/theme-chalk/index.css'
+import 'highlight.js/styles/atom-one-dark.css'
 
 import Vue from 'vue'
 import App from './App.vue'
