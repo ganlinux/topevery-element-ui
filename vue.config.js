@@ -3,6 +3,7 @@ const port = process.env.port || process.env.npm_config_port || 8066 // dev port
 
 module.exports = {
 
+  publicPath: './',
   outputDir: 'docs',
   assetsDir: 'static',
 

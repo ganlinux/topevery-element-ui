@@ -10,7 +10,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shiliangL/ty-el-ui"
+    "url": "git+https://github.com/shiliangL/ty-el-ui",
+    "page":"https://shiliangl.github.io/ty-el-ui/"
   },
   "scripts": {
     "build": "vue-cli-service build",
