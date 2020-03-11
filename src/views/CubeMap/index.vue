@@ -27,10 +27,10 @@ export default {
       dialogVisible: false,
       searchData: [
         [
-          { type: 'input', value: null, key: 'boxCode', placeholder: '压缩箱编号', class: 'w160' },
-          { type: 'input', value: null, key: 'boxCode', placeholder: '压缩箱编号', class: 'w160' },
-          { type: 'input', value: null, key: 'boxCode', placeholder: '压缩箱编号', class: 'w160' },
-          { type: 'option', value: null, key: 'boxType', placeholder: '压缩箱类型', options: [
+          { type: 'input', value: null, key: 'boxCode', placeholder: '输入框', class: 'w160' },
+          { type: 'input', value: null, key: 'boxCode', placeholder: '输入框', class: 'w160' },
+          { type: 'input', value: null, key: 'boxCode', placeholder: '输入框', class: 'w160' },
+          { type: 'option', value: null, key: 'boxType', placeholder: '选择', options: [
             { label: '分体', value: 1 },
             { label: '连体', value: 2 }]
           },
