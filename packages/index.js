@@ -5,13 +5,15 @@ import MaxHeight from './MaxHeight'
 import CubeSelect from './CubeSelect'
 import CubeTable from './CubeTable'
 import NoticeBar from './NoticeBar'
+import SearchBar from './SearchBar'
 
 export const components = {
   CubeDialog,
   MaxHeight,
   CubeSelect,
   CubeTable,
-  NoticeBar
+  NoticeBar,
+  SearchBar
 }
 
 // Define plugin installation method
@@ -39,13 +41,11 @@ if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
 }
 
+const componentsList = { ...components }
+
 export {
   install,
-  CubeDialog,
-  MaxHeight,
-  CubeSelect,
-  CubeTable,
-  NoticeBar
+  componentsList
 }
 export default {
   install

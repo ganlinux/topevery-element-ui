@@ -1,0 +1,269 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1"><title>
+	宝安区环卫精细化管理信息系统
+</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=71ce4e39b5be9ddfb56e3169cafc3922"></script>
+    <!--加载鼠标绘制工具-->
+    <script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"
+        charset="utf-8"></script>
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
+    <!--加载检索信息窗口-->
+    <script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.js"
+        charset="utf-8"></script>
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.css" />
+    <script src="../js/json2.js"></script>
+
+<link type="text/css" rel="Stylesheet" media="ALL" href="/hw.tui/css/base_v2/reset.css?Version=1909052242424902" charset="utf-8"/>
+<link type="text/css" rel="Stylesheet" media="ALL" href="/hw.tui/css/base_v2/style.css?Version=1909052242424902" charset="utf-8"/>
+<link type="text/css" rel="Stylesheet" media="ALL" href="/hw.tui/css/base_v2/skin/ocean/ocean.css?Version=1909052242424902" charset="utf-8"/>
+<link type="text/css" rel="Stylesheet" media="ALL" href="/hw.tui/css/jqGrid/ui.jqgrid.css?Version=1909052242424902" charset="utf-8"/>
+<link type="text/css" rel="Stylesheet" media="ALL" href="/hw.tui/css/base_v2/skin/ocean/ui.jqgrid.css?Version=1909052242424902" charset="utf-8"/>
+<link type="text/css" rel="Stylesheet" media="ALL" href="/hw.tui/css/base_v2/skin/ocean/my97.css?Version=1909052242424902" charset="utf-8"/>
+<link type="text/css" rel="Stylesheet" media="ALL" href="/hw.bav3/css/lzum/style.css?Version=1909052242424902" charset="utf-8"/>
+<script type="text/javascript" src="/hw.tui/js/jquery-1.7.min.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.tui/js/base_v2/topevery.ui.base.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.tui/js/uiLayout/jquery-ui-latest.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.tui/js/uiLayout/jquery.layout-latest.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/base.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/common.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/map.setting.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/jquery.cookie.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/jquery.blockUI.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/jquery.ui.tabs.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/jquery.jqGrid.locale-cn.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/jquery.jqGrid.min.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/jquery.validationEngine.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/jquery.validationEngine-zh.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.my97/WdatePicker.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/jq.framebox.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/jq.menu.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/DivLoadClose.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/map/map.baidu.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/map/map.baidu.helper.js?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/ajaxpro/prototype.ashx?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/ajaxpro/core.ashx?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/ajaxpro/converter.ashx?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/ajaxpro/Topevery.BAHW.Web.AjaxFunction,Topevery.BAHW.Web.ashx?Version=1909052242424902" charset="utf-8"></script>
+<script type="text/javascript" src="/hw.bav3/js/ajaxpro.loading.js?Version=1909052242424902" charset="utf-8"></script>
+
+</head>
+<body>
+
+    <script language="javascript" type="text/javascript">
+        var ajax = Topevery.BAHW.Web.AjaxFunction;
+        $(document).ready(function () {
+            TUILayout("#form1");
+            TUILayout("#rtArea");
+
+            $(document).keydown(function (event) {
+                if (event.altKey && event.keyCode == 83) {
+                    document.getElementById("btnOK").click();
+                }
+            });
+            $(document).keydown(function (event) {
+                if (event.altKey && event.keyCode == 72) {
+                    document.getElementById("btnSave").click();
+                }
+            });
+
+            var myLayout = $("body").layout({
+                fxName: "slide"                         //fxName                        窗体隐藏显示的动画效果
+                , fxSpeed: "slow"                       //fxSpeed                       动画效果的显示时间/速度
+                , maskIframesOnResize: true             //maskIframesOnResize           页面中存在Iframe对象时，设为true
+                , closable: true                        //closable                      是否允许隐藏打开窗体,true为允许
+                , west__size: "700"                      //west__size                    为调整西边窗体的宽度
+                , resizable: true                       //resizable                     是否允许调整窗体的高/宽, true为允许
+                , slidable: true                        //slidable                      是否允许窗体隐藏后可以滑动预览
+                , north__fxName: "slide"                 //north__fxName                 北边窗体隐藏显示的动画效果
+                , south__fxName: "slide"                 //south__fxName                 南边窗体隐藏显示的动画效果
+                , spacing_closed: 7                     //spacing_closed                隐藏后的间隔栏高宽
+                , spacing_open: 7                       //spacing_open                  显示后的间隔栏高宽
+               , north__spacing_open: 0
+               , south__spacing_open: 0
+                , initClosed: false                     //initClosed                    窗体创建后默认隐藏所有窗体
+                , resizerTip: "调整内容宽度"            //resizerTip                    鼠标移上调整窗体栏所显示的文字提醒
+                , resizerDragOpacity: "0.8"             //resizerDragOpacity            鼠标调整窗体栏显示显示的透明度效果
+                , sliderTip: "展开"                     //sliderTip                     鼠标移上滑动隐藏窗体栏所显示的文字提醒
+                , togglerTip_open: "隐藏"               //togglerTip_open               鼠标移上打开的窗体按钮文字提醒
+                , togglerTip_closed: "展开"             //togglerTip_closed             鼠标移上关闭的窗体按钮文字提醒
+            });
+            initMap();
+            initValidate();
+            drawMarker();
+        });
+
+        function windowReload() {
+            window.opener.location.reload();
+            window.opener = null;
+            window.close();
+        }
+        function initValidate() {
+            //jquery 验证
+            $("#txtName").addClass("validate[required]");
+            $("#ddlSection").addClass("validate[required]");
+            $("#txtCleanVolume").addClass("validate[custom[number]]");
+
+            $("#form1").validationEngine({promptPosition: "bottomLeft"});
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        var Icon = new BMap.Icon("../img/map/station.jpg", new BMap.Size(80,80));
+        var overlays = [];
+        var map ;
+
+        function initMap() {
+            // 百度地图API功能
+            map = new BMap.Map('window-info-content');
+
+            var x = 0 ;
+            if (x == 0)
+            {
+                x = 114.028885;
+            }
+            var y = 0;
+            if (y == 0)
+            {
+                y = 22.658294;
+            }
+            var poi = new BMap.Point(x, y );
+            if(0 ==0 && 0 ==0){
+                map.centerAndZoom("深圳",12);
+            }else {
+                map.centerAndZoom(poi, 18);
+            }
+            map.enableScrollWheelZoom();
+
+            var styleOptions = {
+                icon:Icon
+            }
+
+            //实例化鼠标绘制工具
+            var drawingManager = new BMapLib.DrawingManager(map, {
+                isOpen: false, //是否开启绘制模式
+                enableDrawingTool: true, //是否显示工具栏
+                drawingToolOptions: {
+                    anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
+                    offset: new BMap.Size(5, 5), //偏离值
+                    scale: 0.8, //工具栏缩放比例
+                    drawingModes: [BMAP_DRAWING_MARKER]
+                },
+            });
+
+            var ctype=1;
+            var overlaycomplete = function (e) {
+                clearAll();
+                overlays.push(e.overlay);
+
+            };
+            //添加鼠标绘制工具监听事件，用于获取绘制结果
+            drawingManager.addEventListener('overlaycomplete', overlaycomplete);
+        }
+
+        function clearAll() {
+            for (var i = 0; i < overlays.length; i++) {
+                map.removeOverlay(overlays[i]);
+            }
+            overlays.length = 0
+            //map.clearOverlays();
+            $("#hidMapData").val("");
+        }
+
+        function drawMarker() {
+            var mapData = $("#hidMapData").val();
+            if (mapData.length > 0) {
+                var viewPoints = [];
+                var p = null;
+                var ps = mapData.split("#");
+                for (var i = 0; i < ps.length; i++) {
+                    if ($.trim(ps[i]) != "") {
+                        var point = JSON.parse(ps[i]);
+                        var p =new BMap.Point(point[0].lng,point[0].lat);
+                        showMarker(p);
+                    }
+                }
+            }
+        }
+
+        function showMarker(point) {
+            var marker = new BMap.Marker(point);
+            var content = $("#txtName").val();
+            marker.addEventListener("click", function show(){
+                ShowWinInfo(point,content);
+            })
+            overlays.push(marker);
+            map.addOverlay(marker);
+        }
+
+        function ShowWinInfo(epoint, shtml) {
+            var opts = {
+                width: 250, // 信息窗口宽度
+                height: 100, // 信息窗口高度
+                title: "",// 信息窗口标题
+                enableMessage: false
+            }
+
+            var infoWindow = new BMap.InfoWindow(shtml, opts); // 创建信息窗口对象
+            map.openInfoWindow(infoWindow, epoint); // 在地图的特定位置打开信息窗口
+        }
+
+        var polygons = [];
+
+        function beforeSave() {
+            $(overlays).each(function (i, d) {
+                polygons.push(JSON.stringify(d.point));
+
+            });
+            //if ($.trim($("#hidMapData").val()) != "") {
+            //    polygons.push($("#hidMapData").val());
+            //}
+
+            $("#hidMapData").val(polygons.join("#"));
+
+            var data = $("#hidMapData").val();
+            if (data == "" || data == "[]") {
+                alert("请选择收集点坐标！");
+                return false;
+            }
+
+            var type = 1;
+            if (type == 2) {
+                var sectionid = $("#ddlSection option:selected").val();
+                var id = '0';
+                var result = ajax.GetObjBySectionId(sectionid, id, 5).value;
+                if (!result) {
+                    alert("当前收集点已被调入到标段中，但是检测到与此次提交所选择的标段不同，请先调出该收集点!");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function getLevelData(no){
+            var t = Topevery.GRE.Web.BaseInfo.GreenPointSaveOrEditWithMap.ddlLevelDataBind(no);
+        }
+
+        function searchKey() {
+            if ($.trim($("#txtKey").val() != "")) {
+                var myKeys = [];
+                var keys = $("#txtKey").val().split(" ");
+                $(keys).each(function (i, d) {
+                    if ($.trim(d) != "") {
+                        myKeys.push($.trim(d));
+                    }
+                });
+
+                var local = new BMap.LocalSearch(map, {
+                    renderOptions: { map: map, panel: "divSearchResult" },
+                    pageCapacity: 5
+                });
+                local.searchInBounds(myKeys, map.getBounds());
+            }
+        }
+    </script>
+</body>
+</html>

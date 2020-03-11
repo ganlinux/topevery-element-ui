@@ -1,113 +1,58 @@
 <template>
   <div>
-    <div
-      id="CubeMap"
-      class="CubeMap"
-    />
-    <div class="tools">
-      <el-button type="success">成功按钮</el-button>
-      <el-button type="info">信息按钮</el-button>
-      <el-button type="warning">警告按钮</el-button>
-    </div>
+    <el-button type="text" @click="dialogVisible = true">点击打开地图。加载鼠标绘制工具。视图最佳视角移动</el-button>
+
+    <SearchBar :data="searchData" />
+
+    <Cube-Dialog
+      fullscreen
+      title="提示"
+      :destroy-on-close="false"
+      :visible.sync="dialogVisible"
+    >
+      <Add v-if="dialogVisible" />
+    </Cube-Dialog>
   </div>
 </template>
 
 <script>
 
+import Add from './Add'
 export default {
-  name: 'CubeMap',
+  components: {
+    Add
+  },
   data() {
     return {
-      overlays: [],
-      styleOptions: {
-        strokeColor: 'red', // 边线颜色。
-        fillColor: 'red', // 填充颜色。当参数为空时，圆形将没有填充效果。
-        strokeWeight: 2, // 边线的宽度，以像素为单位。
-        strokeOpacity: 0.8, // 边线透明度，取值范围0 - 1。
-        fillOpacity: 0.6, // 填充的透明度，取值范围0 - 1。
-        strokeStyle: 'solid' // 边线的样式，solid或dashed。
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick().then(_ => {
-      setTimeout(() => {
-        this.mapReady()
-      }, 200)
-    })
-  },
-  methods: {
-    mapReady() {
-      const map = this.map = new BMap.Map('CubeMap', { enableMapClick: false, minZoom: 12 })
-      map.centerAndZoom(new BMap.Point(114.12744, 22.64469), 13)
-      map.enableScrollWheelZoom(true)
-      this.map.addEventListener('click', e => {
-        this.onMapClick(e)
-      })
-      this.initDrawingManager(map)
-    },
-    initDrawingManager(map) {
-      const { styleOptions } = this
-      // eslint-disable-next-line no-undef
-      this.drawingManager = new BMapLib.DrawingManager(map, {
-        isOpen: false, // 是否开启绘制模式
-        enableDrawingTool: false, // 是否显示工具栏
-        // eslint-disable-next-line no-undef
-        // drawingMode: BMAP_DRAWING_POLYGON, // 绘制模式  多边形
-        // eslint-disable-next-line no-undef
-        drawingToolOptions: {
-          // eslint-disable-next-line no-undef
-          anchor: BMAP_ANCHOR_TOP_RIGHT, // 位置
-          // eslint-disable-next-line no-undef
-          offset: new BMap.Size(5, 5), // 偏离值
-          drawingModes: [
-            // eslint-disable-next-line no-undef
-            BMAP_DRAWING_POLYGON
-          ]
-        },
-        // 圆的样式
-        circleOptions: styleOptions,
-        // 线的样式
-        polylineOptions: styleOptions,
-        // 多边形的样式
-        polygonOptions: styleOptions,
-        // 矩形的样式
-        rectangleOptions: styleOptions
-      })
-      // eslint-disable-next-line no-undef
-      this.drawingManager && this.drawingManager.addEventListener('overlaycomplete', this.overlaycomplete)
-    },
-    draw() {
-      this.drawingManager && this.drawingManager.draw()
-    },
-    overlaycomplete(e) {
-      console.log(e)
-      this.polygon = e.overlay
-      this.overlays.push(e.overlay)
-    },
-    clearAllOverLayout() {
-      this.map && this.map.clearOverlays()
-    //   this.overlays.map(item => this.map && this.map.removeOverlay(item))
-    },
-    onMapClick(e) {
-      if (this.polygon) {
-        this.clearAllOverLayout()
-      }
-      console.log(e, '地图点击')
+      dialogVisible: false,
+      searchData: [
+        [
+          { type: 'input', value: null, key: 'boxCode', placeholder: '压缩箱编号', class: 'w160' },
+          { type: 'input', value: null, key: 'boxCode', placeholder: '压缩箱编号', class: 'w160' },
+          { type: 'input', value: null, key: 'boxCode', placeholder: '压缩箱编号', class: 'w160' },
+          { type: 'option', value: null, key: 'boxType', placeholder: '压缩箱类型', options: [
+            { label: '分体', value: 1 },
+            { label: '连体', value: 2 }]
+          },
+          { type: 'date', value: null, key: 'boxCode', placeholder: '日期', class: 'w160' },
+          { type: 'datetime', value: null, key: 'boxCode', placeholder: '日期时间', class: 'w160' },
+          { type: 'multiple-date', dateType: 0, value: [], key1: 'startDate', key2: 'endDate', placeholder1: '开始日期', placeholder2: '结束日期' },
+          { type: 'multiple-date', dateType: 1, value: [], key1: 'startDate', key2: 'endDate', placeholder1: '开始时间', placeholder2: '结束时间' },
+
+          { type: 'search', name: '查询', icon: 'el-icon-search' }
+          // { type: 'reset', name: '重置' }
+        ],
+        [
+          { type: 'button', name: '调入', keyType: 'primary', icon: 'el-icon-upload2' },
+          { type: 'button', name: '调出', keyType: 'danger', icon: 'el-icon-close' }
+          // { type: 'button', name: '导出', keyType: 'primary', icon: 'el-icon-upload2' }
+        ]
+      ]
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.CubeMap {
-  height: 100%;
-  width: 100%;
-}
-.tools {
-  position: fixed;
-  top: 80px;
-  right: 40px;
-  z-index: 99999999;
-}
+
 </style>
