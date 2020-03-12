@@ -33,6 +33,7 @@ export default {
   },
   computed: {
     heightPx() {
+      // return 'auto' || `${this.height}px`
       return `${this.height}px`
     }
   },
@@ -50,7 +51,6 @@ export default {
   },
   methods: {
     computedHeight() {
-      console.log('xxxx')
       const boxTop = this.$el.getBoundingClientRect().top || 0
       const innerHieght = window.innerHeight || 0
       this.height = Math.abs(innerHieght - boxTop - this.prefix) > this.minHeight ? Math.abs(innerHieght - boxTop - this.prefix) : this.minHeight

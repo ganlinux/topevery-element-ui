@@ -416,7 +416,7 @@ render表格展示用法。
               width:180,
               render: (h, parmas) => {
                 const { row } = parmas
-                return (<div class="flex-table-cell"> 
+                return (<div class="flex-table-cell-row"> 
                   <div class="btn-text" onClick={ ()=>this.handler('编辑') }> 
                     <i class="el-icon-edit-outline" /> 编辑 
                   </div>

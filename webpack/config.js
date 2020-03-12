@@ -13,8 +13,9 @@ config
     {
       level: 2,
       slugify: slugify,
-      permalink: true,
-      permalinkBefore: true
+      permalink: false,
+      permalinkBefore: true,
+      permalinkSymbol: '#'
     }
   ]).end()
 

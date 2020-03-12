@@ -28,19 +28,17 @@ export default {
       searchData: [
         [
           { type: 'input', value: null, key: 'boxCode', placeholder: '输入框', class: 'w160' },
-          { type: 'input', value: null, key: 'boxCode', placeholder: '输入框', class: 'w160' },
-          { type: 'input', value: null, key: 'boxCode', placeholder: '输入框', class: 'w160' },
           { type: 'option', value: null, key: 'boxType', placeholder: '选择', options: [
             { label: '分体', value: 1 },
             { label: '连体', value: 2 }]
           },
           { type: 'date', value: null, key: 'boxCode', placeholder: '日期', class: 'w160' },
-          { type: 'datetime', value: null, key: 'boxCode', placeholder: '日期时间', class: 'w160' },
-          { type: 'multiple-date', dateType: 0, value: [], key1: 'startDate', key2: 'endDate', placeholder1: '开始日期', placeholder2: '结束日期' },
-          { type: 'multiple-date', dateType: 1, value: [], key1: 'startDate', key2: 'endDate', placeholder1: '开始时间', placeholder2: '结束时间' },
+          // { type: 'datetime', value: null, key: 'boxCode', placeholder: '日期时间', class: 'w160' },
+          // { type: 'multiple-date', dateType: 0, value: [], key1: 'startDate', key2: 'endDate', placeholder1: '开始日期', placeholder2: '结束日期' },
+          // { type: 'multiple-date', dateType: 1, value: [], key1: 'startDate', key2: 'endDate', placeholder1: '开始时间', placeholder2: '结束时间' },
 
-          { type: 'search', name: '查询', icon: 'el-icon-search' }
-          // { type: 'reset', name: '重置' }
+          { type: 'search', name: '查询' },
+          { type: 'reset', name: '重置' }
         ],
         [
           { type: 'button', name: '调入', keyType: 'primary', icon: 'el-icon-upload2' },

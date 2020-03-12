@@ -6,6 +6,7 @@ import CubeSelect from './CubeSelect'
 import CubeTable from './CubeTable'
 import NoticeBar from './NoticeBar'
 import SearchBar from './SearchBar'
+import CubeTableList from './CubeTableList'
 
 export const components = {
   CubeDialog,
@@ -13,7 +14,8 @@ export const components = {
   CubeSelect,
   CubeTable,
   NoticeBar,
-  SearchBar
+  SearchBar,
+  CubeTableList
 }
 
 // Define plugin installation method

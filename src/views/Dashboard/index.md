@@ -1,6 +1,6 @@
 ## 安装
 
-* npm安装 测试
+* npm安装 测试+++
 
 ```sh
 npm install tyelui -S

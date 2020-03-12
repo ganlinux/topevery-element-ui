@@ -1,7 +1,8 @@
 <template>
   <div>
-    <Notice-Bar> 前端必学必会-多媒体-本地存储-浏览器与服务器的交互-通信功能 </Notice-Bar>
-    <cube-Table :data="tableData" :columns="columns" />
+    <Notice-Bar class="notice"> 前端必学必会-多媒体-本地存储-浏览器与服务器的交互-通信功能 </Notice-Bar>
+    <!-- <cube-Table :data="tableData" :columns="columns" /> -->
+    <CubeTableList />
   </div>
 </template>
 <script>
@@ -31,3 +32,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.notice{
+  margin: 10px 0;
+}
+</style>

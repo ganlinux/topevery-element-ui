@@ -7,6 +7,8 @@ import 'highlight.js/styles/atom-one-dark.css'
 import Vue from 'vue'
 import App from './App.vue'
 
+import hljs from 'highlight.js'
+
 import './plugins/element.js'
 
 import tyelui from '../packages'
@@ -23,6 +25,13 @@ Vue.use(tyelui)
 
 Vue.use(Element, {
   size: 'small'
+})
+
+Vue.directive('highlight', function(el) {
+  const blocks = el.querySelectorAll('pre code')
+  blocks.forEach((block) => {
+    hljs.highlightBlock(block)
+  })
 })
 
 new Vue({

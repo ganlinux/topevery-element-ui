@@ -2,7 +2,11 @@
   <div class="search-bar">
     <template v-if="data && data.length > 0">
       <template v-if="data[0].length">
-        <div v-for="(item, index) in data[0]" :key="index" class="left">
+        <div
+          v-for="(item, index) in data[0]"
+          :key="index"
+          class="left"
+        >
           <!-- date 日期 2020年02月29日-->
           <template v-if="item.type === 'date'">
             <el-date-picker
@@ -135,14 +139,16 @@
           <template v-else-if="item.type === 'search'">
             <el-button
               type="primary"
-              :icon="item.icon"
+              :icon="item.icon ? item.icon : 'el-icon-search' "
               size="small"
               @click="search"
             >{{ item.name }}</el-button>
           </template>
           <template v-else-if="item.type === 'reset'">
             <el-button
+              type="primary"
               size="small"
+              plain
               @click="clickReset"
             >{{ item.name }}</el-button>
           </template>
@@ -292,13 +298,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .search-bar {
   width: 100%;
   clear: both;
   margin-bottom: 2px;
-  padding-bottom:2px;
-  border-bottom:1px solid #dfecf9;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #dfecf9;
   background-color: white;
 
   &:after {
@@ -313,10 +318,10 @@ export default {
   .left {
     float: left;
     height: 40px;
-    >div {
+    > div {
       margin-right: 4px;
     }
-    >button {
+    > button {
       margin-right: 4px;
     }
 
@@ -347,13 +352,11 @@ export default {
 
   .right {
     float: right;
-    >div {
-      margin-left: 10px;
-    }
+    margin-right: 10px;
   }
 
-  /deep/.el-range-separator{
-      color: #c2c5ce;
+  /deep/.el-range-separator {
+    color: #c2c5ce;
   }
 
   .el-input {
@@ -369,14 +372,14 @@ div.left {
   margin-left: 5px;
 }
 
-.tree{
+.tree {
   font-size: 13px;
 }
 
 .vue-treeselect {
   font-size: 13px;
   color: #838487;
-  font-weight: normal!important;
+  font-weight: normal !important;
   /deep/.vue-treeselect__control {
     height: 30px;
     line-height: 30px;
@@ -389,8 +392,8 @@ div.left {
     font-size: 13px;
     color: #838487;
   }
-  /deep/.vue-treeselect__menu-container{
-    z-index: 9999999!important;
+  /deep/.vue-treeselect__menu-container {
+    z-index: 9999999 !important;
   }
 }
 </style>
