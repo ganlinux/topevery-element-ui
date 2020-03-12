@@ -146,6 +146,7 @@
           </template>
           <template v-else-if="item.type === 'reset'">
             <el-button
+              :icon="item.icon ? item.icon : 'el-icon-refresh' "
               type="primary"
               size="small"
               plain
