@@ -4,6 +4,17 @@
 
     <SearchBar :data="searchData" />
 
+    <uploader :options="options" class="uploader-example">
+      <uploader-unsupport />
+      <uploader-drop>
+        <p>Drop files here to upload or</p>
+        <uploader-btn>select files</uploader-btn>
+        <uploader-btn :attrs="attrs">select images</uploader-btn>
+        <uploader-btn :directory="true">select folder</uploader-btn>
+      </uploader-drop>
+      <uploader-list />
+    </uploader>
+
     <Cube-Dialog
       fullscreen
       title="提示"
@@ -24,6 +35,13 @@ export default {
   },
   data() {
     return {
+      options: {
+        target: '//localhost:3000/upload',
+        testChunks: false
+      },
+      attrs: {
+        accept: 'image/*'
+      },
       dialogVisible: false,
       searchData: [
         [

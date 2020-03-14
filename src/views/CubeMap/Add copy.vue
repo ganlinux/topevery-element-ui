@@ -46,8 +46,6 @@
 
 const data = [[{ 'lng': 114.295603, 'lat': 22.612399 }, { 'lng': 114.303652, 'lat': 22.609463 }, { 'lng': 114.310551, 'lat': 22.612399 }, { 'lng': 114.315725, 'lat': 22.607861 }, { 'lng': 114.326648, 'lat': 22.611865 }, { 'lng': 114.331822, 'lat': 22.616135 }, { 'lng': 114.345908, 'lat': 22.611598 }, { 'lng': 114.363155, 'lat': 22.619071 }, { 'lng': 114.369479, 'lat': 22.627344 }, { 'lng': 114.388452, 'lat': 22.62174 }, { 'lng': 114.399375, 'lat': 22.636951 }, { 'lng': 114.445943, 'lat': 22.663234 }, { 'lng': 114.423521, 'lat': 22.684043 }, { 'lng': 114.378103, 'lat': 22.657231 }, { 'lng': 114.384715, 'lat': 22.666836 }, { 'lng': 114.367755, 'lat': 22.676173 }, { 'lng': 114.346483, 'lat': 22.67724 }, { 'lng': 114.325211, 'lat': 22.671638 }, { 'lng': 114.301639, 'lat': 22.667903 }, { 'lng': 114.283242, 'lat': 22.663634 }, { 'lng': 114.294453, 'lat': 22.653229 }, { 'lng': 114.27778, 'lat': 22.652962 }, { 'lng': 114.270019, 'lat': 22.645757 }, { 'lng': 114.268007, 'lat': 22.637485 }, { 'lng': 114.278643, 'lat': 22.633215 }, { 'lng': 114.28353, 'lat': 22.629479 }, { 'lng': 114.272319, 'lat': 22.614534 }, { 'lng': 114.286117, 'lat': 22.611865 }], [{ 'lng': 114.350795, 'lat': 22.718984 }, { 'lng': 114.356256, 'lat': 22.694446 }, { 'lng': 114.390464, 'lat': 22.691512 }, { 'lng': 114.400812, 'lat': 22.684043 }, { 'lng': 114.435595, 'lat': 22.694446 }, { 'lng': 114.461466, 'lat': 22.690712 }, { 'lng': 114.453992, 'lat': 22.710183 }, { 'lng': 114.425821, 'lat': 22.726184 }, { 'lng': 114.375229, 'lat': 22.730451 }]]
 
-import { gpsPoints } from './gps'
-
 export default {
   name: 'CubeMapDraw',
   props: {
@@ -152,8 +150,7 @@ export default {
   mounted() {
     this.$nextTick().then(_ => {
       setTimeout(() => {
-        // this.mapReady()
-        this.initMap()
+        this.mapReady()
       }, 200)
     })
   },
@@ -410,134 +407,6 @@ export default {
         markerPointList: this.markerPointList.map(item => item.getPosition()) || [],
         linePointList: this.linePointList.map(item => item.getPath()) || [],
         polygonPointList: this.polygonPointList.map(item => item.getPath()) || []
-      }
-    },
-    initMap() {
-      this.map = new BMap.Map('CubeMap', { enableMapClick: false, minZoom: 12 })
-      this.map.centerAndZoom(new BMap.Point(114.12744, 22.64469), 13)
-      this.map.enableScrollWheelZoom(true)
-
-      const arrPois = gpsPoints.map(item => new BMap.Point(item.lat, item.lng))
-      console.log(gpsPoints, 'xx')
-
-      // this.map && this.map.setViewport(arrPois)
-
-      // 画轨迹
-      const polyLine = new BMap.Polyline(arrPois, {
-        strokeColor: 'red', // 设置颜色
-        strokeWeight: 5, // 宽度
-        strokeOpacity: 0.5 // 透明度
-      })
-      this.map.addOverlay(polyLine)
-      // 画轨迹结束
-      // eslint-disable-next-line no-undef
-      BMapLib.LuShu.prototype._move = function(initPos, targetPos, effect) {
-        // var pointsArr = [initPos, targetPos] // 点数组
-        var me = this
-        // 当前的帧数
-        var currentCount = 0
-        // 步长，米/秒
-        var timer = 10
-        var step = this._opts.speed / (1000 / timer)
-        // 初始坐标
-        var init_pos = this._projection.lngLatToPoint(initPos)
-        // 获取结束点的(x,y)坐标
-        var target_pos = this._projection.lngLatToPoint(targetPos)
-        // 总的步长
-        var count = Math.round(me._getDistance(init_pos, target_pos) / step)
-        // 显示折线 syj201607191107
-        // 如果想显示小车走过的痕迹，放开这段代码就行
-        // this._map.addOverlay(
-        //   new BMap.Polyline(pointsArr, {
-        //     strokeColor: "#111",
-        //     strokeWeight: 5,
-        //     strokeOpacity: 0.5
-        //   })
-        // ); // 画线
-        // 如果小于1直接移动到下一点
-        if (count < 1) {
-          me._moveNext(++me.i)
-          return
-        }
-        me._intervalFlag = setInterval(function() {
-          // 两点之间当前帧数大于总帧数的时候，则说明已经完成移动
-          if (currentCount >= count) {
-            clearInterval(me._intervalFlag)
-            // 移动的点已经超过总的长度
-            if (me.i > me._path.length) {
-              return
-            }
-            // 运行下一个点
-            me._moveNext(++me.i)
-          } else {
-            currentCount++
-            var x = effect(init_pos.x, target_pos.x, currentCount, count)
-            var y = effect(init_pos.y, target_pos.y, currentCount, count)
-            var pos = me._projection.pointToLngLat(new BMap.Pixel(x, y))
-            // 设置marker
-            if (currentCount === 1) {
-              var proPos = null
-              if (me.i - 1 >= 0) {
-                proPos = me._path[me.i - 1]
-              }
-              if (me._opts.enableRotation === true) {
-                me.setRotation(proPos, initPos, targetPos)
-              }
-              if (me._opts.autoView) {
-                if (!me._map.getBounds().containsPoint(pos)) {
-                  me._map.setCenter(pos)
-                }
-              }
-            }
-            // 正在移动
-            me._marker.setPosition(pos)
-            // 设置自定义overlay的位置
-            me._setInfoWin(pos)
-          }
-        }, timer)
-      }
-      // this.initLushu(this.map, arrPois, this.mycaiId)
-    },
-    initLushu(map, arrPois, mycaiId) {
-      // eslint-disable-next-line no-undef
-      this.lushu = new BMapLib.LuShu(map, arrPois, {
-        defaultContent: mycaiId, // "从天安门到百度大厦"
-        autoView: true, // 是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
-        icon: new BMap.Icon(
-          'http://developer.baidu.com/map/jsdemo/img/car.png',
-          new BMap.Size(52, 26),
-          {
-            anchor: new BMap.Size(27, 13)
-          }
-        ),
-        speed: this.speed,
-        enableRotation: true, // 是否设置marker随着道路的走向进行旋转
-        landmarkPois: [
-          {
-            lng: 116.306954,
-            lat: 40.05718,
-            html: '加油站',
-            pauseTime: 2
-          }
-        ]
-      })
-    },
-    play(val) {
-      if (this.arrIndex >= this.gpsArr.length - 3) {
-        this.arrIndex = 0
-      }
-      switch (val) {
-        case 1:
-          this.lushu.start()
-          break
-        case 2:
-          this.lushu.pause()
-          break
-        case 3:
-          this.lushu.stop()
-          this.arrIndex = 0
-          this.percentage = 0
-          break
       }
     }
   }

@@ -67,6 +67,12 @@ export const routesList = [
     component: () => import('@/views/CubeMap/index')
   },
   {
+    path: 'FormValidation',
+    name: 'FormValidation',
+    meta: { title: '表单验证', icon: 'FormValidation', affix: true },
+    component: () => import('@/views/FormValidation/index')
+  },
+  {
     path: 'CubeSelect',
     name: 'CubeSelect',
     meta: { title: '其他', icon: 'CubeSelect', affix: true },

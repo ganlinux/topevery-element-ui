@@ -15,6 +15,7 @@ import tyelui from '../packages'
 
 import router from './router'
 import Element from 'element-ui'
+import elementUIVerify from 'element-ui-verify'
 
 import demoBlock from './components/demo-block'
 
@@ -26,6 +27,14 @@ Vue.use(tyelui)
 Vue.use(Element, {
   size: 'small'
 })
+
+// import elementUIVerify from './element-ui-verif.js'
+Vue.use(elementUIVerify)
+import { elementUIVerifyAddRule } from './element-ui-verify'
+elementUIVerifyAddRule(elementUIVerify)
+
+import uploader from 'vue-simple-uploader'
+Vue.use(uploader)
 
 Vue.directive('highlight', function(el) {
   const blocks = el.querySelectorAll('pre code')
