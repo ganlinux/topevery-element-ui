@@ -6,20 +6,6 @@
     :class="{'menu-open': menuOpen, 'voices-open': voicesOpen}"
     :style="{ color: activeReminder.waveFrontColor, backgroundColor: stageBg }"
   >
-    <div class="time">
-      <transition-group
-        name="timer"
-        tag="div"
-      >
-        <div
-          v-for="time in timer"
-          :key="time.id"
-          class="timer__item"
-        >
-          {{ time.value }}
-        </div>
-      </transition-group>
-    </div>
     <div
       class="waves"
       :style="waveStyles"
@@ -183,7 +169,7 @@ export default {
     return {
       color: '',
       percents: [100],
-      percentsLeft: 100,
+      percentsLeft: 10,
       secondsLeft: 0,
       waveStyles: '',
       duration: 1,
