@@ -4,16 +4,17 @@
 
     <SearchBar :data="searchData" />
 
-    <uploader :options="options" class="uploader-example">
+    <CubeSelectTree :options="treeData" />
+
+    <!-- <uploader :options="options" class="uploader-example">
       <uploader-unsupport />
       <uploader-drop>
-        <p>Drop files here to upload or</p>
-        <uploader-btn>select files</uploader-btn>
-        <uploader-btn :attrs="attrs">select images</uploader-btn>
+        <uploader-btn>选择文件</uploader-btn>
+        <uploader-btn :attrs="attrs">选择图片</uploader-btn>
         <uploader-btn :directory="true">select folder</uploader-btn>
       </uploader-drop>
       <uploader-list />
-    </uploader>
+    </uploader> -->
 
     <Cube-Dialog
       fullscreen
@@ -29,6 +30,8 @@
 <script>
 
 import Add from './Add'
+import { treeData } from './tree'
+
 export default {
   components: {
     Add
@@ -39,6 +42,7 @@ export default {
         target: '//localhost:3000/upload',
         testChunks: false
       },
+      treeData,
       attrs: {
         accept: 'image/*'
       },
@@ -65,6 +69,9 @@ export default {
         ]
       ]
     }
+  },
+  created() {
+    console.log(treeData, 'list')
   }
 }
 </script>

@@ -40,6 +40,7 @@
 <script type="text/babel">
 
 import { stripScript, stripStyle, stripTemplate } from './util'
+import hljs from 'highlight.js'
 
 export default {
   data() {
@@ -103,6 +104,10 @@ export default {
   created() {
     const highlight = this.$slots.highlight
     if (highlight && highlight[0]) {
+      this.$nextTick().then(() => {
+        const blocks = document.querySelectorAll('pre code:not(.hljs)')
+        Array.prototype.forEach.call(blocks, hljs.highlightBlock)
+      })
       let code = ''
       let cur = highlight[0]
       if (cur.tag === 'pre' && (cur.children && cur.children[0])) {

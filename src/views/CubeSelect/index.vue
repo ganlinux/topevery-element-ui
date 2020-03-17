@@ -1,12 +1,12 @@
 <template>
   <div>
-    组件 - 下拉选择组件
+    CubeSelect
   </div>
 </template>
 
 <script>
 export default {
-
+  name: 'CubeSelectX'
 }
 </script>
 

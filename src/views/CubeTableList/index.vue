@@ -23,7 +23,7 @@ export default {
           key: 'name',
           render: (h, parmas) => {
             const { row } = parmas
-            return <span> { row.name } </span>
+            return <span> {row.name} </span>
           }
         },
         { label: '地址', key: 'address' }
@@ -34,7 +34,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.notice{
+.notice {
   margin: 10px 0;
+}
+>>> .CubeTableList {
+  .el-table >>> .flex-table-cell-row {
+    font-weight: 500;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-around;
+    .btn-text {
+      font-size: 12px;
+      color: #409eff;
+      &:active {
+        background-color: transparent;
+      }
+    }
+    .delete-text {
+      color: #f56c6c;
+      &:active {
+        background-color: transparent;
+      }
+    }
+  }
 }
 </style>

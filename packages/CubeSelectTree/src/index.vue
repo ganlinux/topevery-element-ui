@@ -31,56 +31,15 @@
       @hide="hidePopover"
     >
       <div style="text-align: right; margin: 0">
-        <el-table
-          v-loading="loading"
+        <el-tree
+          ref="tree"
+          highlight-current
+          :default-expand-all="true"
+          :expand-on-click-node="false"
+          :filter-node-method="filterNode"
           :data="tableData"
-          style="width: 100%"
-          size="mini"
-          :height="tableHeight"
-          highlight-current-row
-          :row-style="rowStyle"
-          element-loading-text="数据加载中..."
-          @row-click="rowClick"
-        >
-          <el-table-column
-            label="序号"
-            type="index"
-            :index="indexMethod"
-          />
-          <el-table-column
-            v-for="(item,index) in column2"
-            :key="onlyKey ? item[onlyKey] : index"
-            show-overflow-tooltip
-            :width="item.width ? item.width : null "
-            :align="item.align ? item.align : 'center' "
-            :prop="item.prop"
-            :label="item.label"
-          >
-            <template slot-scope="scope">
-              <template v-if="!item.render">
-                <template>
-                  <span>{{ scope.row[item.key] }}</span>
-                </template>
-              </template>
-              <template v-else>
-                <render
-                  :column="item"
-                  :index="index"
-                  :render="item.render"
-                  :row="scope.row"
-                />
-              </template>
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-pagination
-          small
-          class="pagination"
-          layout="total,prev, pager, next"
-          :current-page="pagination.page"
-          :page-size="pagination.size"
-          :total="pagination.total"
-          @current-change="handleCurrentChange"
+          :props="defaultProps"
+          @node-click="handleNodeClick"
         />
       </div>
     </el-popover>
@@ -108,32 +67,10 @@ export function debounce(callback, delay) {
   }
 }
 
-import request from '../../uitls/request'
+// import request from '../../uitls/request'
 
 export default {
-  name: 'CubeSelect',
-  components: {
-    render: {
-      functional: true,
-      props: {
-        row: Object,
-        render: Function,
-        index: Number,
-        column: {
-          type: Object,
-          default: null
-        }
-      },
-      render: (h, opt) => {
-        const params = {
-          row: opt.props.row,
-          index: opt.props.index
-        }
-        if (opt.props.column) params.column = opt.props.column
-        return opt.props.render(h, params)
-      }
-    }
-  },
+  name: 'CubeSelectTree',
   directives: {
     clickOutside: {
       bind(el, binding, vnode) {
@@ -161,6 +98,11 @@ export default {
     }
   },
   props: {
+    // 测试数据
+    options: {
+      type: Array,
+      default: () => []
+    },
     // 设置选择返回的值 默认为空
     // 如果设置则返回该设置 key-value 的value值
     // 不返回  { [this.keyCode]: row[this.keyCode], [this.keyName]: row[this.keyName] }
@@ -209,10 +151,6 @@ export default {
       type: Boolean,
       default: () => true
     },
-    tableHeight: { // 选择区域高度
-      type: Number,
-      default: () => 250
-    },
     extraParam: { // 关联拓展参数
       type: Object,
       default: () => {
@@ -221,13 +159,6 @@ export default {
     placeholder: { // 提示占位符号
       type: String,
       default: () => ''
-    },
-    column: { // 表格显示字段绑定
-      type: Array,
-      default: () => [
-        // { key: 'name', label: '名称' },
-        // { key: 'code', label: '编码' }
-      ]
     },
     focusOnload: { // 是否获取焦点就加载 如果设置 false 则只加载一次
       type: Boolean,
@@ -248,22 +179,17 @@ export default {
   },
   data() {
     return {
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      },
       placeholder2: '请选择',
-      column2: [
-        { prop: 'name', label: '名称' },
-        { prop: 'code', label: '编码' }
-      ],
       recordSelect: null,
       firstTime: true,
       visible: false,
       loading: false,
       selectValue: '',
-      tableData: [],
-      pagination: {
-        size: 50, // 分页每页默认显示10条
-        currentPage: 1, // 当前默认第一页
-        total: 0 // 总条数
-      }
+      tableData: []
     }
   },
   beforeDestroy() {
@@ -271,16 +197,8 @@ export default {
     this.recordSelect = null
   },
   mounted() {
-    // 初始化
-    const { placeholder, column, value } = this
-    if (placeholder) this.placeholder2 = placeholder
-    if (column.length) {
-      this.column2 = deepMerge(this.column2, column)
-    }
-    if (value) {
-      this.recordSelect = value
-      this.selectValue = value[this.keyName]
-    }
+    const { options } = this
+    this.tableData = options
   },
   methods: {
     focus() {
@@ -292,21 +210,16 @@ export default {
         this.placeholder2 = recordSelect[this.keyName]
       }
       // 获取焦点就加载如果关闭则只会加载请求一次
-      if (this.focusOnload) {
-        this.fetchTableData()
-      } else {
-        if (this.firstTime) {
-          this.fetchTableData()
-        }
-      }
+      // if (this.focusOnload) {
+      //   this.fetchTableData()
+      // } else {
+      //   if (this.firstTime) {
+      //     this.fetchTableData()
+      //   }
+      // }
     },
     blur() {
-      // 失去焦点 如果 已经选择的东西 显示
-      // const { recordSelect } = this
-      // if (recordSelect) {
-      //   this.selectValue = recordSelect[this.keyName]
-      //   this.placeholder2 = '请选择'
-      // }
+      this.$emit('blur')
     },
     clear() {
       this.placeholder2 = '请选择'
@@ -323,68 +236,67 @@ export default {
         this.placeholder2 = '请选择'
       }
     },
-    handleCurrentChange(value) {
-      this.pagination.currentPage = value
-      this.fetchTableData()
-    },
-    rowStyle() {
-      return { cursor: 'pointer' }
-    },
-    indexMethod(index) {
-      return (index + 1) + (this.pagination.currentPage - 1) * (this.pagination.size)
-    },
     hidePopover() {
       this.$emit('hidePopover')
     },
-    rowClick(row) {
-      this.selectValue = row[this.keyName]
-      this.recordSelect = row
-      const { backValue, backList } = this
-      const backListParams = {}
-      if (Array.isArray(backList) && backList.length) {
-        for (const item of backList) {
-          backListParams[item] = row[item]
-        }
-      }
-      const params = { [this.keyCode]: row[this.keyCode], [this.keyName]: row[this.keyName], ...backListParams }
-      if (backValue) {
-        this.$emit('input', row[backValue])
-      } else {
-        this.$emit('input', params)
-      }
-      this.$emit('change', row)
-      setTimeout(() => {
-        this.visible = false
-      }, 200)
-    },
-    inputChangeText(item) {
-      this.fetchTableData({ [this.searchName]: this.selectValue })
-    },
-    input: debounce(function() {
-      this.fetchTableData()
-    }, 800),
-    fetchTableData() {
-      this.firstTime = false
-      const { url } = this
-      if (!url) false
-      const { currentPage, size } = this.pagination
-      const searchParams = { [this.searchName]: this.selectValue }
-      const params = { pageIndex: currentPage, pageSize: size, ...searchParams, ...this.extraParam }
-      this.tableData = []
-      this.loading = true
-      const paramsKey = this.method.toUpperCase() !== 'POST' ? 'params' : 'data'
-      request({ url, method: this.method, [paramsKey]: params }).then(({ data }) => {
-        this.loading = false
-        if (data.success) {
-          const result = data.data
-          if (Array.isArray(result.records)) {
-            this.tableData = result.records || []
-            this.pagination.total = result.total || 0
+    handleNodeClick(row) {
+      if (!row.children || !row.children.length) {
+        this.selectValue = row[this.keyName]
+        this.recordSelect = row
+        const { backValue, backList } = this
+        const backListParams = {}
+        if (Array.isArray(backList) && backList.length) {
+          for (const item of backList) {
+            backListParams[item] = row[item]
           }
         }
-      }).catch(e => {
-        this.loading = false
-      })
+        const params = { [this.keyCode]: row[this.keyCode], [this.keyName]: row[this.keyName], ...backListParams }
+        if (backValue) {
+          this.$emit('input', row[backValue])
+        } else {
+          this.$emit('input', params)
+        }
+        this.$emit('change', row)
+        setTimeout(() => {
+          this.visible = false
+        }, 200)
+      }
+    },
+    inputChangeText(item) {
+      // console.log(item)
+      // this.$refs.tree.filter(item)
+      // this.fetchTableData({ [this.searchName]: this.selectValue })
+    },
+    filterNode(value, data) {
+      if (!value) return true
+      return data.label.indexOf(value) !== -1
+    },
+    input: debounce(function(item) {
+      this.$refs.tree.filter(item)
+      // this.fetchTableData()
+    }, 800),
+    fetchTableData() {
+      // this.firstTime = false
+      // const { url } = this
+      // if (!url) false
+      // const { currentPage, size } = this.pagination
+      // const searchParams = { [this.searchName]: this.selectValue }
+      // const params = { pageIndex: currentPage, pageSize: size, ...searchParams, ...this.extraParam }
+      // this.tableData = []
+      // this.loading = true
+      // const paramsKey = this.method.toUpperCase() !== 'POST' ? 'params' : 'data'
+      // request({ url, method: this.method, [paramsKey]: params }).then(({ data }) => {
+      //   this.loading = false
+      //   if (data.success) {
+      //     const result = data.data
+      //     if (Array.isArray(result.records)) {
+      //       this.tableData = result.records || []
+      //       this.pagination.total = result.total || 0
+      //     }
+      //   }
+      // }).catch(e => {
+      //   this.loading = false
+      // })
     }
   }
 }
@@ -414,6 +326,9 @@ export default {
     left: 0;
     top: 36px;
     padding: 4px;
+    max-height: 320px;
+    min-height: 320px;
+    overflow-y: auto;
   }
   .pagination {
     margin-top: 4px;

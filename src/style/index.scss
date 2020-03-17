@@ -227,3 +227,20 @@ html, body {
       color: #409EFF;
     }
   }
+
+  .CubeTableList >>> .flex-table-cell-row {
+    font-weight: 500;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-around;
+    .btn-text {
+      font-size: 12px;
+      color: #409eff;
+      &:active {
+        background-color: transparent;
+      }
+    }
+    .delete-text {
+      color: #f56c6c;
+    }
+  }

@@ -25,10 +25,16 @@ export const routesList = [
     component: () => import('@/views/CubeTableList/index')
   },
   {
-    path: 'SearchBar',
-    name: 'SearchBar',
-    meta: { title: '业务组件', icon: 'SearchBar', affix: true },
-    component: () => import('@/views/SearchBar/index')
+    path: 'CubeSelect',
+    name: 'CubeSelect',
+    meta: { title: 'CubeSelect选择', icon: 'CubeSelect', affix: true },
+    component: () => import('@/views/CubeSelect/index')
+  },
+  {
+    path: 'CubeSelectTree',
+    name: 'CubeSelectTree',
+    meta: { title: 'CubeSelectTree选择', icon: 'CubeSelectTree', affix: true },
+    component: () => import('@/views/CubeSelectTree/index')
   },
   {
     path: 'MaxHeight',
@@ -69,13 +75,19 @@ export const routesList = [
   {
     path: 'FormValidation',
     name: 'FormValidation',
-    meta: { title: '表单验证', icon: 'FormValidation', affix: true },
+    meta: { title: '表单数据验证', icon: 'FormValidation', affix: true },
     component: () => import('@/views/FormValidation/index')
   },
   {
-    path: 'CubeSelect',
-    name: 'CubeSelect',
-    meta: { title: '其他', icon: 'CubeSelect', affix: true },
+    path: 'CardCarousel',
+    name: 'CardCarousel',
+    meta: { title: 'CardCarousel', icon: 'CardCarousel', affix: true },
+    component: () => import('@/views/CardCarousel/index')
+  },
+  {
+    path: 'Other',
+    name: 'Other',
+    meta: { title: '其他', icon: 'Other', affix: true },
     component: () => import('@/views/CubeDialog/index')
   }
 ]

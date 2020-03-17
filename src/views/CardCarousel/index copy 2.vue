@@ -16,7 +16,7 @@
             :key="index"
             class="card-carousel--card"
           >
-            <div :key="index">
+            <div :key="index" class="card-carousel-cards-item">
               <img src="https://placehold.it/200x200">
               <div class="card-carousel--card--footer">
                 <p>{{ item.name }}</p>
@@ -87,12 +87,6 @@ $vue-teal-light: #42b983;
 $gray: #666a73;
 $light-gray: #f8f8f8;
 
-body {
-  background: $light-gray;
-  color: $vue-navy;
-  font-family: "Source Sans Pro", sans-serif;
-}
-
 .card-carousel-wrapper {
   display: flex;
   align-items: center;
@@ -149,8 +143,8 @@ body {
   transform: translatex(0px);
 
   .card-carousel--card {
-    margin: 0 10px;
     cursor: pointer;
+    margin: 0 8px;
     box-shadow: 0 4px 15px 0 rgba(40, 44, 53, 0.06),
       0 2px 2px 0 rgba(40, 44, 53, 0.08);
     background-color: #fff;
@@ -172,7 +166,8 @@ body {
       border-top-right-radius: 4px;
       transition: opacity 150ms linear;
       user-select: none;
-
+      font-size: 0;
+      border: none;
       &:hover {
         opacity: 0.5;
       }
@@ -237,6 +232,11 @@ body {
         }
       }
     }
+  }
+
+  .card-carousel-cards-item{
+    font-size: 14px;
+    // border: 1px solid #d3d3d4;
   }
 }
 

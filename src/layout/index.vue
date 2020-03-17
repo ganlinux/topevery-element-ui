@@ -26,9 +26,7 @@
           name="fade-transform"
           mode="out-in"
         >
-          <keep-alive>
-            <router-view class="page-container" />
-          </keep-alive>
+          <router-view class="page-container" />
         </transition>
       </el-main>
     </el-container>

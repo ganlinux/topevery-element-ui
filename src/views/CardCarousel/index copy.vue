@@ -1,15 +1,14 @@
 <template>
   <div>
-    组件 - 下拉选择组件
+    SearchBar
   </div>
 </template>
 
 <script>
 export default {
-
+  name: 'SearchBar'
 }
 </script>
 
 <style lang="scss" scoped>
-
 </style>

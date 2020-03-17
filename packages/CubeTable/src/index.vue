@@ -196,9 +196,9 @@ export default {
         return { cursor: 'pointer' }
       }
     },
-    // eslint-disable-next-line vue/require-default-prop
     loadMore: {
-      type: Function
+      type: Function,
+      default: () => {}
     },
     // eslint-disable-next-line vue/require-default-prop
     rowClassName: {
@@ -219,7 +219,73 @@ export default {
       default: () => {
         return { background: '#EDF5FF' }
       }
+    },
+
+    // eslint-disable-next-line vue/require-default-prop
+    size: String,
+
+    // eslint-disable-next-line vue/require-default-prop
+    width: [String, Number],
+
+    // eslint-disable-next-line vue/require-default-prop
+    maxHeight: [String, Number],
+
+    // eslint-disable-next-line vue/require-default-prop
+    stripe: Boolean,
+
+    showHeader: {
+      type: Boolean,
+      default: () => true
+    },
+
+    // eslint-disable-next-line vue/require-default-prop
+    showSummary: Boolean,
+
+    // eslint-disable-next-line vue/require-default-prop
+    sumText: String,
+
+    // eslint-disable-next-line vue/require-default-prop
+    summaryMethod: Function,
+
+    // eslint-disable-next-line vue/require-default-prop
+    cellStyle: [Object, Function],
+
+    // eslint-disable-next-line vue/require-default-prop
+    headerRowClassName: [String, Function],
+
+    // eslint-disable-next-line vue/require-default-prop
+    headerRowStyle: [Object, Function],
+
+    // eslint-disable-next-line vue/require-default-prop
+    headerCellClassName: [String, Function],
+
+    highlightCurrentRow: Boolean,
+
+    // eslint-disable-next-line vue/require-default-prop
+    currentRowKey: [String, Number],
+
+    // eslint-disable-next-line vue/require-default-prop
+    emptyText: String,
+
+    // eslint-disable-next-line vue/require-default-prop
+    expandRowKeys: Array,
+
+    defaultExpandAll: Boolean,
+
+    // eslint-disable-next-line vue/require-default-prop
+    defaultSort: Object,
+
+    // eslint-disable-next-line vue/require-default-prop
+    tooltipEffect: String,
+
+    // eslint-disable-next-line vue/require-default-prop
+    spanMethod: Function,
+
+    selectOnIndeterminate: {
+      type: Boolean,
+      default: () => true
     }
+
   },
   data() {
     return {
@@ -256,4 +322,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>

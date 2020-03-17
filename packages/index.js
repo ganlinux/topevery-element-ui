@@ -2,20 +2,22 @@ import { transformCamelCase } from './uitls'
 
 import CubeDialog from './CubeDialog'
 import MaxHeight from './MaxHeight'
-import CubeSelect from './CubeSelect'
 import CubeTable from './CubeTable'
 import NoticeBar from './NoticeBar'
 import SearchBar from './SearchBar'
 import CubeTableList from './CubeTableList'
+import CubeSelect from './CubeSelect'
+import CubeSelectTree from './CubeSelectTree'
 
 export const components = {
   CubeDialog,
   MaxHeight,
-  CubeSelect,
   CubeTable,
   NoticeBar,
   SearchBar,
-  CubeTableList
+  CubeTableList,
+  CubeSelect,
+  CubeSelectTree
 }
 
 // Define plugin installation method

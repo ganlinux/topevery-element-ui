@@ -4,7 +4,12 @@
       ref="SearchBar"
       :data="config.search.data"
     />
-
+    <!-- 插入表头插槽-->
+    <div>
+      <slot
+        name="topBar"
+      />
+    </div>
     <MaxHeight
       v-if="calcTableHeight"
       v-model="height"
@@ -15,6 +20,7 @@
     >
       <CubeTable
         ref="CubeTable"
+        class="CubeTable"
         :data="tableData"
         :columns="config.table.columns"
         :height="initConfig.table.calcTableHeight ? height-prefixHeight : tableHeight"
@@ -64,6 +70,24 @@ export default {
       height: 0,
       loading: false,
       tableData: [
+        {
+          'name': 'Don Schoen Jr.',
+          'email': 'Buck_Aufderhar13@gmail.com',
+          'text': 'exercitationem autem omnis',
+          'results': 45
+        },
+        {
+          'name': 'Don Schoen Jr.',
+          'email': 'Buck_Aufderhar13@gmail.com',
+          'text': 'exercitationem autem omnis',
+          'results': 45
+        },
+        {
+          'name': 'Don Schoen Jr.',
+          'email': 'Buck_Aufderhar13@gmail.com',
+          'text': 'exercitationem autem omnis',
+          'results': 45
+        },
         {
           'name': 'Don Schoen Jr.',
           'email': 'Buck_Aufderhar13@gmail.com',
@@ -204,14 +228,14 @@ export default {
               render: (h, parmas) => {
                 // const { row } = parmas
                 return (
-                  <div class='flex-table-cell-row' style='display: flex; font-size: 12px;color: #409eff;font-weight: 500;justify-content: space-around;'>
-                    <div class='btn-text' onClick={ () => this.handler('编辑') }>
+                  <div class='flex-table-cell-row'>
+                    <div class='btn-text' onClick={() => this.handler('编辑')}>
                       <i class='el-icon-edit-outline' /> 编辑
                     </div>
-                    <div class='btn-text' onClick={ () => this.handler('查看') }>
+                    <div class='btn-text' onClick={() => this.handler('查看')}>
                       <i class='el-icon-view' /> 查看
                     </div>
-                    <div class='btn-text delete-text' onClick={ () => this.handler('删除') }>
+                    <div class='btn-text delete-text' onClick={() => this.handler('删除')}>
                       <i class='el-icon-delete' /> 删除
                     </div>
                   </div>
@@ -246,9 +270,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-/deep/.CubeTableList {
-  /deep/.flex-table-cell {
+<style lang="scss">
+.CubeTableList {
+  .el-table >>> .flex-table-cell-row {
     font-weight: 500;
     font-size: 12px;
     display: flex;
@@ -257,12 +281,14 @@ export default {
       font-size: 12px;
       color: #409eff;
       &:active {
-        color: #3a8ee6;
         background-color: transparent;
       }
     }
     .delete-text {
       color: #f56c6c;
+      &:active {
+        background-color: transparent;
+      }
     }
   }
 }

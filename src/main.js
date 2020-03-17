@@ -7,8 +7,6 @@ import 'highlight.js/styles/atom-one-dark.css'
 import Vue from 'vue'
 import App from './App.vue'
 
-import hljs from 'highlight.js'
-
 import './plugins/element.js'
 
 import tyelui from '../packages'
@@ -35,13 +33,6 @@ elementUIVerifyAddRule(elementUIVerify)
 
 import uploader from 'vue-simple-uploader'
 Vue.use(uploader)
-
-Vue.directive('highlight', function(el) {
-  const blocks = el.querySelectorAll('pre code')
-  blocks.forEach((block) => {
-    hljs.highlightBlock(block)
-  })
-})
 
 new Vue({
   router,
