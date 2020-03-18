@@ -5,6 +5,8 @@ import MaxHeight from './MaxHeight'
 import CubeTable from './CubeTable'
 import NoticeBar from './NoticeBar'
 import SearchBar from './SearchBar'
+import ScrollBar from './ScrollBar'
+import SelectBar from './SelectBar'
 import CubeTableList from './CubeTableList'
 import CubeSelect from './CubeSelect'
 import CubeSelectTree from './CubeSelectTree'
@@ -17,6 +19,8 @@ export const components = {
   SearchBar,
   CubeTableList,
   CubeSelect,
+  ScrollBar,
+  SelectBar,
   CubeSelectTree
 }
 

@@ -51,7 +51,7 @@ export const routesList = [
   {
     path: 'SelectBar',
     name: 'SelectBar',
-    meta: { title: '业务组件', icon: 'SelectBar', affix: true },
+    meta: { title: 'SelectBar选择组件', icon: 'SelectBar', affix: true },
     component: () => import('@/views/SelectBar/index')
   },
   {
