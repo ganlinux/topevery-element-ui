@@ -28,6 +28,9 @@ module.exports = {
   },
 
   chainWebpack: config => {
+    // 修复HMR
+    config.resolve.symlinks(true)
+
     // 别名配置
     config.resolve.alias
       .set('@', path.resolve('src'))

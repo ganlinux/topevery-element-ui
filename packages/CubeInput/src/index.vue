@@ -40,7 +40,7 @@
  */
 
 export default {
-  name: 'SelectBar',
+  name: 'CubeInput',
   directives: {
     loadmore: {
       bind(el, binding) {

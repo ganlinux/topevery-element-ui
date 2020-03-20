@@ -13,6 +13,24 @@ export const routesList = [
     component: () => import('@/views/Dashboard/index')
   },
   {
+    path: 'CubeIcon',
+    name: 'CubeIcon',
+    meta: { title: 'Icon图标库', icon: 'CubeIcon', affix: true },
+    component: () => import('@/views/CubeIcon/index')
+  },
+  {
+    path: 'CubeRadio',
+    name: 'CubeRadio',
+    meta: { title: 'CubeRadio单选', icon: 'CubeRadio', affix: true },
+    component: () => import('@/views/CubeRadio/index')
+  },
+  {
+    path: 'SelectBar',
+    name: 'SelectBar',
+    meta: { title: 'SelectBar选择组件', icon: 'SelectBar', affix: true },
+    component: () => import('@/views/SelectBar/index')
+  },
+  {
     path: 'CubeTable',
     name: 'CubeTable',
     meta: { title: 'CubeTable表格', icon: 'CubeTable', affix: true },
@@ -48,12 +66,7 @@ export const routesList = [
     meta: { title: '业务组件', icon: 'RenderTableList', affix: true },
     component: () => import('@/views/RenderTableList/index')
   },
-  {
-    path: 'SelectBar',
-    name: 'SelectBar',
-    meta: { title: 'SelectBar选择组件', icon: 'SelectBar', affix: true },
-    component: () => import('@/views/SelectBar/index')
-  },
+
   {
     path: 'SelectTree',
     name: 'SelectTree',

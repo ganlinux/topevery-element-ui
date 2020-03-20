@@ -7,6 +7,7 @@ import NoticeBar from './NoticeBar'
 import SearchBar from './SearchBar'
 import ScrollBar from './ScrollBar'
 import SelectBar from './SelectBar'
+import CubeRadio from './CubeRadio'
 import CubeTableList from './CubeTableList'
 import CubeSelect from './CubeSelect'
 import CubeSelectTree from './CubeSelectTree'
@@ -21,6 +22,7 @@ export const components = {
   CubeSelect,
   ScrollBar,
   SelectBar,
+  CubeRadio,
   CubeSelectTree
 }
 

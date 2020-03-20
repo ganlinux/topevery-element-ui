@@ -1,8 +1,8 @@
 import 'normalize.css/normalize.css'
-import './style/index.scss'
-import './assets/styles/fonts/style.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'highlight.js/styles/atom-one-dark.css'
+// import '@/assets/iconfont/iconfont.css'
+import './style/index.scss'
 
 import Vue from 'vue'
 import App from './App.vue'
@@ -33,6 +33,9 @@ elementUIVerifyAddRule(elementUIVerify)
 
 import uploader from 'vue-simple-uploader'
 Vue.use(uploader)
+
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
 
 new Vue({
   router,

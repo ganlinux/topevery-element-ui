@@ -26,7 +26,9 @@
           name="fade-transform"
           mode="out-in"
         >
-          <router-view class="page-container" />
+          <keep-alive>
+            <router-view class="page-container" />
+          </keep-alive>
         </transition>
       </el-main>
     </el-container>
@@ -56,6 +58,7 @@
 <script>
 
 import { routesList } from '@/router'
+import hljs from 'highlight.js'
 import logo from './logo'
 
 export default {
@@ -75,7 +78,10 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route)
+    this.$nextTick(() => {
+      const blocks = document.querySelectorAll('pre code:not(.hljs)')
+      Array.prototype.forEach.call(blocks, hljs.highlightBlock)
+    })
   }
 }
 </script>
@@ -127,6 +133,22 @@ export default {
       background: #2f86f6;
     }
   }
+}
+
+/* fade-transform */
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all .5s;
+}
+
+.fade-transform-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 
 /* mac chrome开启滚动条样式调试 */

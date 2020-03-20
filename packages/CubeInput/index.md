@@ -16,7 +16,6 @@
 
   <el-row>
     <el-col :span="12"> 
-        <i class="iconfont zuoyeanquanshenhe"> </i>
         <p> 常规选择返回value值 {{ value1 }} </p>
         <Select-Bar v-model="value1" :options="options" placeholder="请选择" />
     </el-col>
