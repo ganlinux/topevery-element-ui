@@ -9585,17 +9585,6 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   resolved "https://registry.npmjs.org/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=
 
-tyelui@^0.1.1, tyelui@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.npmjs.org/tyelui/-/tyelui-0.1.2.tgz#95ff4808cf888b1c90d6bac4f685a74a260ee2d1"
-  integrity sha512-0e7fkWZuZ3vm2+H+ElLa6aL3ZkAWcGgtguy/9LRRKayzFm/d0JEU2argKJxlzabFjIMO5+uHUu2NCqfcftu/Tw==
-  dependencies:
-    core-js "^3.6.4"
-    element-ui "^2.4.5"
-    tyelui "^0.1.1"
-    vue "^2.6.11"
-    vue-router "^3.1.5"
-
 type-check@~0.3.2:
   version "0.3.2"
   resolved "https://registry.npmjs.org/type-check/-/type-check-0.3.2.tgz#5884cab512cf1d355e3fb784f30804b2b520db72"

@@ -29,7 +29,6 @@
     "element-ui": "^2.4.5",
     "element-ui-verify": "^1.2.6",
     "normalize.css": "^8.0.1",
-    "tyelui": "^0.1.2",
     "vue": "^2.6.11",
     "vue-clipboard2": "^0.3.1",
     "vue-router": "^3.1.5",
