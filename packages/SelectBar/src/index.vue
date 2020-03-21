@@ -120,7 +120,9 @@ export default {
   },
   watch: {
     value: {
+      immediate: true,
       handler(value) {
+        console.log('xx')
         this.selectValue = value
       }
     },
@@ -132,11 +134,8 @@ export default {
       }
     }
   },
-  created() {
-    const { value } = this
-    this.selectValue = value
-  },
   methods: {
+    // 仅在输入框失去焦点或用户按下回车时触发
     change(item) {
       this.$emit('input', item)
       this.$emit('change', item)

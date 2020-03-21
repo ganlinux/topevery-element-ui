@@ -6,10 +6,13 @@
 
 <script>
 
-import Md from '~packages/CubeDialog/index.md'
+// SelectBar
+
+import Md from '~packages/SelectBar/index.md'
 
 export default {
-  name: 'CubeDialogX',
+  name: 'SelectBarX',
+  title: '选择器',
   components: {
     Md
   }
@@ -17,4 +20,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>

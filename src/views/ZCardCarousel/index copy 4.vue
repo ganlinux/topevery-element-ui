@@ -13,7 +13,8 @@
 
 <script>
 export default {
-
+  name: 'CardCarouselX',
+  title: 'CardCarousel-TEST'
 }
 </script>
 

@@ -42,6 +42,8 @@
 
 <script>
 export default {
+  name: 'SearchBarX',
+  title: '搜索栏组件',
   data() {
     return {
       currentOffset: 0,

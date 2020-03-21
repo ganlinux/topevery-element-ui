@@ -1,4 +1,4 @@
-## 安装
+### 安装
 
 * npm安装 CI测试
 
@@ -11,7 +11,7 @@ npm install tyelui -S
 yarn add tyelui -S
 ```
 
-## 使用
+### 使用
 
 ```js
 // 将自动注册所有组件为全局组件
@@ -20,7 +20,7 @@ import tyelui from 'tyelui'
 Vue.use(tyelui)
 ```
 
-## 按需引入
+### 按需引入
 
 按需引入仅支持基于**ES module**的**tree shaking**，按需引入示例如下：
 

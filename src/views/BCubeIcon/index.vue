@@ -19,6 +19,8 @@
 
 import iconfont from './iconfont'
 export default {
+  name: 'CubeIconX',
+  title: '图标库',
   data() {
     return {
       iconfontList: iconfont.glyphs

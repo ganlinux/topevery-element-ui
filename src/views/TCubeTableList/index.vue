@@ -8,6 +8,7 @@
 <script>
 export default {
   name: 'CubeTableListX',
+  title: '业务列表组件',
   data() {
     return {
       tableData: [

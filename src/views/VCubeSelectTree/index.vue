@@ -43,6 +43,8 @@
 import { treeData } from './tree'
 
 export default {
+  name: 'CubeSelectTreeX',
+  title: '树形选择器',
   data() {
     return {
       treeData,
@@ -51,9 +53,6 @@ export default {
       revealText: '图元科技环卫事业部前端开发小组',
       letters: []
     }
-  },
-  created() {
-    console.log(treeData, 'list')
   },
   mounted() {
     setInterval(() => {
@@ -81,7 +80,7 @@ export default {
 
 <style lang="scss" scoped>
 .body {
-  height: 400px;
+  height: 320px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -118,7 +117,7 @@ export default {
     bottom: 0;
     width: 2px;
     height: 100%;
-    background: white;
+    background: #6ee1f5;
     opacity: 0;
     transform: scale(0);
   }

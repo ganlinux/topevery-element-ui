@@ -7,6 +7,8 @@
 <script>
 import Md from '~packages/CubeRadio/index.md'
 export default {
+  name: 'CubeRadioX',
+  title: '单选框',
   components: {
     Md
   },

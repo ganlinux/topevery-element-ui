@@ -14,7 +14,7 @@
           <el-menu-item
             v-for="(item,index) in routesList"
             :key="index"
-            :index="item.path"
+            :index="item.name"
           >
             <i class="el-icon-menu" />
             <span slot="title">{{ item.meta.title }}</span>
@@ -57,7 +57,7 @@
 
 <script>
 
-import { routesList } from '@/router'
+import { menu } from '@/router'
 import hljs from 'highlight.js'
 import logo from './logo'
 
@@ -72,12 +72,20 @@ export default {
       address: '上海市普陀区金沙江路 1518 弄'
     }
     return {
-      routesList,
+      routesList: menu,
       isCollapse: false,
       tableData: Array(20).fill(item)
     }
   },
+  watch: {
+    '$route': {
+      handler(value) {
+        console.log(value)
+      }
+    }
+  },
   mounted() {
+    console.log(this.$route)
     this.$nextTick(() => {
       const blocks = document.querySelectorAll('pre code:not(.hljs)')
       Array.prototype.forEach.call(blocks, hljs.highlightBlock)
@@ -95,6 +103,9 @@ export default {
     top: 60px;
     height: 90vh;
     overflow-y: auto;
+    // &::-webkit-scrollbar {
+    //   display: none;
+    // }
     .el-menu-item {
       &:after {
         display: none;
@@ -122,6 +133,7 @@ export default {
   }
   /deep/.el-main {
     padding-left: 220px;
+    overflow-x: hidden;
   }
   /deep/.el-menu {
     height: 100%;
@@ -138,7 +150,7 @@ export default {
 /* fade-transform */
 .fade-transform-leave-active,
 .fade-transform-enter-active {
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 .fade-transform-enter {

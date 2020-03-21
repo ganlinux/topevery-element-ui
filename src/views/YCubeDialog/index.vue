@@ -1,21 +1,18 @@
 <template>
   <div>
-    <md />
+    <Md />
   </div>
 </template>
 
 <script>
 
-import md from './index.md'
-export default {
-  name: 'Dashboard',
-  components: {
-    md
-  },
-  mounted() {
-  },
-  methods: {
+import Md from '~packages/CubeDialog/index.md'
 
+export default {
+  name: 'CubeDialogX',
+  title: '弹层组件',
+  components: {
+    Md
   }
 }
 </script>

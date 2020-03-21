@@ -33,6 +33,8 @@ import Add from './Add'
 import { treeData } from './tree'
 
 export default {
+  name: 'CubeMapX',
+  title: '地图应用',
   components: {
     Add
   },

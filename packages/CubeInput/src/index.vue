@@ -1,79 +1,87 @@
 <template>
-  <el-select
-    v-model="selectValue"
-    v-loadmore="loadmore"
+  <el-input
+    v-model.trim="inputValue"
+    class="CubeInput"
+    :class="hide?'hide':''"
     :placeholder="placeholder"
     :clearable="clearable"
-    :multiple="multiple"
-    :collapse-tags="collapseTags"
-    :filterable="filterable"
+    :readonly="readonly"
     :disabled="disabled"
-    :value-key="valueKey"
     :size="size"
-    :loading="loading"
-    @change="change"
-    @clear="clear"
+    :type="type"
+    :rows="rows"
+    :show-word-limit="showLimit"
+    :maxlength="maxlength"
+    :autosize="autosize"
+    :show-password="showPassword"
+    :suffix-icon="rightIcon"
+    :prefix-icon="leftIcon"
     @blur="blur"
     @focus="focus"
+    @change="change"
+    @clear="clear"
+    @keyup.enter.native="enter"
   >
-    <el-option
-      v-for="(item,index) in optionsList"
-      :key="!theOnlyKey ? index : item[theOnlyKey]"
-      :disabled="item.disabled"
-      :label="item[optionName]"
-      :value="!valueKey ? item[optionValue] : item"
-    >
-      <!-- 往外暴露属性 -->
-      <slot :row="item" />
-    </el-option>
-  </el-select>
+    <template v-if="$slots.before">
+      <div
+        slot="prepend"
+        class="before"
+      >
+        <slot name="before" />
+      </div>
+    </template>
+    <template v-if="$slots.after">
+      <div
+        slot="append"
+        class="after"
+      >
+        <slot name="after" />
+      </div>
+    </template>
+  </el-input>
 </template>
 
 <script>
-
-/** 下拉组件封装
- * optionName 显示名称 默认'label'
- * optionValue 绑定字段 默认 'value'
- * options 下拉选项 必填
- * valueKey 绑定返回对象的时候唯一值,传入是返回对象则返回对象
- *
- */
-
 export default {
   name: 'CubeInput',
-  directives: {
-    loadmore: {
-      bind(el, binding) {
-        // 获取element-ui定义好的scroll盒子
-        const SELECTWRAP_DOM = el.querySelector('.el-select-dropdown .el-select-dropdown__wrap')
-        SELECTWRAP_DOM.addEventListener('scroll', function() {
-          const CONDITION = this.scrollHeight - this.scrollTop <= this.clientHeight
-          if (CONDITION) {
-            binding.value()
-          }
-        })
-      }
-    }
-  },
   props: {
-    theOnlyKey: { // option 需要传入唯一值推荐传入
+    value: {
+      type: [String, Number],
+      default: () => ''
+    },
+    placeholder: {
+      type: String,
+      default: () => '请输入内容'
+    },
+    type: {
+      type: String,
+      default: () => 'text' // textarea
+    },
+    autosize: {
+      type: [Boolean, Object], // 自适应内容高度，只对 type="textarea" 有效，可传入对象，如，{ minRows: 2, maxRows: 6 }
+      default: () => false // boolean / object
+    },
+    rows: {
+      type: Number,
+      default: () => 2
+    },
+    leftIcon: {
       type: String,
       default: () => ''
     },
-    value: {
-      type: [Object, String, Number, Array],
+    rightIcon: {
+      type: String,
       default: () => ''
     },
-    options: {
-      type: Array,
-      required: true,
-      default: () => []
+    size: {
+      type: String,
+      default: () => 'small' // medium / small / mini
     },
     clearable: {
       type: Boolean,
       default: () => true
     },
-    multiple: {
+    showLimit: {
       type: Boolean,
       default: () => false
     },
@@ -81,80 +89,70 @@ export default {
       type: Boolean,
       default: () => false
     },
-    filterable: {
-      type: Boolean,
-      default: () => true
-    },
-    collapseTags: {
-      type: Boolean,
-      default: () => false
-    },
-    size: {
-      type: String,
-      default: () => 'small'
-    },
-    valueKey: {
+    maxlength: {
       type: String,
       default: () => ''
     },
-    placeholder: {
-      type: String,
-      default: () => '请选择'
+    showPassword: {
+      type: Boolean,
+      default: () => false
     },
-    optionName: {
-      type: String,
-      default: () => 'label'
+    readonly: {
+      type: Boolean,
+      default: () => false
     },
-    optionValue: {
-      type: String,
-      default: () => 'value'
+    hide: { // 是否隐藏/特殊校验的时候占位做错误提示使用
+      type: Boolean,
+      default: () => false
     }
   },
   data() {
     return {
-      loading: false,
-      canLoadMore: false,
-      selectValue: '',
-      optionsList: []
+      inputValue: ''
     }
   },
   watch: {
     value: {
-      handler(value) {
-        this.selectValue = value
-      }
-    },
-    options: {
-      deep: true,
       immediate: true,
-      handler(value) {
-        this.optionsList = value || []
+      handler(item) {
+        if (!item) return
+        this.inputValue = item
       }
     }
   },
-  created() {
-    const { value } = this
-    this.selectValue = value
-  },
   methods: {
-    change(item) {
-      this.$emit('input', item)
-      this.$emit('change', item)
-    },
-    clear() {
-      this.selectValue = ''
-      this.$emit('input', '')
-      this.$emit('clear')
-    },
     blur() {
       this.$emit('blur')
     },
     focus() {
       this.$emit('focus')
     },
-    loadmore() {
-
+    enter() {
+      this.$emit('enter')
+    },
+    change(item) {
+      this.$emit('change', item)
+      this.$emit('input', item)
+    },
+    clear() {
+      this.$emit('clear')
+      this.$emit('input', '')
+      this.inputValue = ''
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.CubeInput {
+  /deep/.el-input-group__prepend {
+    cursor: pointer;
+  }
+  /deep/.el-input-group__append {
+    cursor: pointer;
+  }
+}
+.hide{
+  display: none;
+}
+</style>

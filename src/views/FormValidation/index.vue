@@ -63,6 +63,8 @@
 </template>
 <script>
 export default {
+  name: 'FormValidation',
+  title: '表单验证',
   data() {
     return {
       form: {
