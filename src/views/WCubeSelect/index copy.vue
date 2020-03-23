@@ -1,14 +1,16 @@
 <template>
   <div>
-    SearchBar
+    CubeSelect
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SearchBar'
+  name: 'CubeSelectX',
+  title: 'CubeSelect组件'
 }
 </script>
 
 <style lang="scss" scoped>
+
 </style>

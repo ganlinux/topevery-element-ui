@@ -1,6 +1,6 @@
 <template>
   <div>
-    CubeSelect
+    构建开发中
   </div>
 </template>
 

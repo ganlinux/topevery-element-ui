@@ -292,14 +292,7 @@ export default {
     }
   }
 }
-// code {
-//   color: #5e6d82;
-//   background-color: #e6effb;
-//   display: inline-block;
-//   padding: 1px 5px;
-//   font-size: 12px;
-//   border-radius: 3px;
-// }
+
 .el-row {
   margin-bottom: 20px;
 }

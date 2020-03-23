@@ -1,13 +1,6 @@
-/**
- * Created by PanJiaChen on 16/11/18.
- */
 
-/**
- * Parse the time to string
- * @param {(Object|string|number)} time
- * @param {string} cFormat
- * @returns {string | null}
- */
+import hljs from 'highlight.js'
+
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null
@@ -448,3 +441,11 @@ export function exportExcel(data, fileName = '导出文件') {
   document.body.removeChild(downloadElement)
   window.URL.revokeObjectURL(href)
 }
+
+export function initHighlightBlock(vue) {
+  vue.$nextTick().then(_ => {
+    const blocks = document.querySelectorAll('pre code:not(.hljs)')
+    Array.prototype.forEach.call(blocks, hljs.highlightBlock)
+  })
+}
+

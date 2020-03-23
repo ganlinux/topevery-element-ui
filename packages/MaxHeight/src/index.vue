@@ -21,6 +21,10 @@ export default {
       type: Number,
       default: 120
     },
+    calcHeight: {
+      type: Boolean,
+      default: true
+    },
     value: {
       type: Number,
       default: 0
@@ -34,7 +38,8 @@ export default {
   computed: {
     heightPx() {
       // return 'auto' || `${this.height}px`
-      return `${this.height}px`
+      const { calcHeight, height } = this
+      return calcHeight ? `${height}px` : 'auto'
     }
   },
   mounted() {
@@ -44,7 +49,7 @@ export default {
   created() {
     this.resizeHeight = debounce(() => {
       this.computedHeight()
-    }, 400)
+    }, 300)
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.resizeHeight)

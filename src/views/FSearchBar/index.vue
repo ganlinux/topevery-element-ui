@@ -6,12 +6,11 @@
 
 <script>
 
-// SelectBar
-import Md from '~packages/CubeInput/index.md'
+import Md from '~packages/SearchBar/index.md'
 
 export default {
-  name: 'CubeInputX',
-  title: '输入框',
+  name: 'SearchBarX',
+  title: '表格搜索栏',
   components: {
     Md
   },
@@ -24,5 +23,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

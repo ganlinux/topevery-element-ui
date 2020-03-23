@@ -1,47 +1,53 @@
 <template>
-  <div>
-    <div class="body">
-      <div class="reveal-warp">
-        <transition name="el-zoom-in-center">
-          <div
-            v-if="letters.length"
-            ref="reveal"
-            class="reveal"
-          >
-            <span
-              v-for="(item,index) in letters"
-              :key="index"
-              :style="{animationDelay:`${delay + Math.abs(index - middle) * 0.1}s`}"
-            > {{ item }} </span>
-          </div>
-        </transition>
-      </div>
-
-      <ul>
-        <li class="circle-gauge"><a style="--gauge-max-value: 1000; --gauge-value:665;" /><span>design</span></li>
-        <li class="circle-gauge"><a style="--gauge-max-value: 1000; --gauge-value:744" /><span>creativity</span></li>
-        <li class="circle-gauge"><a style="--gauge-max-value: 1000; --gauge-value:666" /><span>accessbility</span></li>
-        <li class="circle-gauge"><a style="--gauge-max-value: 1000; --gauge-value:800" /><span>content</span></li>
-        <li class="circle-gauge text"><a style="--gauge-max-value: 1000; --gauge-value:980" /><span>contentText</span></li>
-      </ul>
-
+  <div class="body">
+    <CubeSelectTree :options="treeData" />
+    <div class="reveal-warp">
+      <transition name="el-zoom-in-center">
+        <div
+          v-if="letters.length"
+          ref="reveal"
+          class="reveal"
+        >
+          <span
+            v-for="(item,index) in letters"
+            :key="index"
+            :style="{animationDelay:`${delay + Math.abs(index - middle) * 0.1}s`}"
+          > {{ item }} </span>
+        </div>
+      </transition>
     </div>
-    <md />
+
+    <ul>
+      <li class="circle-gauge"><a style="--gauge-max-value: 1000; --gauge-value:10;" /><span>design</span></li>
+      <li class="circle-gauge"><a style="--gauge-max-value: 1000; --gauge-value:744" /><span>creativity</span></li>
+      <li class="circle-gauge"><a style="--gauge-max-value: 1000; --gauge-value:666" /><span>accessbility</span></li>
+      <li class="circle-gauge"><a style="--gauge-max-value: 1000; --gauge-value:800" /><span>content</span></li>
+      <li class="circle-gauge text"><a style="--gauge-max-value: 1000; --gauge-value:980" /><span>contentText</span></li>
+    </ul>
+
+    <div class="map-tools">
+      <div class="btn-list">
+        <div class="btn"> 停止绘制 </div>
+        <div class="btn"> 标点 </div>
+        <div class="btn"> 画线 </div>
+        <div class="btn"> 画面 </div>
+        <div class="btn"> 清空所有绘制 </div>
+      </div>
+      <div class="map-tip"> tip </div>
+    </div>
   </div>
 </template>
 
 <script>
 
-import { initHighlightBlock } from '@/utils'
-import md from './index.md'
+import { treeData } from './tree'
+
 export default {
-  name: 'Dashboard',
-  title: 'Dashboard',
-  components: {
-    md
-  },
+  name: 'CubeSelectTreeX',
+  title: '树形选择器',
   data() {
     return {
+      treeData,
       delay: 0.3,
       duration: 0.8,
       revealText: '图元科技环卫事业部前端开发小组',
@@ -56,7 +62,6 @@ export default {
         this.revealText = '图元科技环卫事业部前端开发小组'
       }
     }, 3800)
-    initHighlightBlock(this)
   },
   methods: {
     initText() {
@@ -66,7 +71,7 @@ export default {
         setTimeout(_ => {
           this.letters = []
           this.revealText = ''
-        }, 16700)
+        }, 14700)
       })
     }
   }
@@ -154,6 +159,7 @@ export default {
 ul {
   display: flex;
   list-style-type: none;
+
   .circle-gauge {
     $gauge-colors: #e74c3c, #3498db, #2ecc71, #f1c40f;
     // --gauge-max-value: 1000;
@@ -218,4 +224,45 @@ ul {
   }
 }
 
+.map-tools {
+  height: 44px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+
+  .btn-list {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 10px rgba(10, 41, 59, 0.1);
+    padding-right: 16px;
+
+    .btn {
+      padding-left: 16px;
+      font-size: 16px;
+      font-weight: 400;
+      cursor: pointer;
+      :active {
+        background: transparent;
+        color: transparent;
+      }
+    }
+  }
+  .map-tip {
+    height: 100%;
+    cursor: pointer;
+    width: 50px;
+    margin-left: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 1);
+    :active {
+      background: transparent;
+      color: transparent;
+    }
+  }
+}
 </style>

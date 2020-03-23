@@ -137,7 +137,7 @@ export default {
     },
     value: { // 编辑显示传入对象
       type: [Object, String, Array, Number],
-      default: () => { }
+      default: () => ''
     },
     appendVisible: { // 是否显示 选 字
       type: Boolean,
@@ -192,6 +192,25 @@ export default {
       tableData: []
     }
   },
+  watch: {
+    value: {
+      immediate: true,
+      handler(value) {
+        this.selectValue = value
+        if (!value) {
+          this.recordSelect = null
+          this.placeholder2 = '请选择'
+        }
+      }
+    },
+    options: {
+      deep: true,
+      immediate: true,
+      handler(value) {
+        this.optionsList = value || []
+      }
+    }
+  },
   beforeDestroy() {
     this.firstTime = true
     this.recordSelect = null
@@ -240,6 +259,7 @@ export default {
       this.$emit('hidePopover')
     },
     handleNodeClick(row) {
+      // 选择最后一级没有 children 的
       if (!row.children || !row.children.length) {
         this.selectValue = row[this.keyName]
         this.recordSelect = row
@@ -252,14 +272,15 @@ export default {
         }
         const params = { [this.keyCode]: row[this.keyCode], [this.keyName]: row[this.keyName], ...backListParams }
         if (backValue) {
-          this.$emit('input', row[backValue])
-        } else {
           this.$emit('input', params)
         }
         this.$emit('change', row)
         setTimeout(() => {
           this.visible = false
         }, 200)
+      } else {
+      // 选择最后任意
+
       }
     },
     inputChangeText(item) {

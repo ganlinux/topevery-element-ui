@@ -15,6 +15,9 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
     proxy: {
     // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {

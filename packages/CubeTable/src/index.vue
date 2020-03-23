@@ -10,13 +10,17 @@
     style="width: 100%;"
     :data="rebuildData"
     :height="height"
-    highlight-current-row
+    :stripe="stripe"
+    :size="size"
+    :max-height="maxHeight"
+    :highlight-current-row="highlightCurrentRow"
     element-loading-text="数据加载中..."
     :row-style="rowStyle"
     :header-cell-style="headerCellStyle"
     :row-class-name="rowClassName"
     :cell-class-name="cellClassName"
-    @row-click="rowClick"
+    @row-click="tableRowClick"
+    @expand-change="expandChange"
   >
     <template v-for="(column, index) in columns">
       <!-- 处理 selection 、 index  、 expand 特殊项 -->
@@ -222,7 +226,10 @@ export default {
     },
 
     // eslint-disable-next-line vue/require-default-prop
-    size: String,
+    size: {
+      type: String,
+      default: () => 'small'
+    },
 
     // eslint-disable-next-line vue/require-default-prop
     width: [String, Number],
@@ -234,6 +241,10 @@ export default {
     stripe: Boolean,
 
     showHeader: {
+      type: Boolean,
+      default: () => true
+    },
+    highlightCurrentRow: {
       type: Boolean,
       default: () => true
     },
@@ -258,8 +269,6 @@ export default {
 
     // eslint-disable-next-line vue/require-default-prop
     headerCellClassName: [String, Function],
-
-    highlightCurrentRow: Boolean,
 
     // eslint-disable-next-line vue/require-default-prop
     currentRowKey: [String, Number],
@@ -295,6 +304,8 @@ export default {
   },
   watch: {
     data: {
+      immediate: true,
+      deep: true,
       handler() {
         setTimeout(() => {
           const { data } = this
@@ -303,9 +314,7 @@ export default {
             return item
           })
         }, 0)
-      },
-      immediate: true,
-      deep: true
+      }
     }
   },
   methods: {
@@ -314,8 +323,11 @@ export default {
       const TableSelection = this.$refs[this.name] && this.$refs[this.name].selection || []
       return deepClone(TableSelection)
     },
-    rowClick() {
-      this.$emit('rowClick')
+    expandChange(row, expandedRows) {
+      this.$emit('expandChange', row, expandedRows)
+    },
+    tableRowClick(row) {
+      this.$emit('tableRowClick', row)
     }
   }
 }

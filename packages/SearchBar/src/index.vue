@@ -1,7 +1,7 @@
 <template>
   <div class="search-bar">
     <template v-if="data && data.length > 0">
-      <template v-if="data[0].length">
+      <template v-if="data[0] && data[0].length">
         <div
           v-for="(item, index) in data[0]"
           :key="index"
@@ -67,9 +67,9 @@
           <template v-else-if="item.type === 'input'">
             <el-input
               v-model="item.value"
+              clearable
               :class="item.class"
               size="small"
-              clearable
               :placeholder="item.placeholder"
               @keyup.enter.native="search"
             />
@@ -94,25 +94,14 @@
           </template> -->
 
           <!-- tree 树形选择 返回id  -->
-          <!-- <template v-else-if="item.type === 'tree'">
-            <Treeselect
-              v-model="item.value"
-              class="tree"
-              :normalizer="normalizer"
-              :multiple="item.multiple"
-              :class="item.class?item.class:'w220'"
-              :placeholder="item.placeholder|| '请选择'"
-              no-children-text="无数据"
-              no-options-text="无可以选项"
-              no-results-text="查询为空"
-              :options="item.options"
-            />
-          </template> -->
+          <template v-else-if="item.type === 'tree'">
+            <CubeSelectTree v-model="item.value" :placeholder="item.placeholder|| '请选择'" :options="item.options || []" />
+          </template>
 
           <!-- daterange-dateTime  日期范围  2020年02月29日-2020年02月29日 -->
           <template v-if="item.type === 'multiple-date'">
             <el-date-picker
-              v-if="item.dateType"
+              v-if="item.dateTimeRange"
               v-model="item.value"
               value-format="yyyy-MM-dd HH:mm:ss"
               type="datetimerange"
@@ -155,7 +144,7 @@
           </template>
         </div>
       </template>
-      <template v-if="data[1].length">
+      <template v-if="data[1] && data[1].length">
         <template>
           <div class="right">
             <div
@@ -163,38 +152,32 @@
               :key="index"
               class="left"
             >
-              <template v-if="item.type === 'add'">
-                <el-button
-                  size="small"
-                  type="primary"
-                  :icon="item.icon"
-                  @click="clickAdd"
-                >{{ item.name }}</el-button>
-              </template>
               <template v-if="item.type === 'button'">
                 <el-button
                   size="small"
                   :type="item.keyType"
                   :icon="item.icon"
-                  @click="clickBtn(item)"
+                  @click.stop="item.action ? item.action() :clickBtn(item)"
                 >{{ item.name }}</el-button>
               </template>
               <template v-else-if="item.type === 'more'">
                 <el-dropdown
                   trigger="click"
+                  split-button
+                  type="primary"
+                  size="small"
                   @command="command"
                 >
-                  <el-button
-                    type="primary"
-                    size="small"
-                  >{{ item.name || '更多操作' }}<i class="el-icon-arrow-down el-icon--right" /></el-button>
+                  {{ item.name || '更多操作' }}
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item
-                      v-for="(itemK,i) in item.labels"
+                      v-for="(itemK,i) in item.options"
                       :key="i"
                       :icon="itemK.icon"
                       :command="itemK.label"
-                    >{{ itemK.label }}</el-dropdown-item>
+                    >
+                      <span style="display: inline-block;" @click="itemK.action ? itemK.action() : null"> {{ itemK.label }} </span>
+                    </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </template>
@@ -213,12 +196,12 @@
 
 // 定义类型
 const commonlyTypes = ['input', 'select', 'option', 'date', 'datetime', 'cascader', 'tree', 'cubeSelect']
+import CubeSelectTree from '../../CubeSelectTree/index'
 
 export default {
   name: 'SearchBar',
   components: {
-    // Treeselect,
-    // CubeSelect
+    CubeSelectTree
   },
   props: {
     data: {
@@ -251,7 +234,7 @@ export default {
           if (item['type'] === 'search') {
             break
           } else {
-            item['value'] = null
+            item['value'] = ''
           }
         }
       }

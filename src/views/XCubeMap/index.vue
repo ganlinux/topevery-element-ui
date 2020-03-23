@@ -6,20 +6,10 @@
 
     <CubeSelectTree :options="treeData" />
 
-    <!-- <uploader :options="options" class="uploader-example">
-      <uploader-unsupport />
-      <uploader-drop>
-        <uploader-btn>选择文件</uploader-btn>
-        <uploader-btn :attrs="attrs">选择图片</uploader-btn>
-        <uploader-btn :directory="true">select folder</uploader-btn>
-      </uploader-drop>
-      <uploader-list />
-    </uploader> -->
-
     <Cube-Dialog
       fullscreen
-      title="提示"
-      :destroy-on-close="false"
+      title="鼠标地图绘制"
+      append-to-body
       :visible.sync="dialogVisible"
     >
       <Add v-if="dialogVisible" />

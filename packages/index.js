@@ -11,6 +11,10 @@ import CubeInput from './CubeInput'
 import CubeRadio from './CubeRadio'
 import CubeTableList from './CubeTableList'
 import CubeSelect from './CubeSelect'
+import CubeSplit from './CubeSplit'
+import CubeUpload from './CubeUpload'
+import CubeCircle from './CubeCircle'
+import CubeMapDraw from './CubeMapDraw'
 import CubeSelectTree from './CubeSelectTree'
 
 export const components = {
@@ -25,6 +29,10 @@ export const components = {
   SelectBar,
   CubeInput,
   CubeRadio,
+  CubeSplit,
+  CubeUpload,
+  CubeCircle,
+  CubeMapDraw,
   CubeSelectTree
 }
 

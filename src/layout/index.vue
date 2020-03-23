@@ -4,7 +4,23 @@
       <el-header height="56px">
         <logo v-if="false" /> TopEvery Ui
       </el-header>
-      <el-aside width="200px">
+
+      <div class="el-aside">
+        <ul>
+          <li
+            v-for="item in routesList"
+            :key="item.id"
+            :class="item.component.name === $route.name ? 'is-active': ''"
+          >
+            <router-link :to="item.path">{{ item.component.title }}</router-link>
+          </li>
+        </ul>
+      </div>
+
+      <el-aside
+        v-if="false"
+        width="200px"
+      >
         <!-- <div @click="isCollapse = !isCollapse"> {{ isCollapse ? '展开' : '收起' }}</div> -->
         <el-menu
           router
@@ -66,26 +82,12 @@ export default {
     logo
   },
   data() {
-    const item = {
-      date: '2016-05-02',
-      name: '王富贵',
-      address: '上海市普陀区金沙江路 1518 弄'
-    }
     return {
       routesList: menu,
-      isCollapse: false,
-      tableData: Array(20).fill(item)
-    }
-  },
-  watch: {
-    '$route': {
-      handler(value) {
-        console.log(value)
-      }
+      isCollapse: false
     }
   },
   mounted() {
-    console.log(this.$route)
     this.$nextTick(() => {
       const blocks = document.querySelectorAll('pre code:not(.hljs)')
       Array.prototype.forEach.call(blocks, hljs.highlightBlock)
@@ -103,9 +105,8 @@ export default {
     top: 60px;
     height: 90vh;
     overflow-y: auto;
-    // &::-webkit-scrollbar {
-    //   display: none;
-    // }
+    border-right: 1px solid #ebebeb;
+    box-shadow: 0 6px 12px -2px rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
     .el-menu-item {
       &:after {
         display: none;
@@ -122,6 +123,48 @@ export default {
       }
       &.is-active {
         background-color: #ecf5ff;
+      }
+    }
+    ul {
+      font-size: 14px;
+      padding: 0px;
+      margin: 0;
+      li {
+        height: 30px;
+        line-height: 30px;
+        cursor: pointer;
+        padding-left: 10px;
+        position: relative;
+
+        &:after {
+          display: none;
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 2px;
+          height: 100%;
+          background: #2f86f6;
+          transition: transform 0.5s ease;
+        }
+        &.is-active:after {
+          display: block;
+        }
+        &.is-active {
+          color: #2f86f6;
+          background-color: #ecf5ff;
+          a {
+            color: #2f86f6;
+          }
+        }
+      }
+      a {
+        color: #7d7d7d;
+        display: block;
+        padding-bottom: 6px;
+        &:hover {
+          color: #2f86f6;
+        }
       }
     }
   }

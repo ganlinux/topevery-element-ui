@@ -30,3 +30,13 @@ import { MaxHeight } from 'tyelui'
 Vue.use(MaxHeight)
 ```
  
+### 源码使用 
+
+``` JS
+//找到源码包的位置
+import tyelui from './packages'
+
+Vue.use(tyelui)
+
+```
+

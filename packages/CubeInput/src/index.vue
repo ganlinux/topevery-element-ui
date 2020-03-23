@@ -115,7 +115,6 @@ export default {
     value: {
       immediate: true,
       handler(item) {
-        if (!item) return
         this.inputValue = item
       }
     }

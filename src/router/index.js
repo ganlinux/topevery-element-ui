@@ -1,3 +1,4 @@
+import hljs from 'highlight.js'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/layout'
@@ -30,7 +31,15 @@ const router = new VueRouter({
   routes
 })
 
-console.log(routesPages)
+router.afterEach(route => {
+  document.title = 'TopEvery Ui -' + route.meta.title
+  // https://github.com/highlightjs/highlight.js/issues/909#issuecomment-131686186
+  Vue.nextTick(() => {
+    const blocks = document.querySelectorAll('pre code:not(.hljs)')
+    Array.prototype.forEach.call(blocks, hljs.highlightBlock)
+  })
+})
+
 // 暴露菜单
 export const menu = routesPages
 export default router

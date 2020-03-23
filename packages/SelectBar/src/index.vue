@@ -122,7 +122,6 @@ export default {
     value: {
       immediate: true,
       handler(value) {
-        console.log('xx')
         this.selectValue = value
       }
     },

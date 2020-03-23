@@ -222,7 +222,20 @@ html, body {
     }
   }
 
-  .CubeTableList >>> .flex-table-cell-row {
+  //展示定义一下统一样式
+  .CubeInput{
+    width: 180px;
+  }
+ 
+  .el-input-group{
+    width: 250px;
+  }
+  .el-select{
+    width: 250px;
+  }
+
+.el-table {
+  /deep/.flex-box-table-row {
     font-weight: 500;
     font-size: 12px;
     display: flex;
@@ -236,20 +249,9 @@ html, body {
     }
     .delete-text {
       color: #f56c6c;
+      &:active {
+        background-color: transparent;
+      }
     }
   }
-
-  .el-select{
-    width: 250px;
-  }
-
-
-  //展示定义一下统一样式
-
-  .CubeInput{
-    width: 180px;
-  }
- 
-  .el-input-group{
-    width: 250px;
-  }
+}

@@ -165,7 +165,8 @@ const settings = {
 
 export default {
   name: 'CardCarouselX',
-  title: 'CardCarousel',
+  // title: 'CardCarousel',
+  title: '测试',
   data() {
     return {
       color: '',
