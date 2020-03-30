@@ -36,12 +36,14 @@
           highlight-current
           :default-expand-all="true"
           :expand-on-click-node="false"
+          :node-key="nodeKey"
           :filter-node-method="filterNode"
           :data="tableData"
           :props="defaultProps"
           @node-click="handleNodeClick"
         />
       </div>
+      <div v-if="loading" v-loading="loading" class="loadingMark" />
     </el-popover>
   </div>
 
@@ -67,7 +69,7 @@ export function debounce(callback, delay) {
   }
 }
 
-// import request from '../../uitls/request'
+import request from '../../uitls/request'
 
 export default {
   name: 'CubeSelectTree',
@@ -98,22 +100,19 @@ export default {
     }
   },
   props: {
-    // 测试数据
-    options: {
-      type: Array,
-      default: () => []
-    },
-    // 设置选择返回的值 默认为空
-    // 如果设置则返回该设置 key-value 的value值
-    // 不返回  { [this.keyCode]: row[this.keyCode], [this.keyName]: row[this.keyName] }
-    backValue: {
+    // 组件默认点击选择返回 keyCode 对应的值 即id、
+    // 如果设置则返回现在数据对象
+    valuekey: {
       type: String,
       default: () => ''
     },
-    // 额外需要返回字段会包含{ [this.keyCode]: row[this.keyCode], [this.keyName]: row[this.keyName], ...额外属性 }
-    backList: {
-      type: Array,
-      default: () => []
+    nodeKey: {
+      type: String,
+      default: () => ''
+    },
+    backValue: {
+      type: String,
+      default: () => ''
     },
     popoverWidth: { // 搜索弹层宽度
       type: Number,
@@ -129,15 +128,16 @@ export default {
     },
     keyCode: { // 主要用户编辑显示组合对象
       type: String,
-      default: () => 'id'
-    },
-    onlyKey: { // 唯一标识值 例如id
-      type: String,
-      default: () => ''
+      default: () => 'value'
     },
     value: { // 编辑显示传入对象
-      type: [Object, String, Array, Number],
-      default: () => ''
+      type: [Object, String],
+      default: () => {
+        // return {
+        //   label: '显示名称',
+        //   value: '选择value'
+        // }
+      }
     },
     appendVisible: { // 是否显示 选 字
       type: Boolean,
@@ -171,10 +171,6 @@ export default {
     url: { // 数据请求接口 毕传
       type: String,
       default: () => ''
-    },
-    searchName: { // 后台查询字段
-      type: String,
-      default: () => 'name'
     }
   },
   data() {
@@ -196,28 +192,21 @@ export default {
     value: {
       immediate: true,
       handler(value) {
-        this.selectValue = value
-        if (!value) {
+        // 存在
+        if (value) {
+          this.recordSelect = value
+          this.selectValue = value[this.keyName]
+        } else {
+          this.selectValue = ''
           this.recordSelect = null
           this.placeholder2 = '请选择'
         }
-      }
-    },
-    options: {
-      deep: true,
-      immediate: true,
-      handler(value) {
-        this.optionsList = value || []
       }
     }
   },
   beforeDestroy() {
     this.firstTime = true
     this.recordSelect = null
-  },
-  mounted() {
-    const { options } = this
-    this.tableData = options
   },
   methods: {
     focus() {
@@ -229,13 +218,13 @@ export default {
         this.placeholder2 = recordSelect[this.keyName]
       }
       // 获取焦点就加载如果关闭则只会加载请求一次
-      // if (this.focusOnload) {
-      //   this.fetchTableData()
-      // } else {
-      //   if (this.firstTime) {
-      //     this.fetchTableData()
-      //   }
-      // }
+      if (this.focusOnload) {
+        this.fetchTableData()
+      } else {
+        if (this.firstTime) {
+          this.fetchTableData()
+        }
+      }
     },
     blur() {
       this.$emit('blur')
@@ -259,20 +248,18 @@ export default {
       this.$emit('hidePopover')
     },
     handleNodeClick(row) {
-      // 选择最后一级没有 children 的
+      // 选择最后一级没有 children 的 对外期待暴露的是什么 1、选择id 2、对象
       if (!row.children || !row.children.length) {
         this.selectValue = row[this.keyName]
         this.recordSelect = row
-        const { backValue, backList } = this
-        const backListParams = {}
-        if (Array.isArray(backList) && backList.length) {
-          for (const item of backList) {
-            backListParams[item] = row[item]
-          }
-        }
-        const params = { [this.keyCode]: row[this.keyCode], [this.keyName]: row[this.keyName], ...backListParams }
-        if (backValue) {
-          this.$emit('input', params)
+        const { valuekey } = this
+        if (!valuekey) {
+          //  不设置默认返回
+          // { label: '显示名称', value: '选择value' }
+          this.$emit('input', { [this.keyCode]: row[this.keyCode], [this.keyName]: row[this.keyName] })
+        } else {
+          //  设置返回整个数据对象
+          this.$emit('input', row)
         }
         this.$emit('change', row)
         setTimeout(() => {
@@ -280,13 +267,8 @@ export default {
         }, 200)
       } else {
       // 选择最后任意
-
+        console.log('选择最后任意')
       }
-    },
-    inputChangeText(item) {
-      // console.log(item)
-      // this.$refs.tree.filter(item)
-      // this.fetchTableData({ [this.searchName]: this.selectValue })
     },
     filterNode(value, data) {
       if (!value) return true
@@ -297,27 +279,24 @@ export default {
       // this.fetchTableData()
     }, 800),
     fetchTableData() {
-      // this.firstTime = false
-      // const { url } = this
-      // if (!url) false
-      // const { currentPage, size } = this.pagination
-      // const searchParams = { [this.searchName]: this.selectValue }
-      // const params = { pageIndex: currentPage, pageSize: size, ...searchParams, ...this.extraParam }
-      // this.tableData = []
-      // this.loading = true
-      // const paramsKey = this.method.toUpperCase() !== 'POST' ? 'params' : 'data'
-      // request({ url, method: this.method, [paramsKey]: params }).then(({ data }) => {
-      //   this.loading = false
-      //   if (data.success) {
-      //     const result = data.data
-      //     if (Array.isArray(result.records)) {
-      //       this.tableData = result.records || []
-      //       this.pagination.total = result.total || 0
-      //     }
-      //   }
-      // }).catch(e => {
-      //   this.loading = false
-      // })
+      this.firstTime = false
+      const { url } = this
+      if (!url) false
+      const params = { ...this.extraParam }
+      this.tableData = []
+      this.loading = true
+      const paramsKey = this.method.toUpperCase() !== 'POST' ? 'params' : 'data'
+      request({ url, method: this.method, [paramsKey]: params }).then((data) => {
+        this.loading = false
+        if (data.success) {
+          const result = data.data
+          if (Array.isArray(result)) {
+            this.tableData = result || []
+          }
+        }
+      }).catch(e => {
+        this.loading = false
+      })
     }
   }
 }
@@ -350,6 +329,14 @@ export default {
     max-height: 320px;
     min-height: 320px;
     overflow-y: auto;
+
+    .loadingMark{
+      position: absolute!important;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
   }
   .pagination {
     margin-top: 4px;

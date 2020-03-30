@@ -35,7 +35,7 @@
       <el-pagination
         style="text-align: center;margin-top: 4px;"
         background
-        :current-page="pagination.page"
+        :current-page="pagination.currentPage"
         :page-sizes="pagination.pageSizes"
         :page-size="pagination.size"
         layout="total, sizes, prev, pager, next, jumper"
@@ -115,7 +115,6 @@ export default {
     config: {
       // 属性传入改变的时候合并
       immediate: true,
-      deep: true,
       handler(val) {
         const { config, initConfig } = this
         this.initConfig = deepMerge(initConfig, config || {})
@@ -164,15 +163,16 @@ export default {
         this.fetchTableData()
       }
     },
-    fetchTableData(searchParams = {}) {
+    fetchTableData(searchParams = {}, page = 0) {
       const { url, method } = this.initConfig
       if (!url) return
+      page ? this.pagination.currentPage = page : this.pagination.currentPage = 1
       const { currentPage, size } = this.pagination
       const params = { pageIndex: currentPage, pageSize: size, ...searchParams, ...this.extraParam }
       this.tableData = []
       this.loading = true
       const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data'
-      request({ url, method: method, [paramsKey]: params }).then(({ data }) => {
+      request({ url, method: method, [paramsKey]: params }).then((data) => {
         this.loading = false
         if (data.success) {
           const result = data.data
@@ -191,8 +191,7 @@ export default {
       this.fetchList()
     },
     handleCurrentChange(value) {
-      this.pagination.currentPage = value
-      this.fetchList()
+      this.fetchTableData({}, value)
     },
     getCubeTable() {
       return this.$refs[this.name]

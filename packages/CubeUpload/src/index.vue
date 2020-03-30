@@ -8,7 +8,6 @@
       action="//jsonplaceholder.typicode.com/posts/"
       :multiple="false"
       :disabled="disabled"
-      :on-preview="uploadHandlePreview"
       :on-exceed="uploadHandleExceed"
       :on-success="handleFileSuccess"
       :on-error="uploadUploadError"
@@ -43,13 +42,14 @@
       name="list"
       tag="div"
     >
-      <!-- v-if="fileList.length" -->
       <div class="uploadList">
         <transition-group
+          v-viewer="{movable: false}"
           class="el-upload-list"
           name="list"
           tag="ul"
         >
+          >
           <li
             v-for="(item, index) in fileList"
             :key="index+guid"
@@ -60,11 +60,16 @@
               @click="deleteOne(item,index)"
             />
             <div class="upload-files">
-              <div class="el-icon-document" />
+              <el-image
+                v-if="isImg(item)"
+                style="width: 60px; height: 60px"
+                :src="item.url"
+              />
+              <div v-else class="el-icon-document" />
               <!-- 操作工具 -->
               <div class="upload-files-mark">
-                <i class="el-icon-zoom-in" />
-                <i class="el-icon-download" />
+                <i v-if="isImg(item)" class="el-icon-zoom-in" @click="zoomImgs" />
+                <i class="el-icon-download" @click="handleDownload(item.fileId)" />
               </div>
             </div>
             <div class="upload-progress">
@@ -100,6 +105,11 @@ const previewImgSrc = 'http://'
 const uploadFileUrl = 'http://'
 const baseImgSrc = 'http://'
 const baseDownSrc = 'http://'
+
+import 'viewerjs/dist/viewer.css'
+import Viewer from 'v-viewer'
+import Vue from 'vue'
+Vue.use(Viewer)
 
 export default {
   name: 'CubeUpload',
@@ -175,6 +185,12 @@ export default {
     // this.setHeaderToken()
   },
   methods: {
+    zoomImgs() {
+      this.$nextTick().then(_ => {
+        const viewer = this.$el.querySelector('.el-upload-list').$viewer
+        viewer.show()
+      })
+    },
     guid() {
       function s4() { return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1) }
       return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4()
@@ -185,8 +201,6 @@ export default {
     },
     uploadBeforeUpload(file) {
       const testmsg = file.name.substring(file.name.lastIndexOf('.'))
-      // let arr = ["jpg", "jpeg", "png", "pdf", "docx", "doc", "wps", "xlsx", "xml", "xls"];
-      // let isTrue = arr.indexOf(testmsg) > -1;
       const isTrue = this.acceptType.includes(testmsg) // '.jpg, .jpeg, .png, .pdf, .docx, .doc, .wps, .xlsx, .xml, .xls'
       const isLt2M = file.size / 1024 / 1024 < 30
       if (!isTrue) {
@@ -207,16 +221,12 @@ export default {
       this.headers.token = 'getToken()'
     },
     uploadUploadError(err, file, fileList) {
-      this.message({
-        duration: 3500,
-        message: err + '上传失败',
-        type: 'error'
-      })
+      this.$message({ message: err + '上传失败', type: 'error' })
     },
     isImg(file) {
       const { fileName } = file
-      const testmsg = fileName.substring(fileName.lastIndexOf('.') + 1)
-      const isTrue = ['jpg', 'jpeg', 'png', 'gif'].includes(testmsg)
+      const testmsg = fileName.substring(fileName.lastIndexOf('.'))
+      const isTrue = ['.jpg', '.jpeg', '.png', '.gif'].includes(testmsg)
       return isTrue
     },
     getPreviewFileUrl(file, w = 100) {
@@ -232,13 +242,8 @@ export default {
       return ''
     },
     handleDownload(file) {
+      if (file.fileId) return
       window.open(baseDownSrc + '?fileId=' + file.fileId)
-    },
-    handlePreview(file) {
-      return this.uploadHandlePreview & this.uploadHandlePreview(file)
-    },
-    uploadHandlePreview(file) {
-      // window.open(baseDownSrc + file.fileId)
     },
     uploadFileProcess(event, file, fileList) {
       fileList.forEach((element, index) => {
@@ -266,7 +271,7 @@ export default {
       fileList.forEach((element, index) => {
         if (element.uid === file.uid) {
           element.progressPercent = 100
-          element.url = 'https://user-gold-cdn.xitu.io/2017/11/12/28d5b3e…?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1'
+          element.url = 'https://cn.bing.com/th?id=OHR.RainierClouds_ENUS_SS1021697089_1920x1080_HD_ZH-CN170801398.jpg&rf=LaDigue_1920x1080.jpg&pid=hp'
           this.$message.success('文件上传成功')
           this.$set(this.fileList, index, element)
         }
@@ -298,7 +303,6 @@ export default {
 <style scoped lang="scss">
 .CubeUpload {
   position: relative;
-
   .upload-btn {
     display: flex;
     align-items: center;
@@ -306,7 +310,6 @@ export default {
       color: #e5a147;
     }
   }
-
   .uploadList {
     max-height: 320px;
     min-height: 120px;
@@ -316,12 +319,10 @@ export default {
     overflow-y: auto;
     overflow-x: hidden;
   }
-
   .el-upload-list {
     display: flex;
     flex-wrap: wrap;
   }
-
   .upload-li {
     margin: 10px;
     display: inline-block;

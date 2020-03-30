@@ -1,7 +1,7 @@
 import axios from 'axios'
 // import { MessageBox, Message } from 'element-ui'
 import { Message } from 'element-ui'
-const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ3ZWIiLCJpc3MiOiJ0b3BldmVyeSIsInBfbG9naW5fbmFtZSI6ImFkbWluIiwiZXhwIjoxNTgzMTQ1NTgwLCJpYXQiOjE1ODMxNDE5ODAsImp0aSI6ImFjZDJhMDY5YmY1NzQxZmM5ODE4ZjgxZGFiZjE1OTEyIn0.mB7snm1v6Fg4x5NyN7UV2O8rLw73PCdJE5kB6CXxtvU'
+const token = localStorage.getItem('token')
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -13,7 +13,6 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-
     if (token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -35,18 +34,19 @@ service.interceptors.response.use(
    * If you want to get http information such as headers or status
    * Please return  response => response
   */
-
   /**
    * Determine the request status by custom code
    * Here is just an example
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    if (response.status === 200 || response.data.success) {
-      return response
+    const result = response.data
+    const { success, msg } = result
+    if (success) {
+      return result
     } else {
       Message({
-        message: response.data.msg,
+        message: msg,
         type: 'error',
         duration: 5 * 1000
       })
@@ -78,12 +78,8 @@ service.interceptors.response.use(
     // }
   },
   error => {
-    console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    const message = error.msg ? error.msg : '网络异常'
+    Message({ message: message, type: 'error', duration: 5 * 1000 })
     return Promise.reject(error)
   }
 )

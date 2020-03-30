@@ -1,37 +1,21 @@
 <template>
   <div class="div">
-    <div class="demo-split">
-      <Cube-Split v-model="split" min="200">
-        <div
-          slot="left"
-          class="demo-split-pane"
-        >
-          Left Pane
-          <CubeCircle :percent="value1" :stroke-width="14" :size="100">
-            <p>占比: {{ value1 }}%</p>
-          </CubeCircle>
+    <CubeSplit :cube-split-height="cubeSplitHeight">
+      <template slot="left">
+        <div style="margin: 10px;">
+          左右分割面板 - 自动计算最大高度 - 如果设置 cubeSplitHeight 高度 自动计算失效
+          <el-button type="primary" size="small" @click="setCubeSplitHeight">设置cubeSplitHeight = {{ cubeSplitHeight }} </el-button>
+          {{ cubeSplitHeight ? '自动计算高度关闭':'自动计算高度' }}
+          <!-- <div v-for="(item, index) in 100" :key="index"> 数据 </div> -->
         </div>
-        <div
-          slot="right"
-          class="demo-split-pane"
-        >
-          Right Pane
-          <CubeCircle :percent="value2" :stroke-width="14" :size="100">
-            <p>占比: {{ value2 }}%</p>
-          </CubeCircle>
+      </template>
+      <template slot="right">
+        <div style="margin: 10px;">
+          <div v-for="(item, index) in 100" :key="index"> 数据 </div>
         </div>
-      </Cube-Split>
-    </div>
-    <div class="demo-split">
-      <Cube-Split v-model="split2" mode="vertical" min="100">
-        <div slot="top" class="demo-split-pane">
-          Top Pane
-        </div>
-        <div slot="bottom" class="demo-split-pane">
-          Bottom Pane
-        </div>
-      </Cube-Split>
-    </div>
+      </template>
+    </CubeSplit>
+
   </div>
 </template>
 
@@ -41,10 +25,13 @@ export default {
   title: 'CubeSplit分割面板',
   data() {
     return {
-      value1: 70,
-      value2: 80,
-      split: 0.5,
-      split2: 0.5
+      cubeSplitHeight: 0
+    }
+  },
+  methods: {
+    setCubeSplitHeight() {
+      const { cubeSplitHeight } = this
+      this.cubeSplitHeight = cubeSplitHeight ? 0 : 300
     }
   }
 }

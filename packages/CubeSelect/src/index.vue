@@ -9,6 +9,7 @@
       :style="{width: width? width + 'px' : '' }"
       :placeholder="placeholder2"
       :filterable="filterable"
+      :disabled="disabled"
       :clearable="clearable"
       @focus="focus"
       @blur="blur"
@@ -17,10 +18,10 @@
       @input="input"
     >
       <div
-        v-if="appendVisible"
+        v-if="showAppendBtn"
         slot="append"
         @click.stop="visible=true"
-      > 选择 </div>
+      > {{ appendBtnText }} </div>
     </el-input>
 
     <el-popover
@@ -30,9 +31,8 @@
       :width="popoverWidth"
       @hide="hidePopover"
     >
-      <div style="text-align: right; margin: 0">
+      <div v-loading="loading" style="text-align: right; margin: 0">
         <el-table
-          v-loading="loading"
           :data="tableData"
           style="width: 100%"
           size="mini"
@@ -49,7 +49,7 @@
           />
           <el-table-column
             v-for="(item,index) in column2"
-            :key="onlyKey ? item[onlyKey] : index"
+            :key="tableRowKey ? item[tableRowKey] : index"
             show-overflow-tooltip
             :width="item.width ? item.width : null "
             :align="item.align ? item.align : 'center' "
@@ -75,9 +75,10 @@
         </el-table>
         <el-pagination
           small
+          :pager-count="5"
           class="pagination"
           layout="total,prev, pager, next"
-          :current-page="pagination.page"
+          :current-page="pagination.currentPage"
           :page-size="pagination.size"
           :total="pagination.total"
           @current-change="handleCurrentChange"
@@ -108,7 +109,7 @@ export function debounce(callback, delay) {
   }
 }
 
-import request from '../../uitls/request'
+import request from '@/utils/request'
 
 export default {
   name: 'CubeSelect',
@@ -187,9 +188,9 @@ export default {
     },
     keyCode: { // 主要用户编辑显示组合对象
       type: String,
-      default: () => 'id'
+      default: () => 'value'
     },
-    onlyKey: { // 唯一标识值 例如id
+    tableRowKey: { // 唯一标识值 例如id
       type: String,
       default: () => ''
     },
@@ -197,9 +198,13 @@ export default {
       type: [Object, String, Array, Number],
       default: () => { }
     },
-    appendVisible: { // 是否显示 选 字
+    showAppendBtn: { // 是否显示 选 字
       type: Boolean,
       default: () => false
+    },
+    appendBtnText: {
+      type: String,
+      default: () => '选择'
     },
     filterable: { // 是否开启过滤
       type: Boolean,
@@ -208,6 +213,10 @@ export default {
     clearable: { // 是否可以清除
       type: Boolean,
       default: () => true
+    },
+    disabled: { // 是否禁用
+      type: Boolean,
+      default: () => false
     },
     tableHeight: { // 选择区域高度
       type: Number,
@@ -285,6 +294,7 @@ export default {
   methods: {
     focus() {
       this.visible = true
+      this.$emit('visibleChange', true)
       // 获取焦点的时候 如果已经选择的东西 隐藏
       const { recordSelect } = this
       if (recordSelect) {
@@ -299,6 +309,7 @@ export default {
           this.fetchTableData()
         }
       }
+      this.$emit('focus')
     },
     blur() {
       // 失去焦点 如果 已经选择的东西 显示
@@ -307,6 +318,7 @@ export default {
       //   this.selectValue = recordSelect[this.keyName]
       //   this.placeholder2 = '请选择'
       // }
+      this.$emit('blur')
     },
     clear() {
       this.placeholder2 = '请选择'
@@ -314,6 +326,7 @@ export default {
       this.recordSelect = null
       this.$emit('input', null)
       this.$emit('change', null)
+      this.$emit('clear')
     },
     miss() {
       this.visible = false
@@ -334,7 +347,7 @@ export default {
       return (index + 1) + (this.pagination.currentPage - 1) * (this.pagination.size)
     },
     hidePopover() {
-      this.$emit('hidePopover')
+      this.$emit('visibleChange', false)
     },
     rowClick(row) {
       this.selectValue = row[this.keyName]
@@ -359,8 +372,10 @@ export default {
     },
     inputChangeText(item) {
       this.fetchTableData({ [this.searchName]: this.selectValue })
+      this.$emit('enter', item)
     },
     input: debounce(function() {
+      this.pagination.currentPage = 1
       this.fetchTableData()
     }, 800),
     fetchTableData() {
@@ -373,7 +388,7 @@ export default {
       this.tableData = []
       this.loading = true
       const paramsKey = this.method.toUpperCase() !== 'POST' ? 'params' : 'data'
-      request({ url, method: this.method, [paramsKey]: params }).then(({ data }) => {
+      request({ url, method: this.method, [paramsKey]: params }).then((data) => {
         this.loading = false
         if (data.success) {
           const result = data.data
@@ -395,6 +410,7 @@ export default {
   position: relative;
   min-width: 220px;
   // max-width: 420px;
+
   /deep/.el-input-group__append {
     background: #2f86f6;
     color: #ffffff;

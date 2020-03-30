@@ -43,13 +43,12 @@ export default {
     }
   },
   mounted() {
-    this.resizeHeight()
-    window.addEventListener('resize', this.resizeHeight)
-  },
-  created() {
     this.resizeHeight = debounce(() => {
       this.computedHeight()
     }, 300)
+    if (!this.calcHeight) return
+    this.resizeHeight()
+    window.addEventListener('resize', this.resizeHeight)
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.resizeHeight)

@@ -27,7 +27,10 @@
               size="small"
               clearable
               filterable
+              :multiple="item.multiple"
+              collapse-tags
               :placeholder="item.placeholder"
+              @change="item.change ?item.change($event): null"
             >
               <el-option
                 v-for="sub in item.options"
@@ -79,7 +82,6 @@
             <CubeSelect
               v-model="item.value"
               v-bind="item.props"
-              :back-value="item.key"
               :placeholder="item.placeholder"
               :search-name="item.searchName"
               :focus-onload="false"
@@ -248,7 +250,7 @@ export default {
         for (let i = 0; i < items.length; i++) {
           const item = items[i]
           if (commonlyTypes.indexOf(item['type']) !== -1) {
-            params[item['key']] = item.value ? item.value : ''
+            params[item['key']] = item.multiple ? item.value.toString() : item.value
           } else if (item['type'] === 'multiple-date') {
             if (item.value != null) {
               params[item['key1']] = item.value[0] ? item.value[0] : ''
@@ -376,7 +378,7 @@ div.left {
     font-size: 13px;
     color: #838487;
   }
-  /deep/.vue-treeselect__menu-container {
+  /deep/.el-collapse-item__content {
     z-index: 9999999 !important;
   }
 }

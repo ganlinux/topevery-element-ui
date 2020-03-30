@@ -67,7 +67,8 @@
               { type: 'option', value: null, key: 'insuredState', placeholder: '下拉框', options: [
                 { value: '1', label: '未到期' },
                 { value: '2', label: '已到期' },
-                { value: '3', label: '未参保' }]
+                { value: '3', label: '未参保' }],
+                change: (e)=> this.change(e)
               },
               { type: 'date', value: null, key: 'carName', placeholder: '日期' },
               { type: 'search', name: '查询', icon: 'el-icon-search' },
@@ -86,7 +87,12 @@
             ]
           ]
         }
-      }
+      },
+      methods: {
+        change(e){
+          console.log(e)
+        }
+      },
     }
   </script>
 ```
@@ -308,7 +314,7 @@ V2 版本中的事件响应新写法。`type: 'button' ` 中直接传递 `action
           config1:[
             [
               { type: 'input', value: null, key: 'carNumber', placeholder: '车牌号' },
-              { type: 'option', value: null, key: 'insuredState', placeholder: '参保状态', options: [
+              { type: 'option', value: null, multiple:true,key: 'insuredState', placeholder: '参保状态', options: [
                 { value: '1', label: '未到期' },
                 { value: '2', label: '已到期' },
                 { value: '3', label: '未参保' }]

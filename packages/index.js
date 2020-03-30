@@ -16,6 +16,7 @@ import CubeUpload from './CubeUpload'
 import CubeCircle from './CubeCircle'
 import CubeMapDraw from './CubeMapDraw'
 import CubeSelectTree from './CubeSelectTree'
+import CubeContainer from './CubeContainer'
 
 export const components = {
   CubeDialog,
@@ -33,7 +34,8 @@ export const components = {
   CubeUpload,
   CubeCircle,
   CubeMapDraw,
-  CubeSelectTree
+  CubeSelectTree,
+  CubeContainer
 }
 
 // Define plugin installation method
@@ -52,6 +54,7 @@ const install = function(Vue) {
     }
   })
 
+  Vue.prototype.$baseUrl = process.env.BASE_URL
   // Mount to prototype
   // Vue.prototype.$toast = Toast
 }

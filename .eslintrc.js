@@ -11,6 +11,8 @@ module.exports = {
     },
     extends: ['plugin:vue/recommended', 'eslint:recommended'],
     "globals": {
+      //视频
+      "Byskplayer": true,
       //为百度地图设置规则
       "BMap": true,
       "BMAP_NORMAL_MAP": true,

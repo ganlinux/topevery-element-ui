@@ -2,10 +2,12 @@
   <el-container class="layout">
     <el-container>
       <el-header height="56px">
-        <logo v-if="false" /> TopEvery Ui
+        <logo v-if="false" /> TopEvery Ui <i
+          class="refresh el-icon-refresh"
+          @click="getCaptcha"
+        />
       </el-header>
-
-      <div class="el-aside">
+      <div class="el-aside-bar">
         <ul>
           <li
             v-for="item in routesList"
@@ -17,26 +19,6 @@
         </ul>
       </div>
 
-      <el-aside
-        v-if="false"
-        width="200px"
-      >
-        <!-- <div @click="isCollapse = !isCollapse"> {{ isCollapse ? '展开' : '收起' }}</div> -->
-        <el-menu
-          router
-          :default-active="$route.name"
-          :collapse="isCollapse"
-        >
-          <el-menu-item
-            v-for="(item,index) in routesList"
-            :key="index"
-            :index="item.name"
-          >
-            <i class="el-icon-menu" />
-            <span slot="title">{{ item.meta.title }}</span>
-          </el-menu-item>
-        </el-menu>
-      </el-aside>
       <el-main>
         <transition
           name="fade-transform"
@@ -76,6 +58,8 @@
 import { menu } from '@/router'
 import hljs from 'highlight.js'
 import logo from './logo'
+import { login, getCaptcha } from '@/api'
+import dayjs from 'dayjs'
 
 export default {
   components: {
@@ -87,11 +71,28 @@ export default {
       isCollapse: false
     }
   },
+  create() {
+    this.getCaptcha()
+  },
   mounted() {
     this.$nextTick(() => {
       const blocks = document.querySelectorAll('pre code:not(.hljs)')
       Array.prototype.forEach.call(blocks, hljs.highlightBlock)
     })
+  },
+  methods: {
+    login(code) {
+      login({ loginName: 'admin', password: '123456', captcha: code }).then(({ data }) => {
+        const { access_token } = data
+        localStorage.setItem('token', access_token)
+      })
+    },
+    async getCaptcha() {
+      getCaptcha({ t: dayjs().valueOf() }).then(({ data }) => {
+        const { code } = data
+        this.login(code.toString())
+      })
+    }
   }
 }
 </script>
@@ -99,32 +100,14 @@ export default {
 <style lang="scss">
 .layout {
   height: 100vh;
-  /deep/.el-aside {
+  .el-aside-bar {
     width: 200px;
     position: fixed;
     top: 60px;
-    height: 90vh;
+    height: 94vh;
     overflow-y: auto;
     border-right: 1px solid #ebebeb;
     box-shadow: 0 6px 12px -2px rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
-    .el-menu-item {
-      &:after {
-        display: none;
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 4px;
-        height: 100%;
-        background: #2f86f6;
-      }
-      &.is-active:after {
-        display: block;
-      }
-      &.is-active {
-        background-color: #ecf5ff;
-      }
-    }
     ul {
       font-size: 14px;
       padding: 0px;
@@ -168,20 +151,20 @@ export default {
       }
     }
   }
-  /deep/.el-header {
+  .el-header {
     line-height: 56px;
     color: #ffffff;
     display: flex;
     align-items: center;
   }
-  /deep/.el-main {
+  .el-main {
     padding-left: 220px;
     overflow-x: hidden;
   }
-  /deep/.el-menu {
+  .el-menu {
     height: 100%;
   }
-  /deep/.el-container {
+  .el-container {
     .el-header {
       z-index: 6;
       box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.15);
@@ -221,5 +204,9 @@ export default {
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
+}
+.refresh {
+  margin-left: 10px;
+  cursor: pointer;
 }
 </style>

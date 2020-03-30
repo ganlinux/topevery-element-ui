@@ -204,6 +204,11 @@ export default {
       type: Function,
       default: () => {}
     },
+    // 是否初始化数据之后默认选择第一个
+    initSeletTheFirst: {
+      type: Boolean,
+      default: () => false
+    },
     // eslint-disable-next-line vue/require-default-prop
     rowClassName: {
       type: Function
@@ -305,7 +310,7 @@ export default {
   watch: {
     data: {
       immediate: true,
-      deep: true,
+      // deep: true,
       handler() {
         setTimeout(() => {
           const { data } = this
@@ -313,6 +318,11 @@ export default {
             // item._rowKey = this.getRandomID()
             return item
           })
+          if (this.initSeletTheFirst) {
+            const row = this.rebuildData[0]
+            this.setCurrent(row)
+            this.tableRowClick(row)
+          }
         }, 0)
       }
     }
@@ -322,6 +332,9 @@ export default {
       // 获取表格勾选项目
       const TableSelection = this.$refs[this.name] && this.$refs[this.name].selection || []
       return deepClone(TableSelection)
+    },
+    setCurrent(row) {
+      this.$refs[this.name] && this.$refs[this.name].setCurrentRow(row)
     },
     expandChange(row, expandedRows) {
       this.$emit('expandChange', row, expandedRows)

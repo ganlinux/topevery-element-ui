@@ -7,6 +7,22 @@ export function getInfo(token) {
   })
 }
 
+export function login(data) {
+  return request({
+    url: '/login',
+    method: 'post',
+    data
+  })
+}
+
+// 获取验证码
+export function getCaptcha(params) {
+  return request({
+    url: '/captcha',
+    method: 'get',
+    params
+  })
+}
 export function logout() {
   return request({
     url: '/logout',

@@ -1,0 +1,685 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>博云视控</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .main {
+      margin: 10px;
+      width: calc(100% - 22px);
+      height: calc(100vh - 22px);
+      display: flex;
+      flex-wrap: nowrap;
+      border: 1px solid #cecece;
+    }
+
+    .left {
+      width: 300px;
+      height: 100%;
+      border-right: 1px solid #cecece;
+    }
+
+    .right {
+      width: calc(100% - 300px);
+      height: 100%;
+      padding: 3px;
+    }
+
+    #container {
+      width: 100%;
+      height: calc(100% - 6px);
+      display: block;
+    }
+
+    #real_div {
+      display: none;
+    }
+
+    #record_div {
+      display: none;
+    }
+
+    button,
+    input,
+    select {
+      margin-bottom: 5px;
+    }
+  </style>
+  <script type="text/javascript" src="byskplayer.js"></script>
+</head>
+
+<body>
+  <div class="main">
+    <div class="left">
+      <div>
+        视频服务：
+        <input id="ws_URL" type="text" value="" title="请查看API文档" onchange="saveConfig()">
+        <!-- <input id='ws_URL' type='text' value='ws://47.106.47.118:8899/'> -->
+        <!-- <input id='ws_URL' type='text' value='ws://120.78.203.76:8899/'> -->
+        <br> 客户代码：
+        <input id="userkey" type="text" value="" title="请查看API文档" onchange="saveConfig()">
+        <br> 用户等级：
+        <input id="userLevel" type="text" value="1" title="请查看API文档" onchange="saveConfig()">
+        <br> 播放模式：
+        <select id="play_mode" style="width:173px;">
+          <option value="0">实时视频</option>
+          <option vlaue="1">回放视频</option>
+        </select>
+        <br>
+        <button onclick="createPlayer()" style="color:red;">建立连接</button>
+        <button onclick="destroy()">断开连接</button>
+        <hr>
+      </div>
+      <div>
+        切换播放换面：
+        <button onclick="player.setPlayerNum(1)">1</button>
+        <button onclick="player.setPlayerNum(2)">2</button>
+        <button onclick="player.setPlayerNum(4)">4</button>
+        <button onclick="player.setPlayerNum(6)">6</button>
+        <button onclick="player.setPlayerNum(8)">8</button>
+        <button onclick="player.setPlayerNum(9)">9</button>
+        <button onclick="player.setPlayerNum(12)">12</button>
+        <button onclick="player.setPlayerNum(13)">13</button>
+        <button onclick="player.setPlayerNum(16)">16</button>
+        <hr>
+      </div>
+      <!-- <div>
+            切换图片：
+            <input type="file" id='video_poster' onchange="setPoster()">
+            <hr>
+        </div> -->
+      <div>
+        自动关闭时间（分钟）：
+        <select id="auto_close_time" onchange="onCloseTimeChange()">
+          <option value="0">从不</option>
+          <option value="5">5分钟</option>
+          <option value="15">15分钟</option>
+          <option value="30">30分钟</option>
+          <option value="60">60分钟</option>
+        </select>
+        <hr>
+      </div>
+      <div id="real_div">
+        实时视频
+        <br> 终端号:
+        <input type="text" id="real_device" value="" title="请查看API文档" onchange="saveConfig()">
+        <br> 通道号:
+        <!-- <input type="text" id='real_device' value="13021411001"> channel: -->
+        <input type="text" id="real_channel" value="1" title="多路播放请用逗号隔开">
+        <br> 协议类型:
+        <select id="real_protocol">
+          <option value="1">GF-1078</option>
+          <option value="1">GB-1078</option>
+          <option value="2">GA系列</option>
+        </select>
+        <br>
+        <button onclick="real.open()">播放</button>
+        <button onclick="real.close()">停止</button>
+        <button onclick="real.openSpeak()">开启对讲</button>
+        <button onclick="real.closeSpeak()">关闭对讲</button>
+      </div>
+      <div id="record_div">
+        <hr> 回放视频
+        <br> 终端号:
+        <input type="text" id="record_device" value="" title="请查看API文档" onchange="saveConfig()">
+        <br>通道号:
+        <!-- <input type='text' id='record_device' value="13021411001"> channel: -->
+        <input type="text" id="record_channel" value="1" title="多路播放请用逗号隔开">
+        <br> 协议类型:
+        <select id="record_protocol" onchange="onChangeRecordProtocol()">
+          <option value="1">GF-1078</option>
+          <option value="1">GB-1078</option>
+          <option value="2">GA系列</option>
+        </select>
+        <br>开始时间:
+        <input id="record_begintime" type="text" style="width: 139px;">
+        <br> 结束时间:
+        <input id="record_endtime" type="text" style="width: 139px;">
+        <button onclick="record.query()">查询</button>
+        <br> 回放列表：
+        <select id="file_list" onchange="onChangeFileList()" style="width:calc(100% - 5px);"></select>
+        <button onclick="record.open()">播放</button>
+        <button onclick="record.close()">停止</button>
+        <hr>下载文件
+        <br>开始时间：
+        <input id="download_begintime" type="text" style="width: 139px;" title="下载开始时间">
+        <br>结束时间：
+        <input id="download_endtime" type="text" style="width: 139px;" title="下载结束时间">
+        <br><button id="btn_ftp_download" onclick="ftp.downloadToServer()">FTP上传服务器</button>
+        <button id="btn_ftp_downloadfile" onclick="ftp.downloadFile()">jt下载到本地</button>
+        <button id="btn_ftp_cancel" onclick="ftp.cancel()">FTP取消上传</button>
+        <button id="btn_ga_download" onclick="gaDownload.downloadFile()">GA下载到本地</button>
+        <button id="btn_ga_cancel" onclick="gaDownload.cancel()">GA取消下载</button>
+      </div>
+    </div>
+    <div class="right">
+      <div id="container"></div>
+    </div>
+  </div>
+  <script>
+    let playList = [];
+    let player = null;
+    let speaker = null; //正在对讲设备
+
+    let bobj = JSON.parse(localStorage.getItem('__api_demo_ws__'))
+    if (bobj) {
+      document.getElementById('userkey').value = bobj.userkey
+      document.getElementById('userLevel').value = bobj.userLevel || 1
+      document.getElementById('ws_URL').value = bobj.baseURL
+      document.getElementById('record_device').value = bobj.record_device
+      document.getElementById('real_device').value = bobj.real_device
+    }
+
+    function saveConfig() {
+      let userkey = document.getElementById('userkey').value
+      let userLevel = document.getElementById('userLevel').value
+      let baseURL = document.getElementById('ws_URL').value
+      let record_device = document.getElementById('record_device').value
+      let real_device = document.getElementById('real_device').value
+      localStorage.setItem('__api_demo_ws__', JSON.stringify({
+        baseURL,
+        userkey,
+        userLevel,
+        record_device,
+        real_device
+      }))
+    }
+
+    //创建player
+    function createPlayer() {
+      if (player) destroy();
+      let userkey = document.getElementById('userkey').value
+      let baseURL = document.getElementById('ws_URL').value
+      let playMode = document.getElementById('play_mode');
+      let realDiv = document.getElementById('real_div');
+      let recordDiv = document.getElementById('record_div');
+      let userLevel = document.getElementById('userLevel').value * 1 || 1; //默认1
+
+      playMode.setAttribute('disabled', true);
+      if (playMode.selectedIndex == 0) {
+        realDiv.style.display = 'block';
+        recordDiv.style.display = 'none';
+      } else {
+        realDiv.style.display = 'none';
+        recordDiv.style.display = 'block';
+      }
+      player = new byskplayer({
+        id: 'container',
+        isReal: playMode.selectedIndex == 0,
+        isRecord: playMode.selectedIndex == 1,
+        userId: 'apidemo',
+        userkey,
+        userLevel,
+        baseURL,
+        click: onPlayClick,
+        playstart: onPlayStart,
+        playend: onPlayEnd,
+        snapshot: onSnapshot,
+        message: onMessage,
+      });
+      console.log('byskplayer.js version: ' + player.version);
+      player.poster = '/poster.png'; //设置预览图片
+      player.setPlayerNum(4); //设置视频画面
+    }
+
+    //销毁
+    function destroy() {
+      if (player) {
+        player.destroy();
+      }
+      let playMode = document.getElementById('play_mode');
+      let realDiv = document.getElementById('real_div');
+      let recordDiv = document.getElementById('record_div');
+      playMode.removeAttribute('disabled');
+      realDiv.style.display = 'none';
+      recordDiv.style.display = 'none';
+      player = null;
+      playList = [];
+      document.querySelector('.right').innerHTML = '<div id="container"></div>'
+    }
+
+    //实时视频
+    let real = {
+      open: function() {
+        let device = document.getElementById('real_device').value.trim()
+        let channel = document.getElementById('real_channel').value
+        let protocolType = Number(document.getElementById('real_protocol').value);
+        let obj = playList.find(p => p.device == device && p.channel == channel);
+        if (obj) return; //已经在播放的则不能再播放
+
+        const channelArr = channel.split(',').map(p => p * 1)
+        const tidObj = player.allocate(channelArr.length) //根据通道数申请
+          // let tidObj = player.allocate(1); //申请一个视频播放器
+
+        if (tidObj.flag == 1) {
+
+          //申请成功
+          let params = {
+            device: device, //终端号
+            channel: channel, //通道号 （1~8）
+            protocolType: protocolType, //协议类型，1：GF-1078，2：GA系列
+            codeTypeCtrlBtnEnabled: protocolType === 1, //是否显示高标清切换按钮(GF才有高清)
+            plate: '测试车辆', //车牌号（可选）
+            vehicleId: '4321', //车辆Id（可选）
+            groupId: '1', //车辆所属车组ID（可选）
+          }
+
+          if (protocolType === 1) { //1078
+            for (let i = 0; i < channelArr.length; i++) {
+              const tid = tidObj.ids[i]
+              const param = {
+                ...params,
+                channel: channelArr[i]
+              }
+              player.real.open(tid, param, res => {
+                console.log(res);
+              });
+              playList.push({
+                ...param
+              })
+            }
+          } else if (protocolType === 2) { //GA
+            player.real.open(tidObj.ids, params, res => {
+              console.log(res);
+            });
+            playList.push(...tidObj.ids.map((p, i) => {
+              return {
+                ...params,
+                channel: channelArr[i]
+              }
+            }));
+          }
+        } else {
+          //申请失败
+          alert(tidObj.msg);
+        }
+      },
+      close: function() {
+        let device = document.getElementById('real_device').value.trim()
+        let channel = document.getElementById('real_channel').value
+        const channelArr = channel.split(',').map(p => p * 1)
+        for (let i = 0; i < channelArr.length; i++) {
+          let index = playList.findIndex(p => p.device == device && p.channel == channelArr[i]);
+          let obj = playList[index];
+          if (obj) player.real.close(obj.tid, {
+            device: obj.device,
+            channel: obj.channel,
+            protocolType: obj.protocolType
+          }, res => {
+            console.log(res);
+          });
+          playList.splice(index, 1);
+        }
+      },
+      openSpeak: function() {
+        const device = document.getElementById('real_device').value.trim()
+        const protocolType = Number(document.getElementById('real_protocol').value);
+        const params = {
+          device: device, //终端号
+          protocolType: protocolType //协议类型，1：GF-1078，2：GA系列，目前支持GF-1078
+        }
+        player.real.openSpeak(params, res => {
+          console.log(res)
+        })
+      },
+      closeSpeak: function() {
+        const device = document.getElementById('real_device').value.trim()
+        const protocolType = Number(document.getElementById('real_protocol').value);
+        const params = {
+          device: device,
+          protocolType: protocolType
+        }
+        player.real.closeSpeak(params, res => {
+          console.log(res)
+        })
+      }
+    }
+
+    //回放视频
+    let record = {
+      query: function() {
+        let device = document.getElementById('record_device').value.trim()
+        let channel = document.getElementById('record_channel').value * 1
+        let protocolType = Number(document.getElementById('record_protocol').value);
+        let begintime = Math.round(new Date(document.getElementById('record_begintime').value).getTime() / 1000);
+        let endtime = Math.round(new Date(document.getElementById('record_endtime').value).getTime() / 1000);
+        let params = {
+          device: device, //终端号
+          channel: channel, //通道号
+          protocolType: protocolType, //协议类型，1：GF-1078，2：GA系列
+          begintime: begintime, //开始时间（时间戳，精确至秒）
+          endtime: endtime, //结束时间（时间戳，精确至秒）
+          alarmSign: 0 //报警类型（目前只支持：0）
+        };
+
+        player.record.query(params, res => {
+          console.log(res);
+          if (res.status == 1) {
+            loadfile(res.recordfiles);
+          }
+        });
+      },
+      open: function() {
+        let device = document.getElementById('record_device').value.trim()
+        const protocolTypeDom = document.getElementById('record_protocol');
+        let protocolType = Number(protocolTypeDom.value);
+        let select = document.querySelector('#file_list');
+        let option = select.options[select.selectedIndex];
+        if (!option) return;
+        let channel = ~~option.getAttribute('channel')
+        let params = {
+          device: device,
+          channel: channel,
+          protocolType: protocolType,
+          begintime: Math.round(Number(option.getAttribute('begintime')) / 1000),
+          endtime: Math.round(Number(option.getAttribute('endtime')) / 1000),
+          fileName: Number(option.getAttribute('fileName')) || null,
+          plate: '测试车辆',
+          vehicleId: '4321',
+          groupId: '1'
+        };
+
+        const T = protocolTypeDom.options[protocolTypeDom.selectedIndex].innerText
+          //GB-1078音视频分离
+        if (['GB-1078'].includes(T)) {
+          params.datatype = 0;
+        }
+
+        let obj = playList.find(p => p.device == device && p.channel == channel);
+        if (obj) return;
+        let tidObj = player.allocate(1);
+        if (tidObj.flag == 1) {
+          let tid = tidObj.ids[0];
+          player.record.open(tid, params, res => {
+            console.log(res);
+          }, {
+            hasAudio: !['GB-1078'].includes(T), //GB-1078音视频分开，默认不请求音频
+          });
+          playList.push({
+            ...params
+          });
+        } else {
+          alert(tidObj.msg);
+        }
+      },
+      close: function() {
+        let device = document.getElementById('record_device').value.trim()
+        let channel = document.getElementById('record_channel').value * 1
+        let index = playList.findIndex(p => p.device == device && p.channel == channel);
+        let obj = playList[index];
+        if (obj) player.record.close(obj.tid, {
+          device: obj.device,
+          channel: obj.channel,
+          protocolType: obj.protocolType
+        }, res => {
+          console.log(res);
+        });
+        playList.splice(index, 1);
+      }
+    }
+
+    let ftp = {
+      downloadFile: function() {
+        let device = document.getElementById('record_device').value.trim()
+        let protocolType = Number(document.getElementById('record_protocol').value);
+        let select = document.querySelector('#file_list');
+        let option = select.options[select.selectedIndex];
+        if (!option) return;
+        let channel = ~~option.getAttribute('channel');
+        let begintime = Math.round(new Date(document.getElementById('download_begintime').value).getTime() / 1000);
+        let endtime = Math.round(new Date(document.getElementById('download_endtime').value).getTime() / 1000);
+        let datatype = Math.round(option.getAttribute('datatype'));
+
+        let params = {
+          device: device,
+          channel: channel,
+          protocolType: protocolType,
+          begintime: begintime,
+          endtime: endtime,
+          datatype,
+          fileName: Number(option.getAttribute('fileName')) || null,
+          plate: '测试车辆',
+          vehicleId: '4321',
+          groupId: '1'
+        };
+        player.ftp.downloadFile(params, res => {
+          console.log(res);
+          if (res.status && res.media_address) {
+            saveAsFile(res.media_address.video_address)
+          }
+        });
+      },
+      downloadToServer: function() {
+        let select = document.querySelector('#file_list');
+        let option = select.options[select.selectedIndex];
+        if (!option) return
+        let serial = option.getAttribute('serial')
+        if (serial) return //正在下载
+        let device = option.getAttribute('device') * 1
+        let channel = option.getAttribute('channel') * 1
+        let alarmSign = option.getAttribute('alarmSign') * 1
+        let begintime = Math.round(new Date(document.getElementById('download_begintime').value).getTime() / 1000);
+        let endtime = Math.round(new Date(document.getElementById('download_endtime').value).getTime() / 1000);
+        let datatype = Math.round(option.getAttribute('datatype'));
+
+        player.ftp.downloadToServer({
+          device,
+          channel,
+          begintime,
+          endtime,
+          alarmSign,
+          datatype
+        }, res => {
+          if (res.status === 1) {
+            console.log(res.serial)
+            option.setAttribute('serial', res.serial)
+          }
+        })
+      },
+      cancel: function() {
+        let select = document.querySelector('#file_list');
+        let option = select.options[select.selectedIndex];
+        if (!option) return
+        let serial = option.getAttribute('serial')
+        let device = option.getAttribute('device') * 1
+        if (!serial) return
+        player.ftp.cancel({
+          device,
+          serial
+        }, res => {
+          option.setAttribute('serial', '')
+          console.log(res)
+        })
+      }
+    }
+    let gaDownload = {
+      downloadFile: function() {
+        let select = document.querySelector('#file_list');
+        let option = select.options[select.selectedIndex];
+        if (!option) return
+        let serial = option.getAttribute('serial')
+        if (serial) return //正在下载
+        let device = option.getAttribute('device') * 1
+        let channel = option.getAttribute('channel') * 1
+        let filesize = option.getAttribute('filesize') * 1
+        let fileBegintime = option.getAttribute('begintime') * 1
+        let fileEndtime = option.getAttribute('endtime') * 1
+        let fileName = option.getAttribute('fileName')
+        let begintime = new Date(document.getElementById('download_begintime').value).getTime()
+        let endtime = new Date(document.getElementById('download_endtime').value).getTime()
+
+        let size = ~~((endtime - begintime) / (fileEndtime - fileBegintime) * filesize)
+
+        player.gaDownload.downloadFile({
+          device,
+          channel,
+          fileName,
+          begintime: ~~(begintime / 1000),
+          endtime: ~~(endtime / 1000),
+          filesize: size
+        }, res => {
+          if (res.status && res.media_address) {
+            saveAsFile(res.media_address.video_address)
+          }
+        })
+
+      },
+      cancel: function() {
+        let select = document.querySelector('#file_list');
+        let option = select.options[select.selectedIndex];
+        if (!option) return
+        let device = option.getAttribute('device') * 1
+        let channel = option.getAttribute('channel') * 1
+        player.gaDownload.cancel({
+          device,
+          channel
+        }, res => {
+          console.log(res)
+        })
+      }
+    }
+
+    function setPoster(evt) {
+      let files = document.getElementById('video_poster').files;
+      if (files.length > 0) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+          player.poster = e.target.result; //设置播放器图片
+        }
+        reader.readAsDataURL(files[0]);
+      }
+    }
+
+    function onCloseTimeChange(evt) {
+      let select = document.getElementById('auto_close_time');
+      let option = select.options[select.selectedIndex];
+      player.autoCloseTime = Number(option.value); //设置自动关闭视频时间
+    }
+
+    function onPlayClick(e) {
+      console.log(e);
+    }
+
+    function onPlayStart(e) {
+      let index = playList.findIndex(p => p.device == e.device && p.channel == e.channel);
+      let obj = playList[index];
+      if (obj) return;
+      playList.push({
+        ...e
+      });
+    }
+
+    function onPlayEnd(e) {
+      let index = playList.findIndex(p => p.device == e.device && p.channel == e.channel);
+      playList.splice(index, 1);
+    }
+
+    function onSnapshot(e) {
+
+    }
+
+    function onMessage(e) {
+      if (!(e instanceof String)) {
+        let {
+          status,
+          info
+        } = e;
+        switch (status) {
+          case 19: //视频回放高级别用户通知, //需要主动关闭视频
+            record.close();
+            alert(info)
+            break;
+          case 20: //实时对讲高级别用户通知，//需要主动关闭对讲
+            real.closeSpeak();
+            alert(info)
+            break;
+        }
+      }
+    }
+
+    function loadfile(files) {
+      let fileSelect = document.getElementById('file_list');
+      fileSelect.innerHTML = '';
+      for (let i = 0; i < files.length; i++) {
+        let file = files[i];
+        let stime = new Date(file.begintime);
+        let etime = new Date(file.endtime);
+        let value = new Date(stime.setHours(stime.getHours() + 8)).toJSON().substring(0, 19).replace('T', ' ') + ' 至 ' + new Date(etime.setHours(etime.getHours() + 8)).toJSON().substring(0, 19).replace('T', ' ')
+        let option = document.createElement('option');
+        option.setAttribute('device', file.device)
+        option.setAttribute('begintime', file.begintime);
+        option.setAttribute('endtime', file.endtime);
+        option.setAttribute('channel', file.channel);
+        option.setAttribute('value', value);
+        option.setAttribute('fileName', file.fileName || '');
+        option.setAttribute('filesize', file.filesize || '')
+        option.setAttribute('alarmSign', file.alarmSign)
+        option.setAttribute('codetype', file.codetype)
+        option.setAttribute('datatype', file.datatype)
+        option.setAttribute('storgetype', file.storgetype)
+        option.innerHTML = value;
+        fileSelect.appendChild(option);
+      }
+      onChangeFileList()
+    }
+
+    function onChangeFileList() {
+      let select = document.querySelector('#file_list');
+      let option = select.options[select.selectedIndex];
+      if (!option) return
+      document.getElementById("download_begintime").value = new Date(option.getAttribute('begintime') * 1 + 28800000).toJSON().substring(0, 19).replace("T", " ");
+      document.getElementById("download_endtime").value = new Date(option.getAttribute('endtime') * 1 + 28800000).toJSON().substring(0, 19).replace("T", " ");
+    }
+
+    function onChangeRecordProtocol() {
+      let select = document.querySelector("#record_protocol")
+      let option = select.options[select.selectedIndex];
+      let value = option.getAttribute('value') * 1
+
+      document.querySelector('#btn_ftp_download').style.display = 'none'
+      document.querySelector('#btn_ftp_downloadfile').style.display = 'none'
+      document.querySelector('#btn_ftp_cancel').style.display = 'none'
+      document.querySelector('#btn_ga_download').style.display = 'none'
+      document.querySelector('#btn_ga_cancel').style.display = 'none'
+
+      if (value === 1) {
+        document.querySelector('#btn_ftp_download').style.display = ''
+        document.querySelector('#btn_ftp_downloadfile').style.display = ''
+        document.querySelector('#btn_ftp_cancel').style.display = ''
+      } else if (value === 2) {
+        document.querySelector('#btn_ga_download').style.display = ''
+        document.querySelector('#btn_ga_cancel').style.display = ''
+      }
+    }
+
+    function saveAsFile(src, filename) {
+      let a = document.createElement('a')
+      a.href = src
+      a.target = '_blank'
+      a.download = filename || src.substr(src.lastIndexOf('/'))
+      a.click()
+    }
+
+    window.onload = function() {
+      let today = new Date();
+      let day1 = new Date(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate() + " 00:00:00");
+      today.setHours(today.getHours() + 8);
+      day1.setHours(day1.getHours() + 8);
+      document.getElementById("record_begintime").value = day1.toJSON().substring(0, 19).replace("T", " ");
+      document.getElementById("record_endtime").value = today.toJSON().substring(0, 19).replace("T", " ");
+      onChangeRecordProtocol()
+    }
+  </script>
+<script type="text/javascript" src="/byskplayer.js"></script></body>
+
+</html>

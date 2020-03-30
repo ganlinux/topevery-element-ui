@@ -1,13 +1,21 @@
 <template>
   <div>
+    <Md />
     <!-- <Notice-Bar v-if="false" class="notice"> 前端必学必会-多媒体-本地存储-浏览器与服务器的交互-通信功能 </Notice-Bar> -->
-    <CubeTableList ref="CubeTableList" :config="config" />
+    <CubeTableList v-if="false" ref="CubeTableList" :config="config" />
   </div>
 </template>
+
 <script>
+
+import Md from '~packages/CubeTableList/index.md'
+
 export default {
   name: 'CubeTableListX',
-  title: '业务列表组件',
+  title: 'CubeTableList业务列表',
+  components: {
+    Md
+  },
   data() {
     return {
       config: {
@@ -20,16 +28,11 @@ export default {
               { type: 'cascader', value: null, key: 'carType', placeholder: '车辆类型', options: [] },
               { type: 'option', value: null, key: 'powerType', placeholder: '动力类型', options: [] },
               { type: 'option', value: null, key: 'insuredState', placeholder: '参保状态', options: [
-                { value: '1', label: '未到期' },
-                { value: '2', label: '已到期' },
-                { value: '3', label: '未参保' }
+                { value: '1', label: '未到期' }, { value: '2', label: '已到期' }, { value: '3', label: '未参保' }
               ]
               },
               { type: 'option', value: null, key: 'annualInspectionState', placeholder: '年检状态', options: [
-                { value: '2', label: '已到期' },
-                { value: '1', label: '未到期' },
-                { value: '3', label: '离年检九十天以上' },
-                { value: '4', label: '离年检不足九十天' }
+                { value: '2', label: '已到期' }, { value: '1', label: '未到期' }, { value: '3', label: '离年检九十天以上' }, { value: '4', label: '离年检不足九十天' }
               ]
               },
               { type: 'search', name: '查询', icon: 'el-icon-search' },

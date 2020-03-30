@@ -205,12 +205,14 @@ html, body {
         font-size: 12px;
         color: #409EFF;
         &:active{
-          color: #3a8ee6;
           background-color: transparent;
         }
       }
       .delete-text{
         color: #f56c6c;
+        &:active{
+          background-color: transparent;
+        }
       }
     }
   }
@@ -224,14 +226,14 @@ html, body {
 
   //展示定义一下统一样式
   .CubeInput{
-    width: 180px;
+    width: 220px;
   }
  
   .el-input-group{
     width: 250px;
   }
   .el-select{
-    width: 250px;
+    width: 220px;
   }
 
 .el-table {

@@ -244,7 +244,7 @@ render表格展示用法。
             { label: '操作',
               render: (h, parmas) => {
                 const { row } = parmas
-                return (<div> 
+                return (<div class="flex-box-table-row">  
                   <el-button size="mini" type="text" onClick={ ()=>this.handler('编辑') }> 编辑 </el-button>
                   <el-button size="mini" type="text" onClick={ ()=>this.handler('查看') }> 查看 </el-button>
                   <el-button size="mini" type="text" onClick={ ()=>this.handler('删除') }> 删除 </el-button>
@@ -343,7 +343,7 @@ render表格展示用法。
               width: 80,
               render: (h, parmas) => {
                 const { row } = parmas
-                return (<div class="flex-table-cell"> 
+                return (<div class="flex-box-table-row"> 
                   <div class="btn-text" onClick={ ()=>this.handler('查看') }> 
                     <i class="el-icon-view" /> 查看 
                   </div>
@@ -376,7 +376,7 @@ render表格展示用法。
               width:140,
               render: (h, parmas) => {
                 const { row } = parmas
-                return (<div class="flex-table-cell"> 
+                return (<div class="flex-box-table-row"> 
                   <div class="btn-text" onClick={ ()=>this.handler('编辑') }> 
                     <i class="el-icon-edit-outline" /> 编辑 
                   </div>
@@ -413,14 +413,14 @@ render表格展示用法。
               width:180,
               render: (h, parmas) => {
                 const { row } = parmas
-                return (<div class="flex-table-cell-row"> 
+                return (<div class="flex-box-table-row"> 
                   <div class="btn-text" onClick={ ()=>this.handler('编辑') }> 
                     <i class="el-icon-edit-outline" /> 编辑 
                   </div>
                   <div class="btn-text" onClick={ ()=>this.handler('查看') }> 
                     <i class="el-icon-view" /> 查看 
                   </div>
-                  <div class="btn-text delete-text"  onClick={ ()=>this.handler('删除') }> 
+                  <div class="delete-text"  onClick={ ()=>this.handler('删除') }> 
                     <i class="el-icon-delete" /> 删除 
                   </div>
                </div>)
@@ -453,7 +453,7 @@ render表格展示用法。
               width:180,
               render: (h, parmas) => {
                 const { row } = parmas
-                return (<div class="flex-table-cell"> 
+                return (<div class="flex-box-table-row"> 
                   <div class="btn-text" onClick={ ()=>this.handler('编辑') }> 
                     <i class="el-icon-edit-outline" /> 编辑 
                   </div>
