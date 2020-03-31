@@ -27,9 +27,9 @@
               size="small"
               clearable
               filterable
+              :placeholder="item.placeholder"
               :multiple="item.multiple"
               collapse-tags
-              :placeholder="item.placeholder"
               @change="item.change ?item.change($event): null"
             >
               <el-option

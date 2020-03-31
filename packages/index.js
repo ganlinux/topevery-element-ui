@@ -17,6 +17,7 @@ import CubeCircle from './CubeCircle'
 import CubeMapDraw from './CubeMapDraw'
 import CubeSelectTree from './CubeSelectTree'
 import CubeContainer from './CubeContainer'
+import ProgressLine from './ProgressLine'
 
 export const components = {
   CubeDialog,
@@ -35,7 +36,8 @@ export const components = {
   CubeCircle,
   CubeMapDraw,
   CubeSelectTree,
-  CubeContainer
+  CubeContainer,
+  ProgressLine
 }
 
 // Define plugin installation method

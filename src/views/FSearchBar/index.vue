@@ -10,7 +10,7 @@ import Md from '~packages/SearchBar/index.md'
 
 export default {
   name: 'SearchBarX',
-  title: '表格搜索栏',
+  title: 'CubeTable搜索栏',
   components: {
     Md
   },

@@ -321,7 +321,6 @@ export default {
           if (this.initSeletTheFirst) {
             const row = this.rebuildData[0]
             this.setCurrent(row)
-            this.tableRowClick(row)
           }
         }, 0)
       }
@@ -335,6 +334,7 @@ export default {
     },
     setCurrent(row) {
       this.$refs[this.name] && this.$refs[this.name].setCurrentRow(row)
+      this.tableRowClick(row)
     },
     expandChange(row, expandedRows) {
       this.$emit('expandChange', row, expandedRows)

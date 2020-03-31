@@ -243,8 +243,6 @@ V1 版本中的事件响应的通过子组件向外`$emit`触发的，所有`typ
 ```
 :::
 
-
-
 ::: tip 
 V2 版本中的事件响应新写法。`type: 'button' ` 中直接传递 `action`事件响应。这样写法就比较简单了。具体如下.(新版本中做了兼容v1写法也是可以支持)
 :::
@@ -296,7 +294,7 @@ V2 版本中的事件响应新写法。`type: 'button' ` 中直接传递 `action
 ```
 :::
 
-### `Search-Bar`组件参数搜集
+### `Search-Bar` 业务-组件参数搜集
 
 组件会收集配置项中传入的`key`集合
 
@@ -342,6 +340,111 @@ V2 版本中的事件响应新写法。`type: 'button' ` 中直接传递 `action
   </script>
 ```
 :::
+
+
+### `Search-Bar` 业务-关联检索与基础多选
+
+组件会收集配置项中传入的`key`集合 `type:option`设置为下拉框选项是业务中最常见的组件。
+multiple:false 或者不设置默认为单选,multiple:true 设置为多选。多选返回可以选择 value的集合。类似'id1,id2,id3...'
+
+:::demo `Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置， `Search-Bar`选择完成会触发`change`事件回调选中数据，可以利用这个事件做搜索数据的联动检索。如下。食物类型的选择决定食物的选择。
+```html
+  <template>
+    <Search-Bar ref="SearchBar" :data="config1" />
+  </template>
+
+  <script>
+    export default {
+      data() {
+        return {
+          config1:[
+            [
+              //  multiple:true 设置为多选。多选返回可以选择 value的集合。类似'id1,id2,id3...'
+              { type: 'option', value: null, multiple:true,key: 'insuredState', placeholder: '参保状态-设置为多选', options: [
+                { value: '1', label: '未到期' },
+                { value: '2', label: '已到期' },
+                { value: '3', label: '未参保' }]
+              },
+               { type: 'option', value: null, multiple:false, key: 'foodType', placeholder: '食物类型', options: [
+                { value: '1', label: '水果' },
+                { value: '2', label: '蔬菜' },
+                { value: '3', label: '肉类' },
+                ],
+                change: (selectValue) => this.footTypeChange(selectValue)
+              },
+              //  multiple:false 或者不设置默认为单选
+              { type: 'option', value: null,key: 'food', placeholder: '食物选择', options: []},
+              { type: 'search', name: '查询', icon: 'el-icon-search' },
+              { type: 'reset', name: '重置' }
+            ],
+            [
+              { type: 'button', name: '参数收集', keyType: 'primary', icon: 'el-icon-s-order' , action: ()=> this.handlerClick('参数收集') }
+            ]
+          ]
+        }
+      },
+      methods: {
+        handlerClick(mes) {
+          const params = this.$refs['SearchBar'].getSearchParams()
+          this.$alert( params , '收集参数', {
+          confirmButtonText: '确定',
+          callback: action => {}
+        });
+        },
+        //找到key对应的数据对象
+        findeKeyItem(key){
+          return this.config1[0].find(item=> item.key ===key) 
+        },
+        footTypeChange(value){
+          // 关联项目改变的时候
+          // 1 情况以有选项options
+          // 2 切换该类型下options
+          // 清空食物已有选项
+          this.findeKeyItem('food').options = []
+          this.findeKeyItem('food').value = null
+          //这里模拟一下假数据。真实场景替换这里是根据选择值加载对应数据接口请求
+          switch (value) {
+            case '1':
+              // 模拟数据加载
+              setTimeout(() => {
+                this.findeKeyItem('food').options = [
+                  { value: '1', label: '香蕉' },
+                  { value: '2', label: '苹果' },
+                  { value: '3', label: '雪梨' },
+                ]
+              }, 1000);
+              break;
+            case '2':
+              // 模拟数据加载
+              setTimeout(() => {
+                this.findeKeyItem('food').options = [
+                  { value: '1', label: '白菜' },
+                  { value: '2', label: '豆芽' },
+                  { value: '3', label: '地瓜' },
+                ]
+              }, 1000);
+              break;
+            case '3':
+              // 模拟数据加载
+              setTimeout(() => {
+                this.findeKeyItem('food').options = [
+                  { value: '1', label: '猪肉' },
+                  { value: '2', label: '牛肉' },
+                  { value: '3', label: '龙肉' },
+                ]
+              }, 1000);
+              break;
+          
+            default:
+              break;
+          }
+        }
+      }
+    }
+  </script>
+```
+:::
+
 
 ### SearchBar Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |

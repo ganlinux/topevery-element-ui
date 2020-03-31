@@ -13,7 +13,7 @@ import { getData } from '~packages/uitls/mockData.js'
 
 export default {
   name: 'CubeTableX',
-  title: 'CubeTable表格',
+  title: 'CubeTable表格组件',
   components: {
     Md
   },

@@ -11,7 +11,7 @@
           <el-upload
             class="upload-demo"
             style="text-align: center;"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="//jsonplaceholder.typicode.com/posts/"
             :before-upload="beforeUpload"
           >
             <div style="text-align: center;">
@@ -123,9 +123,13 @@ export default {
     },
     crop() {
       this.cropper.getCroppedCanvas().toBlob(blob => {
-        this.$emit('on-crop', blob)
-        const img = window.URL.createObjectURL(blob)
-        console.log(img, 'blob')
+        // this.$emit('on-crop', blob)
+        // const img = window.URL.createObjectURL(blob)
+        const fd = new FormData()
+        fd.append('image', blob, 'image.png')
+        const xhr = new XMLHttpRequest()
+        xhr.open('POST', '//jsonplaceholder.typicode.com/posts/', true)
+        xhr.send(fd)
       })
     }
   }
