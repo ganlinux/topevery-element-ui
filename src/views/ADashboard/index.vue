@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="body">
+
       <div class="reveal-warp">
         <transition name="el-zoom-in-center">
           <div
@@ -24,7 +25,6 @@
         <li class="circle-gauge"><a style="--gauge-max-value: 1000; --gauge-value:800" /><span>content</span></li>
         <li class="circle-gauge text"><a style="--gauge-max-value: 1000; --gauge-value:980" /><span>contentText</span></li>
       </ul>
-
     </div>
     <md />
   </div>
@@ -35,8 +35,13 @@
 import { initHighlightBlock } from '@/utils'
 import md from './index.md'
 export default {
-  name: 'Dashboard',
-  title: 'Dashboard',
+  pageConfig: {
+    groupsKey: 'Dashboard',
+    groupsName: 'Dashboard',
+    pageTitle: 'Dashboard',
+    pageName: 'Dashboard',
+    sort: '1'
+  },
   components: {
     md
   },

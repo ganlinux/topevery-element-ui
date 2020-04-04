@@ -8,6 +8,13 @@
 export default {
   name: 'CubeUploadX',
   title: 'CubeUpload上传',
+  pageConfig: {
+    groupsKey: 'component',
+    groupsName: '组件',
+    pageTitle: 'CubeUpload附件上传',
+    pageName: 'CubeUpload',
+    sort: '1'
+  },
   data() {
     return {
       value1: 70,

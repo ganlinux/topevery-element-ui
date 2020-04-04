@@ -25,6 +25,13 @@ import { treeData } from './tree'
 export default {
   name: 'CubeMapX',
   title: '地图应用',
+  pageConfig: {
+    groupsKey: 'map',
+    groupsName: '地图组件',
+    pageTitle: '地图应用',
+    pageName: 'CubeMapX',
+    sort: '1'
+  },
   components: {
     Add
   },

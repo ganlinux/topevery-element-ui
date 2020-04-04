@@ -164,6 +164,13 @@ import store from './store'
 export default {
   name: 'WCubeChartX',
   title: 'Chart图表相关',
+  pageConfig: {
+    groupsKey: 'chart',
+    groupsName: '图表',
+    pageTitle: 'Chart图表相关',
+    pageName: 'WCubeChartX',
+    sort: '1'
+  },
   components: {
     chart: ECharts
   },

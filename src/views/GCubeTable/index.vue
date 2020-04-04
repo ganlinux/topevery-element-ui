@@ -2,18 +2,23 @@
 <template>
   <div>
     <Md />
-    <cube-Table v-if="false" cell-class-name :height="400" :data="tableData" :columns="columns" />
   </div>
 </template>
 
 <script>
 
 import Md from '~packages/CubeTable/index.md'
-import { getData } from '~packages/uitls/mockData.js'
 
 export default {
   name: 'CubeTableX',
   title: 'CubeTable表格组件',
+  pageConfig: {
+    groupsKey: 'component',
+    groupsName: '组件',
+    pageTitle: 'CubeTable表格组件',
+    pageName: 'CubeTable',
+    sort: '1'
+  },
   components: {
     Md
   },
@@ -42,11 +47,6 @@ export default {
         }
       ]
     }
-  },
-  mounted() {
-    setTimeout(_ => {
-      this.tableData = getData(10)
-    }, 400)
   },
   methods: {
     rowClassName() {},

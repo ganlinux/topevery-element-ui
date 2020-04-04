@@ -21,6 +21,13 @@ import iconfont from './iconfont'
 export default {
   name: 'CubeIconX',
   title: '图标库',
+  pageConfig: {
+    groupsKey: 'other',
+    groupsName: '其他',
+    pageTitle: '字体图标库',
+    pageName: 'CubeIcon',
+    sort: '1'
+  },
   data() {
     return {
       iconfontList: iconfont.glyphs

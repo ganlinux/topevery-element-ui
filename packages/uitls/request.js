@@ -1,7 +1,9 @@
 import axios from 'axios'
 // import { MessageBox, Message } from 'element-ui'
 import { Message } from 'element-ui'
-const token = localStorage.getItem('token')
+import { getToken } from '../../src/utils/auth'
+// const token = localStorage.getItem('token')
+const token = getToken()
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url

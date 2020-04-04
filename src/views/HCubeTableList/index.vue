@@ -13,6 +13,13 @@ import Md from '~packages/CubeTableList/index.md'
 export default {
   name: 'CubeTableListX',
   title: 'CubeTableList业务列表',
+  pageConfig: {
+    groupsKey: 'business',
+    groupsName: '业务组件',
+    pageTitle: 'CubeTableList业务列表',
+    pageName: 'CubeTableList',
+    sort: '1'
+  },
   components: {
     Md
   },

@@ -266,7 +266,6 @@ export default {
   &-vertical &-inner {
     height: 100%;
     width: auto;
-
     & > *,
     &:after {
       display: inline-block;

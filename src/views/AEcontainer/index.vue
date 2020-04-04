@@ -16,8 +16,13 @@
 import CubeFrame from './CubeFrame'
 
 export default {
-  name: 'AEcontainer',
-  title: 'CubeContainer滚动条容器',
+  pageConfig: {
+    groupsKey: 'layout',
+    groupsName: '布局类',
+    pageTitle: '滚动条容器',
+    pageName: 'CubeContainer',
+    sort: '1'
+  },
   components: {
     CubeFrame
   },

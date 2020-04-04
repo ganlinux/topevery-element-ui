@@ -7,16 +7,9 @@
           @click="getCaptcha"
         />
       </el-header>
+
       <div class="el-aside-bar">
-        <ul>
-          <li
-            v-for="item in routesList"
-            :key="item.id"
-            :class="item.component.name === $route.name ? 'is-active': ''"
-          >
-            <router-link :to="item.path">{{ item.component.title }}</router-link>
-          </li>
-        </ul>
+        <siderBar />
       </div>
 
       <el-main>
@@ -55,15 +48,18 @@
 
 <script>
 
+import siderBar from './sideBar'
 import { menu } from '@/router'
 import hljs from 'highlight.js'
 import logo from './logo'
 import { login, getCaptcha } from '@/api'
 import dayjs from 'dayjs'
+import { setToken } from '@/utils/auth'
 
 export default {
   components: {
-    logo
+    logo,
+    siderBar
   },
   data() {
     return {
@@ -84,6 +80,7 @@ export default {
     login(code) {
       login({ loginName: 'admin', password: '123456', captcha: code }).then(({ data }) => {
         const { access_token } = data
+        setToken(access_token)
         localStorage.setItem('token', access_token)
       })
     },
@@ -104,7 +101,7 @@ export default {
     width: 200px;
     position: fixed;
     top: 60px;
-    height: 94vh;
+    height: 90vh;
     overflow-y: auto;
     border-right: 1px solid #ebebeb;
     box-shadow: 0 6px 12px -2px rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
@@ -113,8 +110,6 @@ export default {
       padding: 0px;
       margin: 0;
       li {
-        height: 30px;
-        line-height: 30px;
         cursor: pointer;
         padding-left: 10px;
         position: relative;

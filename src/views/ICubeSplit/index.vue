@@ -23,6 +23,13 @@
 export default {
   name: 'CubeSplitX',
   title: 'CubeSplit分割面板',
+  pageConfig: {
+    groupsKey: 'component',
+    groupsName: '组件',
+    pageTitle: 'CubeSplit分割面板',
+    pageName: 'CubeSplit',
+    sort: '1'
+  },
   data() {
     return {
       cubeSplitHeight: 0

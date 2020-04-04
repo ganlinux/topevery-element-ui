@@ -44,6 +44,13 @@ import 'cropperjs/dist/cropper.min.css'
 export default {
   name: 'WCubeuploadCropper',
   title: '图片上传剪切',
+  pageConfig: {
+    groupsKey: 'component',
+    groupsName: '组件',
+    pageTitle: '图片上传剪切',
+    pageName: 'CubeuploadCropper',
+    sort: '1'
+  },
   props: {
     src: {
       type: String,

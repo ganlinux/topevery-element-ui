@@ -6,57 +6,55 @@
   >
     <el-input
       v-model.trim="selectValue"
-      :style="{width: width? width + 'px' : '' }"
+      filterable
+      :style="{width: defaultConfig.inputWidth? defaultConfig.inputWidth + 'px' : 'auto' }"
       :placeholder="placeholder2"
-      :filterable="filterable"
-      :clearable="clearable"
+      :clearable="defaultConfig.clearable"
       @focus="focus"
       @blur="blur"
-      @keyup.enter.native="inputChangeText"
       @clear="clear"
       @input="input"
     >
       <div
-        v-if="appendVisible"
+        v-if="defaultConfig.tipButtonVisible"
         slot="append"
-        @click.stop="visible=true"
-      > 选择 </div>
+        @click.stop="focus"
+        v-text="defaultConfig.tipButtonText"
+      />
     </el-input>
-
-    <el-popover
-      v-model="visible"
-      class="popover"
-      placement="bottom"
-      :width="popoverWidth"
-      @hide="hidePopover"
-    >
-      <div style="text-align: right; margin: 0">
-        <el-tree
-          ref="tree"
-          highlight-current
-          :default-expand-all="true"
-          :expand-on-click-node="false"
-          :node-key="nodeKey"
-          :filter-node-method="filterNode"
-          :data="tableData"
-          :props="defaultProps"
-          @node-click="handleNodeClick"
+    <transition name="el-zoom-in-center">
+      <el-popover
+        v-model="visible"
+        class="popover"
+        placement="bottom"
+        :width="defaultConfig.popoverWidth"
+        @hide="hidePopover"
+      >
+        <div style="text-align: right; margin: 0">
+          <el-tree
+            ref="tree"
+            highlight-current
+            :default-expand-all="true"
+            :expand-on-click-node="false"
+            :filter-node-method="filterNode"
+            :data="tableData"
+            :node-key="defaultConfig.nodeKey"
+            :props="defaultConfig.treeDefaultProps"
+            @node-click="handleNodeClick"
+          />
+        </div>
+        <div
+          v-if="loading"
+          v-loading="loading"
+          class="loadingMark"
         />
-      </div>
-      <div v-if="loading" v-loading="loading" class="loadingMark" />
-    </el-popover>
+      </el-popover>
+    </transition>
   </div>
 
 </template>
 
 <script>
-
-export function deepMerge(target, merged) {
-  for (var key in merged) {
-    target[key] = target[key] && target[key].toString() === '[object Object]' ? deepMerge(target[key], merged[key]) : target[key] = merged[key]
-  }
-  return target
-}
 
 export function debounce(callback, delay) {
   let lastTime
@@ -70,6 +68,7 @@ export function debounce(callback, delay) {
 }
 
 import request from '../../uitls/request'
+import { deepMerge, deepClone } from '../../uitls'
 
 export default {
   name: 'CubeSelectTree',
@@ -100,92 +99,51 @@ export default {
     }
   },
   props: {
-    // 组件默认点击选择返回 keyCode 对应的值 即id、
-    // 如果设置则返回现在数据对象
-    valuekey: {
-      type: String,
-      default: () => ''
-    },
-    nodeKey: {
-      type: String,
-      default: () => ''
-    },
-    backValue: {
-      type: String,
-      default: () => ''
-    },
-    popoverWidth: { // 搜索弹层宽度
-      type: Number,
-      default: () => 320
-    },
-    width: { // 输入框宽度
-      type: Number,
-      default: () => 0
-    },
-    keyName: { // 主要用户编辑显示组合对象
-      type: String,
-      default: () => 'label'
-    },
-    keyCode: { // 主要用户编辑显示组合对象
-      type: String,
-      default: () => 'value'
+    config: {
+      type: Object,
+      default: () => { }
     },
     value: { // 编辑显示传入对象
       type: [Object, String],
-      default: () => {
-        // return {
-        //   label: '显示名称',
-        //   value: '选择value'
-        // }
-      }
-    },
-    appendVisible: { // 是否显示 选 字
-      type: Boolean,
-      default: () => false
-    },
-    filterable: { // 是否开启过滤
-      type: Boolean,
-      default: () => true
-    },
-    clearable: { // 是否可以清除
-      type: Boolean,
-      default: () => true
-    },
-    extraParam: { // 关联拓展参数
-      type: Object,
-      default: () => {
-      }
-    },
-    placeholder: { // 提示占位符号
-      type: String,
-      default: () => ''
-    },
-    focusOnload: { // 是否获取焦点就加载 如果设置 false 则只加载一次
-      type: Boolean,
-      default: () => true
-    },
-    method: { // 请求方法 默认 POST
-      type: String,
-      default: () => 'POST'
-    },
-    url: { // 数据请求接口 毕传
-      type: String,
-      default: () => ''
+      // { label: '显示名称',value: '选择value'}
+      default: () => { }
     }
   },
   data() {
     return {
-      defaultProps: {
-        children: 'children',
-        label: 'label'
-      },
       placeholder2: '请选择',
       recordSelect: null,
-      firstTime: true,
       visible: false,
       loading: false,
       selectValue: '',
-      tableData: []
+      tableData: [],
+      // 默认参数
+      defaultConfig: {
+        // 显示输入区域
+        keyName: 'label', // 显示选择名称
+        keyCode: 'value', // 选择关键key
+        placeholder: '请选择',
+        clearable: true,
+        tipButtonVisible: true,
+        tipButtonText: '选择',
+        popoverWidth: 320, // 弹层宽度
+        inputWidth: 330, // 输入框宽度
+        // 树区域
+        nodeKey: 'id',
+        selectAny: false,
+        treeDefaultProps: {
+          children: 'children',
+          label: 'label'
+        },
+        // 请求额外设置参数 -  网络数据加载区域
+        needLoad: true,
+        method: 'POST',
+        url: '',
+        extraParam: {},
+        focusOnload: true,
+        // 选择返回值设置
+        selectValuekey: []
+      }
     }
   },
   watch: {
@@ -194,13 +152,22 @@ export default {
       handler(value) {
         // 存在
         if (value) {
+          const { keyName } = this.defaultConfig
           this.recordSelect = value
-          this.selectValue = value[this.keyName]
+          this.selectValue = value[keyName]
         } else {
           this.selectValue = ''
           this.recordSelect = null
           this.placeholder2 = '请选择'
         }
+      }
+    },
+    config: {
+      immediate: true,
+      handler(configData) {
+        const { defaultConfig } = this
+        this.defaultConfig = deepMerge(deepClone(defaultConfig), configData || {})
+        this.placeholder2 = this.defaultConfig.placeholder
       }
     }
   },
@@ -210,20 +177,17 @@ export default {
   },
   methods: {
     focus() {
+      const { recordSelect } = this
+      const { focusOnload, keyName } = this.defaultConfig
       this.visible = true
       // 获取焦点的时候 如果已经选择的东西 隐藏
-      const { recordSelect } = this
       if (recordSelect) {
         this.selectValue = ''
-        this.placeholder2 = recordSelect[this.keyName]
+        this.placeholder2 = recordSelect[keyName]
       }
       // 获取焦点就加载如果关闭则只会加载请求一次
-      if (this.focusOnload) {
+      if (focusOnload) {
         this.fetchTableData()
-      } else {
-        if (this.firstTime) {
-          this.fetchTableData()
-        }
       }
     },
     blur() {
@@ -239,8 +203,9 @@ export default {
     miss() {
       this.visible = false
       const { recordSelect } = this
+      const { keyName } = this.defaultConfig
       if (recordSelect) {
-        this.selectValue = recordSelect[this.keyName]
+        this.selectValue = recordSelect[keyName]
         this.placeholder2 = '请选择'
       }
     },
@@ -248,26 +213,31 @@ export default {
       this.$emit('hidePopover')
     },
     handleNodeClick(row) {
-      // 选择最后一级没有 children 的 对外期待暴露的是什么 1、选择id 2、对象
-      if (!row.children || !row.children.length) {
-        this.selectValue = row[this.keyName]
-        this.recordSelect = row
-        const { valuekey } = this
-        if (!valuekey) {
-          //  不设置默认返回
-          // { label: '显示名称', value: '选择value' }
-          this.$emit('input', { [this.keyCode]: row[this.keyCode], [this.keyName]: row[this.keyName] })
-        } else {
-          //  设置返回整个数据对象
-          this.$emit('input', row)
+      const { selectAny, keyName, keyCode, selectValuekey } = this.defaultConfig
+      // 可设置返回对象内容
+      const selectValuekeyParams = {}
+      if (Array.isArray(selectValuekey) && selectValuekey.length) {
+        for (const item of selectValuekey) {
+          selectValuekeyParams[item] = row[item]
         }
+      }
+      const params = { [keyCode]: row[keyCode], [keyName]: row[keyName], ...selectValuekeyParams }
+      if (selectAny) {
+        // 选择最后任意
+        this.visible = false
+        this.selectValue = row[keyName]
+        this.recordSelect = row
+        this.$emit('input', params)
         this.$emit('change', row)
-        setTimeout(() => {
-          this.visible = false
-        }, 200)
       } else {
-      // 选择最后任意
-        console.log('选择最后任意')
+        // 选择最后一级-没有children、或者 !children.length
+        if (!row.children || !row.children.length) {
+          this.visible = false
+          this.selectValue = row[keyName]
+          this.recordSelect = row
+          this.$emit('input', params)
+          this.$emit('change', row)
+        }
       }
     },
     filterNode(value, data) {
@@ -276,17 +246,16 @@ export default {
     },
     input: debounce(function(item) {
       this.$refs.tree.filter(item)
-      // this.fetchTableData()
     }, 800),
     fetchTableData() {
-      this.firstTime = false
-      const { url } = this
+      const { url, extraParam, method } = this.defaultConfig
       if (!url) false
-      const params = { ...this.extraParam }
-      this.tableData = []
       this.loading = true
-      const paramsKey = this.method.toUpperCase() !== 'POST' ? 'params' : 'data'
-      request({ url, method: this.method, [paramsKey]: params }).then((data) => {
+      this.tableData = []
+      // const params = Object.keys(extraParam).length ? { ...extraParam } : null
+      const params = { ...extraParam }
+      const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data'
+      request({ url, method: method, [paramsKey]: params }).then((data) => {
         this.loading = false
         if (data.success) {
           const result = data.data
@@ -330,8 +299,8 @@ export default {
     min-height: 320px;
     overflow-y: auto;
 
-    .loadingMark{
-      position: absolute!important;
+    .loadingMark {
+      position: absolute !important;
       top: 0;
       left: 0;
       width: 100%;

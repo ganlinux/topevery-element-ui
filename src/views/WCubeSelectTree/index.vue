@@ -19,6 +19,13 @@
 export default {
   name: 'WCubeSelectTreeX',
   title: 'CubeSelectTree树形选择',
+  pageConfig: {
+    groupsKey: 'business',
+    groupsName: '业务组件',
+    pageTitle: 'CubeSelectTree树形选择',
+    pageName: 'CubeSelectTree',
+    sort: '1'
+  },
   data() {
     return {
       cubeSelectTree: '',

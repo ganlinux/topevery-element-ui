@@ -7,8 +7,11 @@ import NoticeBar from './NoticeBar'
 import SearchBar from './SearchBar'
 import ScrollBar from './ScrollBar'
 import SelectBar from './SelectBar'
+
+import CubeButton from './CubeButton'
 import CubeInput from './CubeInput'
 import CubeRadio from './CubeRadio'
+
 import CubeTableList from './CubeTableList'
 import CubeSelect from './CubeSelect'
 import CubeSplit from './CubeSplit'
@@ -16,8 +19,16 @@ import CubeUpload from './CubeUpload'
 import CubeCircle from './CubeCircle'
 import CubeMapDraw from './CubeMapDraw'
 import CubeSelectTree from './CubeSelectTree'
+
 import CubeContainer from './CubeContainer'
+import CubePanel from './CubePanel'
+
 import ProgressLine from './ProgressLine'
+
+import CubeBorderBox1 from './CubeBorderBox1'
+import CubeBorderBox2 from './CubeBorderBox2'
+import CubeBorderBox3 from './CubeBorderBox3'
+import CubeBorderBox4 from './CubeBorderBox4'
 
 export const components = {
   CubeDialog,
@@ -29,15 +40,25 @@ export const components = {
   CubeSelect,
   ScrollBar,
   SelectBar,
+
+  CubeButton,
   CubeInput,
   CubeRadio,
+
   CubeSplit,
   CubeUpload,
   CubeCircle,
   CubeMapDraw,
   CubeSelectTree,
+
   CubeContainer,
-  ProgressLine
+  CubePanel,
+
+  ProgressLine,
+  CubeBorderBox1,
+  CubeBorderBox2,
+  CubeBorderBox3,
+  CubeBorderBox4
 }
 
 // Define plugin installation method
@@ -52,7 +73,7 @@ const install = function(Vue) {
     if (component.name) {
       Vue.component(component.name, component) // kebab-case
       Vue.component(transformCamelCase(`-${component.name}`), component) // PascalCase
-      console.log(transformCamelCase(`-${component.name}`))
+      // console.log(transformCamelCase(`-${component.name}`))
     }
   })
 

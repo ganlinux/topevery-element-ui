@@ -68,6 +68,7 @@ export default {
 
 <style lang="scss" scoped>
 .MaxHeight{
+  box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
 }

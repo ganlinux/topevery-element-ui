@@ -20,7 +20,7 @@
       <div
         v-if="showAppendBtn"
         slot="append"
-        @click.stop="visible=true"
+        @click.stop="focus"
       > {{ appendBtnText }} </div>
     </el-input>
 
@@ -109,7 +109,7 @@ export function debounce(callback, delay) {
   }
 }
 
-import request from '@/utils/request'
+import request from '../../uitls/request'
 
 export default {
   name: 'CubeSelect',

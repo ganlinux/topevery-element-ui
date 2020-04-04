@@ -13,6 +13,13 @@ import { initHighlightBlock } from '@/utils'
 export default {
   name: 'FormValidationX',
   title: '表单验证',
+  pageConfig: {
+    groupsKey: 'business',
+    groupsName: '业务组件',
+    pageTitle: '表单验证',
+    pageName: 'FormValidation',
+    sort: '1'
+  },
   components: {
     Md
   },

@@ -24,7 +24,32 @@
       :stroke-width="12"
       status="active"
     />
-
+    <div class="vertical">
+      <ProgressLine
+        vertical
+        :percent="90"
+        :stroke-width="12"
+        status="active"
+      />
+      <ProgressLine
+        vertical
+        :percent="65"
+        :stroke-width="12"
+        status="active"
+      />
+      <ProgressLine
+        vertical
+        :percent="45"
+        :stroke-width="12"
+        status="active"
+      />
+      <ProgressLine
+        vertical
+        :percent="25"
+        :stroke-width="12"
+        status="active"
+      />
+    </div>
     <Cube-Circle
       :size="250"
       :trail-width="5"
@@ -49,6 +74,13 @@
 export default {
   name: 'CardCarouselX',
   title: '进度条',
+  pageConfig: {
+    groupsKey: 'component',
+    groupsName: '组件',
+    pageTitle: '进度条',
+    pageName: 'CardCarouselX',
+    sort: '1'
+  },
   data() {
     return {
 
@@ -60,7 +92,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .circle-custom {
   & h1 {
     color: #3f414d;
@@ -87,6 +119,11 @@ export default {
     font-style: normal;
     color: #3f414d;
   }
+}
+.vertical{
+  height: 200px;
+  margin: 40px 0;
+  display: flex;
 }
 </style>
 
