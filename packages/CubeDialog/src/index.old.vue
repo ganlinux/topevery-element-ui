@@ -7,7 +7,6 @@
     <div
       v-show="visible"
       class="el-dialog__wrapper"
-      :class="fullscreen ? 'fullscreen_wrapper':'' "
       @click.self="handleWrapperClick"
     >
       <div
@@ -25,6 +24,7 @@
           </slot>
           <button
             v-if="showClose"
+            style="top:14px;"
             type="button"
             class="el-dialog__headerbtn"
             aria-label="Close"
@@ -36,39 +36,25 @@
         <div
           v-if="rendered"
           class="el-dialog__body"
-          :style="dialogBodyStyle"
         >
-          <div class="el-dialog__body__main">
-            <div
-              ref="scroll-bar"
-              class="scroll-bar"
-            >
-              <slot />
-            </div>
-          </div>
-          <div
-            v-if="$slots.footer"
-            class="el-dialog__footer"
-          >
-            <slot name="footer" />
-          </div>
+          <slot />
         </div>
-        <!-- <div
+        <div
           v-if="$slots.footer"
           class="el-dialog__footer"
         >
           <slot name="footer" />
-        </div> -->
+        </div>
       </div>
     </div>
   </transition>
 </template>
 
 <script>
+
 import Popup from 'element-ui/src/utils/popup'
 import Migrating from 'element-ui/src/mixins/migrating'
 import emitter from 'element-ui/src/mixins/emitter'
-import { debounce1 } from '@/utils'
 
 export default {
   name: 'CubeDialog',
@@ -116,8 +102,10 @@ export default {
       default: true
     },
 
-    // eslint-disable-next-line vue/require-default-prop
-    width: String,
+    width: {
+      type: String,
+      default: ''
+    },
 
     fullscreen: Boolean,
 
@@ -128,11 +116,13 @@ export default {
 
     top: {
       type: String,
-      default: '0vh'
+      default: '15vh'
     },
 
     // eslint-disable-next-line vue/require-default-prop
-    beforeClose: Function,
+    beforeClose: {
+      type: Function
+    },
 
     center: {
       type: Boolean,
@@ -148,10 +138,7 @@ export default {
   data() {
     return {
       closed: false,
-      key: 0,
-      // 高度占屏幕的百分比
-      percentage: 0.84,
-      maxHeight: 'auto'
+      key: 0
     }
   },
 
@@ -165,10 +152,6 @@ export default {
         }
       }
       return style
-    },
-    dialogBodyStyle() {
-      const { fullscreen, maxHeight } = this
-      return fullscreen ? {} : { height: `${maxHeight}` }
     }
   },
 
@@ -183,19 +166,6 @@ export default {
         })
         if (this.appendToBody) {
           document.body.appendChild(this.$el)
-        }
-        if (!this.fullscreen) {
-          if (this.resizeHeight) {
-            setTimeout(_ => {
-              this.computedHeight()
-            }, 200)
-          } else {
-            this.resizeHeight = debounce1(() => {
-              this.computedHeight()
-            }, 200)
-            window.addEventListener('resize', this.resizeHeight)
-            this.resizeHeight()
-          }
         }
       } else {
         this.$el.removeEventListener('scroll', this.updatePopper)
@@ -225,27 +195,12 @@ export default {
       this.$el.parentNode.removeChild(this.$el)
     }
   },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.resizeHeight)
-  },
-  methods: {
-    computedHeight() {
-      // p判断容器高度是否大于可视区高度
-      const { fullscreen } = this
-      const innerHieght = window.innerHeight || 400
-      const divHieght = this.$refs['scroll-bar'] && this.$refs['scroll-bar'].offsetHeight || 410
-      if (divHieght > innerHieght && !fullscreen) {
-        this.maxHeight = (Math.abs(innerHieght) * this.percentage).toFixed(0) + 'px'
-      } else {
-        // this.maxHeight = `350px`
-        this.maxHeight = `auto`
-      }
-    },
 
+  methods: {
     getMigratingConfig() {
       return {
         props: {
-          'size': 'size is removed.'
+          size: 'size is removed.'
         }
       }
     },
@@ -281,37 +236,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-.el-dialog__wrapper {
-  display: flex;
-  align-items: center;
-}
-
-.fullscreen_wrapper {
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  padding: 18px;
-  overflow: auto;
-  background: rgba(0, 0, 0, 0.1);
-}
-.el-dialog__body {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  .el-dialog__body__main {
-    flex: 1;
-    overflow: auto;
-  }
-  .el-dialog__footer {
-    padding: 10px;
-    text-align: center;
-  }
-  .scroll-bar {
-    height: 100%;
-  }
+<style lang="scss">
+.el-dialog__headerbtn {
+  font-size: 18px!important;;
+  top: 14px!important;;
 }
 </style>

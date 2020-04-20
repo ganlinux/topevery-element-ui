@@ -19,7 +19,8 @@
     <MaxHeight
       v-model="height"
       v-loading="loading"
-      element-loading-text="拼命加载中"
+      :prefix="0"
+      :element-loading-text="loadingText"
       element-loading-spinner="el-icon-loading"
       element-loading-background="rgba(242, 248, 254, 0.9)"
       :calc-height="initConfig.table.calcTableHeight"
@@ -27,21 +28,10 @@
       <CubeTable
         :ref="name"
         class="CubeTable"
-        :data="tableData"
-        :columns="initConfig.table.columns"
+        :config="initConfig.table"
         :height="initConfig.table.calcTableHeight ? height-prefixHeight : initConfig.table.tableHeight"
+        :load-more="loadMore"
         @tableRowClick="tableRowClick"
-      />
-      <el-pagination
-        style="text-align: center;margin-top: 4px;"
-        background
-        :current-page="pagination.currentPage"
-        :page-sizes="pagination.pageSizes"
-        :page-size="pagination.size"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="pagination.total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
       />
     </MaxHeight>
 
@@ -58,7 +48,7 @@ import request from '../../uitls/request'
 import { deepClone, deepMerge } from '../../uitls'
 
 export default {
-  name: 'CubeTableList',
+  name: 'TableLoadMore',
   components: {
     SearchBar,
     CubeTable,
@@ -80,6 +70,10 @@ export default {
       type: Object,
       default: () => {}
     },
+    loadingText: {
+      type: String,
+      default: '数据加载中...'
+    },
     config: {
       type: Object,
       default: () => {}
@@ -87,10 +81,10 @@ export default {
   },
   data() {
     return {
-      name: 'CubeTable',
+      name: 'TableLoadMore',
       height: 0,
       loading: false,
-      tableData: [],
+      pageIndex: 1,
       initConfig: {
         method: 'POST',
         url: '',
@@ -100,21 +94,32 @@ export default {
         table: {
           tableHeight: 400, // 如果关闭自动开启计算高度 - 这个字段建议传入。
           calcTableHeight: true, // 是否开启表格自动高度计算 - 开启则忽略tableHeight设置的高度
-          columns: []
+          columns: [
+            { label: '选项', type: 'selection' },
+            { label: '序号', type: 'index' },
+            { label: '名称', key: 'name' },
+            { label: '编码', key: 'code' }
+          ],
+          data: [
+            { name: 'shiliangl', code: 1212 },
+            { name: 'shiliangl', code: 1212 },
+            { name: 'shiliangl', code: 1212 },
+            { name: 'shiliangl', code: 1212 },
+            { name: 'shiliangl', code: 1212 },
+            { name: 'shiliangl', code: 1212 },
+            { name: 'shiliangl', code: 1212 },
+            { name: 'shiliangl', code: 1212 },
+            { name: 'shiliangl', code: 1212 },
+            { name: 'shiliangl', code: 1212 }
+          ]
         }
-      },
-      pagination: {
-        pageSizes: [30, 50, 70, 100], // 默认分页可选择的每页显示的页数
-        size: 30, // 分页每页默认显示50条
-        currentPage: 1, // 当前默认第一页
-        total: 0 // 总条数
       }
     }
   },
   watch: {
     config: {
       // 属性传入改变的时候合并
-      immediate: true,
+      // immediate: true,
       handler(val) {
         const { config, initConfig } = this
         this.initConfig = deepMerge(initConfig, config || {})
@@ -166,9 +171,8 @@ export default {
     fetchTableData(searchParams = {}, page = 0) {
       const { url, method } = this.initConfig
       if (!url) return
-      page ? this.pagination.currentPage = page : this.pagination.currentPage = 1
-      const { currentPage, size } = this.pagination
-      const params = { pageIndex: currentPage, pageSize: size, ...searchParams, ...this.extraParam }
+      page ? this.pageIndex = page : this.pageIndex = 1
+      const params = { pageIndex: this.pageIndex, ...searchParams, ...this.extraParam }
       this.tableData = []
       this.loading = true
       const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data'
@@ -178,20 +182,19 @@ export default {
           const result = data.data
           if (Array.isArray(result.records)) {
             this.tableData = result.records || []
-            this.pagination.total = result.total || 0
           }
         }
       }).catch(e => {
         this.loading = false
       })
     },
-    // 分页操作区域
-    handleSizeChange(value) {
-      this.pagination.size = value
-      this.fetchList()
-    },
-    handleCurrentChange(value) {
-      this.fetchTableData({}, value)
+    loadMore() {
+      this.loading = true
+      setTimeout(() => {
+        this.pageIndex++
+        this.initConfig.table.data.push({ name: 'shiliangl_load_more' + this.pageIndex, code: 33 })
+        this.loading = false
+      }, 2000)
     },
     getCubeTable() {
       return this.$refs[this.name]

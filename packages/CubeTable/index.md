@@ -9,20 +9,22 @@
 :::demo 当`cube-table`元素中注入`data`作为表格数据源，注入`columns`为表格指定渲染`label`属性来对表头，用`key`属性来定义渲染字段。
 ```html
   <template>
-    <cube-Table :data="tableData" :columns="columns" />
+    <cube-Table :config="config" />
   </template>
   <script>
     export default {
       data() {
         return {
-          tableData:[
-            { date: '2016-05-02', name: '王富贵', address: '上海市普陀区金沙江路 1517 弄' },
-            {date: '2016-05-02',name: '翠花',address: '上海市普陀区金沙江路 1518 弄'}
-          ],
-          columns:[
-            { label: '姓名', key: 'name' },
-            { label: '地址',key: 'address' },
-          ]
+          config:{
+            data:[
+              { date: '2016-05-02', name: '王富贵', address: '上海市普陀区金沙江路 1517 弄' },
+              {date: '2016-05-02',name: '翠花',address: '上海市普陀区金沙江路 1518 弄'}
+            ],
+            columns:[
+              { label: '姓名', key: 'name' },
+              { label: '地址',key: 'address' },
+            ]
+          }
         }
       }
     }
@@ -41,27 +43,29 @@ render表格展示用法。
 :::demo `render`函数存在作为最高级别渲染。对应的`key`渲染将忽略
 ```html
   <template>
-    <cube-Table :data="tableData" :columns="columns" />
+    <cube-Table :config="config" />
   </template>
   <script>
     export default {
       data() {
         return {
-          tableData:[
-            {date: '2016-05-02', name: '王富贵', gender: 1},
-            {date: '2016-05-02',name: '翠花',gender: 0}
-          ],
-          columns:[
-            { label: '姓名', key: 'name' },
-            { 
-              label: '性别', 
-              key: 'gender', // render函数存在作为最高级别渲染。对应的key渲染将忽略
-              render: (h, parmas) => {
-                const { row } = parmas
-                return <span> { row.gender ? '男': '女'} </span>
-              }
-            },
-          ]
+          config:{
+            data:[
+              {date: '2016-05-02', name: '王富贵', gender: 1},
+              {date: '2016-05-02',name: '翠花',gender: 0}
+            ],
+            columns:[
+              { label: '姓名', key: 'name' },
+              { 
+                label: '性别', 
+                key: 'gender', // render函数存在作为最高级别渲染。对应的key渲染将忽略
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return <span> { row.gender ? '男': '女'} </span>
+                }
+              },
+            ]
+          }
         }
       }
     }
@@ -76,29 +80,32 @@ render表格展示用法。
 :::demo 通过设置 `columns`数据对象中的`type`指定特殊类型。`index/selection/expand`分别对应`索引` `多选` `拓展内容`
 ```html
   <template>
-    <cube-Table :data="tableData" :columns="columns" />
+    <cube-Table :config="config" />
   </template>
   <script>
     export default {
       data() {
         return {
-          tableData:[
-            {date: '2016-05-02', name: '王富贵', gender: 1},
-            {date: '2016-05-02',name: '翠花',gender: 0}
-          ],
-          columns:[
-            { label: '选项',  type: 'selection'},
-            { label: '序号', type: 'index' },
-            { label: '姓名', key: 'name' },
-            { 
-              label: '性别', 
-              key: 'gender', // render函数存在作为最高级别渲染。对应的key渲染将忽略
-              render: (h, parmas) => {
-                const { row } = parmas
-                return <span> { row.gender ? '男': '女'} </span>
-              }
-            },
-          ]
+          config:{
+            data:[
+              {date: '2016-05-02', name: '王富贵', gender: 1},
+              {date: '2016-05-02',name: '翠花',gender: 0}
+            ],
+            columns:[
+              { label: '选项',  type: 'selection'},
+              { label: '序号', type: 'index' },
+              { label: '姓名', key: 'name' },
+              { 
+                label: '性别', 
+                // render函数存在作为最高级别渲染。对应的key渲染将忽略
+                key: 'gender', 
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return <span> { row.gender ? '男': '女'} </span>
+                }
+              },
+            ]
+          }
         }
       }
     }
@@ -116,37 +123,39 @@ render表格展示用法。
 :::demo 只要在`cube-table`元素中定义了`height`属性，即可实现固定表头的表格，而不需要额外的代码。
 ```html
   <template>
-    <cube-Table :height='300' :data="tableData" :columns="columns" :loadMore="loadMore" />
+    <cube-Table :height='300' :config="config" :loadMore="loadMore" />
   </template>
   <script>
     export default {
       data() {
         return {
-          tableData:[
-            {date: '2016-05-02', name: '王富贵', gender: 1},
-            {date: '2016-05-02',name: '翠花',gender: 0},
-            {date: '2016-05-02',name: '翠花',gender: 0},
-            {date: '2016-05-02',name: '翠花',gender: 0},
-            {date: '2016-05-02',name: '翠花',gender: 0},
-            {date: '2016-05-02',name: '翠花',gender: 0},
-            {date: '2016-05-02',name: '翠花',gender: 0},
-            {date: '2016-05-02',name: '翠花',gender: 0},
-            {date: '2016-05-02',name: '翠花',gender: 0},
-            {date: '2016-05-02',name: '翠花',gender: 0},
-          ],
-          columns:[
-            { label: '选项',  type: 'selection'},
-            { label: '序号', type: 'index' },
-            { label: '姓名', key: 'name' },
-            { 
-              label: '性别', 
-              key: 'gender', // render函数存在作为最高级别渲染。对应的key渲染将忽略
-              render: (h, parmas) => {
-                const { row } = parmas
-                return <span> { row.gender ? '男': '女'} </span>
-              }
-            },
-          ]
+          config:{
+            data:[
+              {date: '2016-05-02', name: '王富贵', gender: 1},
+              {date: '2016-05-02',name: '翠花',gender: 0},
+              {date: '2016-05-02',name: '翠花',gender: 0},
+              {date: '2016-05-02',name: '翠花',gender: 0},
+              {date: '2016-05-02',name: '翠花',gender: 0},
+              {date: '2016-05-02',name: '翠花',gender: 0},
+              {date: '2016-05-02',name: '翠花',gender: 0},
+              {date: '2016-05-02',name: '翠花',gender: 0},
+              {date: '2016-05-02',name: '翠花',gender: 0},
+              {date: '2016-05-02',name: '翠花',gender: 0},
+            ],
+            columns:[
+              { label: '选项',  type: 'selection'},
+              { label: '序号', type: 'index' },
+              { label: '姓名', key: 'name' },
+              { 
+                label: '性别', 
+                key: 'gender', // render函数存在作为最高级别渲染。对应的key渲染将忽略
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return <span> { row.gender ? '男': '女'} </span>
+                }
+              },
+            ]
+          }
         }
       },
       methods: {
@@ -170,7 +179,7 @@ render表格展示用法。
   <template>
   <div>
     <el-row>
-      <cube-Table :data="tableData" :columns="columns" ref="cubeTable" />
+      <cube-Table :config="config" ref="cubeTable" />
     </el-row>
     <el-row>
       <el-button type="primary" @click="getSelectRowData">获取勾选数据</el-button>
@@ -182,76 +191,78 @@ render表格展示用法。
     export default {
       data() {
         return {
-          tableData:[
-              {
-                  "name": "Dr. Ayden Bashirian",
-                  "email": "Kaylin_Zieme@gmail.com",
-                  "text": "rerum est nihil",
-                  'results': 90
+          config:{
+            data:[
+                {
+                    "name": "Dr. Ayden Bashirian",
+                    "email": "Kaylin_Zieme@gmail.com",
+                    "text": "rerum est nihil",
+                    'results': 90
+                },
+                {
+                    "name": "Elinore Keeling",
+                    "email": "Riley_Borer94@gmail.com",
+                    "text": "magnam voluptatem illo",
+                    'results': 70
+                },
+                {
+                    "name": "Esteban Luettgen",
+                    "email": "Emmie_Lang@yahoo.com",
+                    "text": "inventore quod dolores",
+                    'results': 88
+                },
+                {
+                    "name": "Maximo Marvin",
+                    "email": "Rebekah_Kohler87@yahoo.com",
+                    "text": "et velit sed",
+                    'results': 30
+                },
+                {
+                    "name": "Mrs. Roosevelt Brekke",
+                    "email": "Kian19@gmail.com",
+                    "text": "aliquid nobis error",
+                    'results': 75
+                },
+                {
+                    "name": "Don Schoen Jr.",
+                    "email": "Buck_Aufderhar13@gmail.com",
+                    "text": "exercitationem autem omnis",
+                    'results': 45
+                }
+            ],
+            columns:[
+              { label: '选项',  type: 'selection'},
+              { label: '序号', type: 'index' },
+              { label: '姓名', key: 'name' },
+              { label: '邮箱', key: 'email' },
+              { 
+                label: '描述', 
+                key: 'text', 
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return <span> { row.text } </span>
+                }
               },
-              {
-                  "name": "Elinore Keeling",
-                  "email": "Riley_Borer94@gmail.com",
-                  "text": "magnam voluptatem illo",
-                  'results': 70
+              { 
+                label: '业绩', 
+                key: 'text', 
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return <span> { row.results } 万 </span>
+                }
               },
-              {
-                  "name": "Esteban Luettgen",
-                  "email": "Emmie_Lang@yahoo.com",
-                  "text": "inventore quod dolores",
-                  'results': 88
+              { label: '操作',
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return (<div class="flex-box-table-row">  
+                    <el-button size="mini" type="text" onClick={ ()=>this.handler('编辑') }> 编辑 </el-button>
+                    <el-button size="mini" type="text" onClick={ ()=>this.handler('查看') }> 查看 </el-button>
+                    <el-button size="mini" type="text" onClick={ ()=>this.handler('删除') }> 删除 </el-button>
+                 </div>)
+                }
               },
-              {
-                  "name": "Maximo Marvin",
-                  "email": "Rebekah_Kohler87@yahoo.com",
-                  "text": "et velit sed",
-                  'results': 30
-              },
-              {
-                  "name": "Mrs. Roosevelt Brekke",
-                  "email": "Kian19@gmail.com",
-                  "text": "aliquid nobis error",
-                  'results': 75
-              },
-              {
-                  "name": "Don Schoen Jr.",
-                  "email": "Buck_Aufderhar13@gmail.com",
-                  "text": "exercitationem autem omnis",
-                  'results': 45
-              }
-          ],
-          columns:[
-            { label: '选项',  type: 'selection'},
-            { label: '序号', type: 'index' },
-            { label: '姓名', key: 'name' },
-            { label: '邮箱', key: 'email' },
-            { 
-              label: '描述', 
-              key: 'text', 
-              render: (h, parmas) => {
-                const { row } = parmas
-                return <span> { row.text } </span>
-              }
-            },
-            { 
-              label: '业绩', 
-              key: 'text', 
-              render: (h, parmas) => {
-                const { row } = parmas
-                return <span> { row.results } 万 </span>
-              }
-            },
-            { label: '操作',
-              render: (h, parmas) => {
-                const { row } = parmas
-                return (<div class="flex-box-table-row">  
-                  <el-button size="mini" type="text" onClick={ ()=>this.handler('编辑') }> 编辑 </el-button>
-                  <el-button size="mini" type="text" onClick={ ()=>this.handler('查看') }> 查看 </el-button>
-                  <el-button size="mini" type="text" onClick={ ()=>this.handler('删除') }> 删除 </el-button>
-               </div>)
-              }
-            },
-          ]
+            ]
+          }
         }
       },
        methods: {

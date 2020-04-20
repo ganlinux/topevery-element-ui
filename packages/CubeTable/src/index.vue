@@ -8,13 +8,13 @@
     class="cube-table"
     :border="border"
     style="width: 100%;"
-    :data="rebuildData"
+    :data="initConfig.data"
     :height="height"
     :stripe="stripe"
     :size="size"
     :max-height="maxHeight"
     :highlight-current-row="highlightCurrentRow"
-    element-loading-text="数据加载中..."
+    :element-loading-text="loadingText"
     :row-style="rowStyle"
     :header-cell-style="headerCellStyle"
     :row-class-name="rowClassName"
@@ -22,7 +22,7 @@
     @row-click="tableRowClick"
     @expand-change="expandChange"
   >
-    <template v-for="(column, index) in columns">
+    <template v-for="(column, index) in initConfig.columns">
       <!-- 处理 selection 、 index  、 expand 特殊项 -->
       <template v-if="column.type">
         <!-- expand -->
@@ -112,8 +112,8 @@
 
 <script>
 
-import { deepClone } from '../../uitls'
 import { Table, TableColumn } from 'element-ui'
+import { deepClone, deepMerge } from '../../uitls/index'
 
 export default {
   name: 'CubeTable',
@@ -121,19 +121,21 @@ export default {
     loadMore: {
       bind(el, binding) {
         const selectWrap = el.querySelector('.el-table__body-wrapper')
-        selectWrap.addEventListener('scroll', function() {
+        function scrollTableEvent() {
           const sign = 0
           const scrollDistance = this.scrollHeight - this.scrollTop - this.clientHeight
           if (scrollDistance <= sign) {
             binding.value()
           }
-        })
+        }
+        selectWrap.addEventListener('scroll', scrollTableEvent)
+        el.__scrollTableEvent__ = scrollTableEvent
       },
       update() { },
       unbind(el, binding) {
-        // 解除事件监听
-        // const selectWrap = el.querySelector('.el-table__body-wrapper')
-        // selectWrap.removeEventListener('scroll', function() {})
+        const selectWrap = el.querySelector('.el-table__body-wrapper')
+        selectWrap.removeEventListener('scroll', el.__scrollTableEvent__)
+        delete el.__scrollTableEvent__
       }
     }
   },
@@ -170,25 +172,26 @@ export default {
       type: Boolean,
       default: false
     },
+    loadingText: {
+      type: String,
+      default: '数据加载中...'
+    },
     border: {
       type: Boolean,
       default: true
     },
-    data: {
-      type: Array,
-      default: () => []
-    },
-    columns: {
-      type: Array,
-      default: () => [
-        {
-          align: '',
-          label: '',
-          type: '',
-          fixed: '',
-          width: ''
+    config: {
+      type: Object,
+      default: () => {
+        return {
+          data: [],
+          columns: [
+            { label: '选项', type: 'selection' },
+            { label: '名称', key: 'name' },
+            { label: '编码', key: 'code' }
+          ]
         }
-      ]
+      }
     },
     // eslint-disable-next-line vue/require-default-prop
     height: {
@@ -304,22 +307,23 @@ export default {
   data() {
     return {
       name: 'CubeTable',
-      rebuildData: []
+      initConfig: {
+        data: [],
+        columns: []
+      }
     }
   },
   watch: {
-    data: {
+    config: {
       immediate: true,
       // deep: true,
       handler() {
         setTimeout(() => {
-          const { data } = this
-          this.rebuildData = data.map(item => {
-            // item._rowKey = this.getRandomID()
-            return item
-          })
+          const { config, initConfig } = this
+          this.initConfig = deepMerge(initConfig, config || {})
+          console.log(this.initConfig, 'xx')
           if (this.initSeletTheFirst) {
-            const row = this.rebuildData[0]
+            const row = this.initConfig.data[0]
             this.setCurrent(row)
           }
         }, 0)

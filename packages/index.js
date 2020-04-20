@@ -3,6 +3,7 @@ import { transformCamelCase } from './uitls'
 import CubeDialog from './CubeDialog'
 import MaxHeight from './MaxHeight'
 import CubeTable from './CubeTable'
+
 import NoticeBar from './NoticeBar'
 import SearchBar from './SearchBar'
 import ScrollBar from './ScrollBar'
@@ -12,7 +13,13 @@ import CubeButton from './CubeButton'
 import CubeInput from './CubeInput'
 import CubeRadio from './CubeRadio'
 
+import CubeForm from './CubeForm'
+
 import CubeTableList from './CubeTableList'
+import TableLoadMore from './TableLoadMore'
+
+import CubeVideoPlayer from './CubeVideoPlayer'
+
 import CubeSelect from './CubeSelect'
 import CubeSplit from './CubeSplit'
 import CubeUpload from './CubeUpload'
@@ -36,7 +43,12 @@ export const components = {
   CubeTable,
   NoticeBar,
   SearchBar,
+
   CubeTableList,
+  TableLoadMore,
+
+  CubeVideoPlayer,
+
   CubeSelect,
   ScrollBar,
   SelectBar,
@@ -44,6 +56,8 @@ export const components = {
   CubeButton,
   CubeInput,
   CubeRadio,
+
+  CubeForm,
 
   CubeSplit,
   CubeUpload,

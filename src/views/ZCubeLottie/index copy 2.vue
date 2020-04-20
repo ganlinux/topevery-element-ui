@@ -1,6 +1,9 @@
 <template>
   <div>
-    <TableLoadMore />
+    <!-- {{ treeSelect }} -->
+    <CubeSelectTree v-model="treeSelect" :config="config" />
+
+    <CubeVideoPlayer />
   </div>
 </template>
 
