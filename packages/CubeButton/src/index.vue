@@ -1,75 +1,76 @@
+<template>
+  <button
+    class="el-button"
+    :disabled="buttonDisabled || loading"
+    :autofocus="autofocus"
+    :type="nativeType"
+    :class="[
+      type ? 'el-button--' + type : '',
+      buttonSize ? 'el-button--' + buttonSize : '',
+      {
+        'is-disabled': buttonDisabled,
+        'is-loading': loading,
+        'is-plain': plain,
+        'is-round': round,
+        'is-circle': circle
+      }
+    ]"
+    @click="handleClick"
+  >
+    <i v-if="loading" class="el-icon-loading" />
+    <i v-if="icon && !loading" :class="icon" />
+    <span v-if="$slots.default"><slot /></span>
+  </button>
+</template>
 <script>
-import { Button } from 'element-ui'
+
 export default {
   name: 'CubeButton',
-  extends: Button, // 指定继承组件
-  props: {
-    value: {
-      type: [String, Number],
-      default: () => ''
+  inject: {
+    elForm: {
+      default: ''
     },
-    placeholder: {
-      type: String,
-      default: () => '请输入内容'
-    },
-    type: {
-      type: String,
-      default: () => 'text' // textarea
-    },
-    autosize: {
-      type: [Boolean, Object], // 自适应内容高度，只对 type="textarea" 有效，可传入对象，如，{ minRows: 2, maxRows: 6 }
-      default: () => false // boolean / object
-    },
-    rows: {
-      type: Number,
-      default: () => 2
-    },
-    leftIcon: {
-      type: String,
-      default: () => ''
-    },
-    rightIcon: {
-      type: String,
-      default: () => ''
-    },
-    size: {
-      type: String,
-      default: () => 'small' // medium / small / mini
-    },
-    clearable: {
-      type: Boolean,
-      default: () => true
-    },
-    showLimit: {
-      type: Boolean,
-      default: () => false
-    },
-    disabled: {
-      type: Boolean,
-      default: () => false
-    },
-    maxlength: {
-      type: String,
-      default: () => ''
-    },
-    showPassword: {
-      type: Boolean,
-      default: () => false
-    },
-    readonly: {
-      type: Boolean,
-      default: () => false
-    },
-    hide: { // 是否隐藏/特殊校验的时候占位做错误提示使用
-      type: Boolean,
-      default: () => false
+    elFormItem: {
+      default: ''
     }
   },
-  data() {
-    return {
-      inputValue: ''
+  props: {
+    type: {
+      type: String,
+      default: 'default'
+    },
+    // eslint-disable-next-line vue/require-default-prop
+    size: String,
+    icon: {
+      type: String,
+      default: ''
+    },
+    nativeType: {
+      type: String,
+      default: 'button'
+    },
+    loading: Boolean,
+    disabled: Boolean,
+    plain: Boolean,
+    autofocus: Boolean,
+    round: Boolean,
+    circle: Boolean
+  },
+  computed: {
+    _elFormItemSize() {
+      return (this.elFormItem || {}).elFormItemSize
+    },
+    buttonSize() {
+      return this.size || this._elFormItemSize || (this.$ELEMENT || {}).size
+    },
+    buttonDisabled() {
+      return this.disabled || (this.elForm || {}).disabled
+    }
+  },
+  methods: {
+    handleClick(evt) {
+      this.$emit('click', evt)
     }
   }
 }
 </script>
-

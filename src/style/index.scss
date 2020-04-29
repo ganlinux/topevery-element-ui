@@ -225,7 +225,7 @@ html, body {
   }
 
   //展示定义一下统一样式
-  .CubeInput{
+  .cubeInput{
     width: 220px;
   }
  
@@ -266,4 +266,16 @@ html, body {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+
+// w80 - w470
+@function indexName($args) { 
+  @return $args * 10 + 70; 
+}
+
+@for $i from 1 through 40 {
+  .w#{indexName($i)} {
+      width: #{indexName($i)+'px !important;'}
+  }
 }

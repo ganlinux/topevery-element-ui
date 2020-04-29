@@ -11,14 +11,12 @@ import 'echarts/map/js/china.js'
 // const animationDuration = 4000
 
 export default {
-  name: 'WCubeuploadCropper',
-  title: '图片上传剪切',
   pageConfig: {
-    groupsKey: 'component',
+    groupsKey: 'chart',
     groupsName: '组件',
-    pageTitle: '测试echart',
-    pageName: 'TestEchart',
-    sort: '1'
+    pageTitle: 'Echart流线图',
+    pageName: 'WchartFlyLineX',
+    sort: '6'
   },
   mixins: [resize],
   props: {

@@ -49,7 +49,7 @@
           label: '北京烤鸭'
         }],
         value1: '',
-        value2: '',
+        value2: { value: '42F84BFD-2ED6-4D76-82ED-9A0566CFE022', label: '黄金糕' }
       }
     }
   }

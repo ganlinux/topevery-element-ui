@@ -86,21 +86,23 @@ export default {
     background-color: transparent;
   }
   &:hover::-webkit-scrollbar-thumb {
-    background-color: rgba(69, 90, 100, .2)
+    background-color: rgba(69, 90, 100, 0.2);
   }
-  .item,.subitem {
+  .item,
+  .subitem {
     a {
       margin: 0;
       display: block;
-      color: #455a64;
+      color: #606f82;
       padding-left: 30px;
       padding-top: 4px;
       padding-bottom: 4px;
       line-height: 24px;
-      transition: all .3s;
-      text-decoration:none;
+      transition: all 0.3s;
+      text-decoration: none;
       &.active {
-        color: #1989fa;
+        background: #3086f6;
+        color: #fff;
       }
     }
   }
@@ -119,11 +121,13 @@ export default {
     font-size: 16px;
     line-height: 40px;
     padding-left: 20px;
-    color: rgba(69, 90, 100, .6);
+    color: #333333;
+    background: antiquewhite;
+    font-weight: 400;
   }
   @media (max-width: 1300px) {
-    min-width: 220px;
-    max-width: 220px;
+    min-width: 210px;
+    max-width: 210px;
     .item,
     .subitem {
       a {

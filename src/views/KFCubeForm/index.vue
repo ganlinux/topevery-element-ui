@@ -2,7 +2,17 @@
 <template>
   <div>
     {{ config.form }}
-    <CubeForm :config="config" />
+    <CubeForm :config="config">
+
+      <div slot="other">
+        <el-form-item label="审批人">
+          <el-input v-model="config.form.user" placeholder="审批人" />
+        </el-form-item>
+        <el-form-item label="数量">
+          <CubeInputNumber v-model="config.form.number" />
+        </el-form-item>
+      </div>
+    </CubeForm>
   </div>
 </template>
 
@@ -21,11 +31,13 @@ export default {
     return {
       config: {
         form: {
+          user: '',
           name: '张文静',
           age: null,
           food: { 'value': '选项5', 'label': '北京烤鸭' },
           date: '',
           money: '',
+          number: '',
           time: '',
           textarea: '',
           dateTime: '',

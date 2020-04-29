@@ -3,6 +3,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'highlight.js/styles/atom-one-dark.css'
 // import '@/assets/iconfont/iconfont.css'
 import './style/index.scss'
+import './style/theme/index.css'
 
 import Vue from 'vue'
 import App from './App.vue'
@@ -14,6 +15,9 @@ import tyelui from '../packages'
 import router from './router'
 import Element from 'element-ui'
 import elementUIVerify from 'element-ui-verify'
+
+import '@/style/icons/iconfont.js'
+import '@/style/icons/iconfont.css'
 
 import demoBlock from './components/demo-block'
 

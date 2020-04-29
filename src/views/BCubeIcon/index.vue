@@ -1,17 +1,73 @@
 <template>
   <div class="container">
-    <el-card
-      v-for="(item) in iconfontList"
-      :key="item.icon_id"
-      class="box-card"
-      :body-style="{padding: '10px'}"
-      @click.native="doCopy(item)"
-    >
-      <div class="card-inner">
-        <i :class="'iconfont icon' + item.font_class" />
-        <div class="name">{{ item.name }}</div>
-      </div>
-    </el-card>
+
+    <div class="search-bar">
+
+      <el-button
+        size="mini"
+        :type="theme===0? 'primary':'' "
+        @click="theme=0"
+      >Font class 无颜色</el-button>
+      <el-button
+        size="mini"
+        :type="theme===1? 'primary':''"
+        @click="theme=1"
+      > Symbol 有颜色</el-button>
+
+      <Cube-Input
+        v-model="searchText"
+        class="w180"
+        @change="searchData"
+      />
+    </div>
+
+    <div class="list-warp">
+
+      <transition-group
+        key="class"
+        name="el-zoom-in-center"
+      >
+        <template v-if="!theme">
+          <el-card
+            v-for="(item) in iconfontList"
+            :key="item.icon_id"
+            class="box-card"
+            :body-style="{padding: '10px'}"
+            @click.native="doCopy(item)"
+          >
+            <div class="card-inner">
+              <i :class="'iconfont icon' + item.font_class" />
+              <div class="name">{{ item.name }}</div>
+            </div>
+          </el-card>
+        </template>
+
+        <transition-group
+          v-else
+          key="symbol"
+        >
+          <el-card
+            v-for="(item) in iconfontList"
+            :key="item.icon_id"
+            class="box-card"
+            :body-style="{padding: '10px'}"
+            @click.native="doCopy(item)"
+          >
+            <div class="card-inner">
+              <!-- <i :class="'iconfont icon' + item.font_class" /> -->
+              <svg
+                class="icon"
+                aria-hidden="true"
+              >
+                <use :xlink:href=" `#icon${item.font_class}` " />
+              </svg>
+              <div class="name">{{ item.name }}</div>
+            </div>
+          </el-card>
+        </transition-group>
+      </transition-group>
+
+    </div>
   </div>
 </template>
 
@@ -30,6 +86,8 @@ export default {
   },
   data() {
     return {
+      theme: 0,
+      searchText: '',
       iconfontList: iconfont.glyphs
     }
   },
@@ -45,6 +103,19 @@ export default {
       }, (e) => {
         console.log(e)
       })
+    },
+    searchData(searchText) {
+      console.log(searchText, 'xx')
+      const { iconfontList } = this
+      if (searchText) {
+        return iconfontList.filter(function(product) {
+          return Object.keys(product.name).some(function(key) {
+            return String(product[key]).toLowerCase().indexOf(searchText) > -1
+          })
+        })
+      } else {
+        return iconfontList
+      }
     }
   }
 
@@ -94,7 +165,7 @@ export default {
   // border: 1px solid #297bf5;
   color: #ffffff;
   background: #297bf5;
-  .iconfont{
+  .iconfont {
     color: #ffffff;
   }
 }
@@ -115,4 +186,44 @@ export default {
   }
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+
+  .search-bar {
+    padding: 6px 0;
+    background: #ffffff;
+    box-shadow: 0 0 6px 0 rgba(29, 38, 41, 0.07);
+  }
+
+  .list-warp {
+    margin-top: 10px;
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+.el-button {
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  margin-left: 4px;
+}
+
+.w180{
+  margin: 0 4px;
+}
+.icon {
+  width: 40px;
+  height: 40px;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+/deep/.card-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 </style>

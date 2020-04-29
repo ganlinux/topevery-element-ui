@@ -39,10 +39,7 @@
           :style="dialogBodyStyle"
         >
           <div class="el-dialog__body__main">
-            <div
-              ref="scroll-bar"
-              class="scroll-bar"
-            >
+            <div ref="scroll-bar" class="scroll-bar">
               <slot />
             </div>
           </div>
@@ -53,12 +50,6 @@
             <slot name="footer" />
           </div>
         </div>
-        <!-- <div
-          v-if="$slots.footer"
-          class="el-dialog__footer"
-        >
-          <slot name="footer" />
-        </div> -->
       </div>
     </div>
   </transition>
@@ -68,7 +59,7 @@
 import Popup from 'element-ui/src/utils/popup'
 import Migrating from 'element-ui/src/mixins/migrating'
 import emitter from 'element-ui/src/mixins/emitter'
-import { debounce1 } from '@/utils'
+import { debounce } from '@/utils'
 
 export default {
   name: 'CubeDialog',
@@ -116,7 +107,6 @@ export default {
       default: true
     },
 
-    // eslint-disable-next-line vue/require-default-prop
     width: String,
 
     fullscreen: Boolean,
@@ -131,7 +121,6 @@ export default {
       default: '0vh'
     },
 
-    // eslint-disable-next-line vue/require-default-prop
     beforeClose: Function,
 
     center: {
@@ -168,7 +157,7 @@ export default {
     },
     dialogBodyStyle() {
       const { fullscreen, maxHeight } = this
-      return fullscreen ? {} : { height: `${maxHeight}` }
+      return fullscreen ? { } : { height: `${maxHeight}` }
     }
   },
 
@@ -190,7 +179,7 @@ export default {
               this.computedHeight()
             }, 200)
           } else {
-            this.resizeHeight = debounce1(() => {
+            this.resizeHeight = debounce(() => {
               this.computedHeight()
             }, 200)
             window.addEventListener('resize', this.resizeHeight)
@@ -230,10 +219,11 @@ export default {
   },
   methods: {
     computedHeight() {
+      if (!this.visible) return
       // p判断容器高度是否大于可视区高度
       const { fullscreen } = this
       const innerHieght = window.innerHeight || 400
-      const divHieght = this.$refs['scroll-bar'] && this.$refs['scroll-bar'].offsetHeight || 410
+      const divHieght = this.$refs['scroll-bar'] && this.$refs['scroll-bar'].offsetHeight + 200 || 410
       if (divHieght > innerHieght && !fullscreen) {
         this.maxHeight = (Math.abs(innerHieght) * this.percentage).toFixed(0) + 'px'
       } else {
@@ -282,36 +272,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.el-dialog__wrapper {
-  display: flex;
-  align-items: center;
-}
-
-.fullscreen_wrapper {
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  padding: 18px;
-  overflow: auto;
-  background: rgba(0, 0, 0, 0.1);
-}
-.el-dialog__body {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  .el-dialog__body__main {
-    flex: 1;
+  .fullscreen_wrapper {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    padding: 18px;
     overflow: auto;
+    background: rgba(0, 0, 0, 0.1);
   }
-  .el-dialog__footer {
+  .el-dialog__body {
     padding: 10px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    .el-dialog__body__main {
+      flex: 1;
+      overflow: auto;
+    }
+    .el-dialog__footer {
+      padding: 10px;
+    }
+    .scroll-bar{
+      height: 100%;
+    }
   }
-  .scroll-bar {
-    height: 100%;
-  }
-}
 </style>

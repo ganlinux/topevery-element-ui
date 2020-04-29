@@ -166,7 +166,7 @@ export default {
   title: 'Chart图表相关',
   pageConfig: {
     groupsKey: 'chart',
-    groupsName: '图表',
+    groupsName: '图形&图表',
     pageTitle: 'Chart图表相关',
     pageName: 'WCubeChartX',
     sort: '1'

@@ -1,44 +1,63 @@
 <template>
-  <div class="div">
-    <CubeSplit :cube-split-height="cubeSplitHeight">
-      <template slot="left">
-        <div style="margin: 10px;">
-          左右分割面板 - 自动计算最大高度 - 如果设置 cubeSplitHeight 高度 自动计算失效
-          <el-button type="primary" size="small" @click="setCubeSplitHeight">设置cubeSplitHeight = {{ cubeSplitHeight }} </el-button>
-          {{ cubeSplitHeight ? '自动计算高度关闭':'自动计算高度' }}
-          <!-- <div v-for="(item, index) in 100" :key="index"> 数据 </div> -->
+  <div class="demo-split">
+    <cubeSplit v-model="split3">
+      <div slot="left" class="demo-split-pane">
+        <cubeSplit v-model="split4" mode="vertical">
+          <div slot="top" class="demo-split-pane">
+            <div class="p10">
+              <div
+                v-for="item in 100"
+                :key="item"
+              >
+                {{ item }} 上面
+              </div>
+            </div>
+          </div>
+          <div
+            slot="bottom"
+            class="demo-split-pane"
+          >
+            <div class="p10">
+              <div
+                v-for="item in 100"
+                :key="item"
+              >
+                {{ item }} 下面
+              </div>
+            </div>
+          </div>
+        </cubeSplit>
+      </div>
+      <div
+        slot="right"
+        class="demo-split-pane"
+      >
+        <div class="p10">
+          <div
+            v-for="item in 100"
+            :key="item"
+          >
+            {{ item }} 左边
+          </div>
         </div>
-      </template>
-      <template slot="right">
-        <div style="margin: 10px;">
-          <div v-for="(item, index) in 100" :key="index"> 数据 </div>
-        </div>
-      </template>
-    </CubeSplit>
-
+      </div>
+    </cubeSplit>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'CubeSplitX',
-  title: 'CubeSplit分割面板',
   pageConfig: {
-    groupsKey: 'component',
-    groupsName: '组件',
+    groupsKey: 'layout',
+    groupsName: '布局类',
     pageTitle: 'CubeSplit分割面板',
     pageName: 'CubeSplit',
-    sort: '1'
+    sort: '2'
   },
   data() {
     return {
-      cubeSplitHeight: 0
-    }
-  },
-  methods: {
-    setCubeSplitHeight() {
-      const { cubeSplitHeight } = this
-      this.cubeSplitHeight = cubeSplitHeight ? 0 : 300
+      split3: 0.5,
+      split4: 0.5
     }
   }
 }
@@ -46,10 +65,17 @@ export default {
 
 <style lang="scss" scoped>
 .demo-split {
-  height: 200px;
+  height: 100%;
   border: 1px solid #dcdee2;
+  box-sizing: border-box;
 }
 .demo-split-pane {
+  padding: 0;
+  height: 100%;
+  overflow: auto;
+}
+.p10{
   padding: 10px;
 }
 </style>
+

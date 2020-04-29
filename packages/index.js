@@ -11,9 +11,11 @@ import SelectBar from './SelectBar'
 
 import CubeButton from './CubeButton'
 import CubeInput from './CubeInput'
+import CubeInputNumber from './CubeInputNumber'
 import CubeRadio from './CubeRadio'
 
 import CubeForm from './CubeForm'
+import CubeTime from './CubeTime'
 
 import CubeTableList from './CubeTableList'
 import TableLoadMore from './TableLoadMore'
@@ -55,9 +57,11 @@ export const components = {
 
   CubeButton,
   CubeInput,
+  CubeInputNumber,
   CubeRadio,
 
   CubeForm,
+  CubeTime,
 
   CubeSplit,
   CubeUpload,

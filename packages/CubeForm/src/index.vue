@@ -7,12 +7,6 @@
   >
     <!-- <el-row :gutter="10"> -->
     <template v-for="(item, index) in defaultConfig.formOption">
-      <!-- <el-col
-          :key="index"
-          :sm="item.sm ?item.sm: 12"
-          :md="item.md ?item.md: 8"
-          :lg="item.lg ?item.lg: 6"
-        > -->
       <el-form-item
         :key="index"
         :label="item.label?item.label:'选项'"
@@ -171,6 +165,8 @@
       </el-form-item>
       <!-- </el-col> -->
     </template>
+
+    <slot name="other" :formConfig="defaultConfig" />
     <!-- </el-row> -->
     <div class="footer">
       <el-button

@@ -6,3 +6,5 @@ dist
 lib
 *.md
 docs
+
+iconfont.js
