@@ -310,30 +310,6 @@ export default {
     > button {
       margin-right: 4px;
     }
-
-    // .el-range-editor--small.el-input__inner {
-    //   margin-top: 5px;
-    //   padding-left: 5px;
-    //   padding-right: 0;
-    //   width: 215px;
-    // }
-
-    // .el-date-editor .el-range-separator {
-    //   padding: 0;
-    //   line-height: 24px;
-    //   margin-left: 3px;
-    //   margin-right: 5px;
-    // }
-
-    // .el-range-editor--small .el-range-input {
-    //   min-width: 80px;
-    // }
-
-    // .el-date-editor--datetimerange {
-    //   .el-range-input {
-    //     min-width: 130px;
-    //   }
-    // }
   }
 
   .right {
