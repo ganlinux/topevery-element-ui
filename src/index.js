@@ -89,6 +89,7 @@ import CubeSelect from '../packages/cube-select/index.js';
 import CubeSelectTree from '../packages/cube-select-tree/index.js';
 import CubeCascader from '../packages/cube-cascader/index.js';
 import CubeProgress from '../packages/cube-progress/index.js';
+import CubeChart from '../packages/cube-chart/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -177,6 +178,7 @@ const components = [
   CubeSelectTree,
   CubeCascader,
   CubeProgress,
+  CubeChart,
   CollapseTransition
 ];
 
@@ -305,5 +307,6 @@ export default {
   CubeSelect,
   CubeSelectTree,
   CubeCascader,
-  CubeProgress
+  CubeProgress,
+  CubeChart
 };

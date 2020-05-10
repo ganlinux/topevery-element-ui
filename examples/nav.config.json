@@ -62,12 +62,8 @@
               "title": "cubeProgress 进度"
             },
             {
-              "path": "/cube-table",
-              "title": "CubeTable 封装表格"
-            },
-            {
-              "path": "/cube-table-list",
-              "title": "CubeTableList 列表组件"
+              "path": "/cube-chart",
+              "title": "cubeChart 图表"
             }
           ]
         },

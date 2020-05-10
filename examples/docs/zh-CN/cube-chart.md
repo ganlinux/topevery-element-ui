@@ -1,3 +1,8 @@
+## cube-chart
+
+
+:::demo 测试图表基本用法。
+```html
 <template>
   <cube-chart
     autoresize
@@ -7,8 +12,7 @@
 </template>
 
 <script>
-
-import 'echarts/lib/chart/bar';
+// import 'echarts/lib/chart/bar';
 export default {
   data() {
     return {
@@ -53,3 +57,5 @@ export default {
   }
 };
 </script>
+```
+:::
