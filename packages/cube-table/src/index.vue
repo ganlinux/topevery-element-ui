@@ -114,9 +114,9 @@
 
 <script>
 
-import Table from '../../table/src/table';
-import TableColumn from '../../table/src/table-column';
-import { deepClone, deepMerge } from 'element-ui/src/utils/index.new.js';
+import { deepClone, deepMerge } from 'utils/index.new.js';
+import ElTable from 'packages/table';
+import ElTableColumn from 'packages/table-column';
 
 export default {
   name: 'CubeTable',
@@ -143,8 +143,8 @@ export default {
     }
   },
   components: {
-    ElTable: Table,
-    ElTableColumn: TableColumn,
+    ElTable,
+    ElTableColumn,
     render: {
       functional: true,
       props: {

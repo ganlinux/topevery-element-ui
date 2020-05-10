@@ -95,10 +95,16 @@
 <script>
 
 import debounce from 'throttle-debounce/debounce';
-import request from 'element-ui/src/utils/request';
-import { deepMerge } from 'element-ui/src/utils/index.new';
-import { isObject } from 'element-ui/src/utils/types';
-import emitter from 'element-ui/src/mixins/emitter';
+import request from 'utils/request';
+import { deepMerge } from 'utils/index.new';
+import { isObject } from 'utils/types';
+import emitter from 'mixins/emitter';
+
+import ElInput from 'packages/input';
+import Elpopover from 'packages/popover';
+import ElTable from 'packages/table';
+import ElTableColumn from 'packages/table-column';
+import ElPagination from 'packages/pagination';
 
 export default {
   name: 'CubeSelect',
@@ -122,7 +128,12 @@ export default {
         if (opt.props.column) params.column = opt.props.column;
         return opt.props.render(h, params);
       }
-    }
+    },
+    ElInput,
+    Elpopover,
+    ElTable,
+    ElTableColumn,
+    ElPagination
   },
   directives: {
     clickOutside: {

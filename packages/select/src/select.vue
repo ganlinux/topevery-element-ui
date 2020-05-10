@@ -325,7 +325,7 @@
         query: '',
         previousQuery: null,
         inputHovering: false,
-        currentPlaceholder: '',
+        currentPlaceholder: '请选择',
         menuVisibleOnFocus: false,
         isOnComposition: false,
         isSilentBlur: false

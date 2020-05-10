@@ -62,11 +62,14 @@
 <script>
 
 import debounce from 'throttle-debounce/debounce';
-import request from 'element-ui/src/utils/request';
-import { deepMerge } from 'element-ui/src/utils/index.new';
-import { isObject } from 'element-ui/src/utils/types';
-import emitter from 'element-ui/src/mixins/emitter';
+import request from 'utils/request';
+import { deepMerge } from 'utils/index.new';
+import { isObject } from 'utils/types';
+import emitter from 'mixins/emitter';
 
+import ElInput from 'packages/input';
+import Elpopover from 'packages/popover';
+import ElTree from 'packages/tree';
 // import Scroll2Target from '../../cueb-scroll-to/src/scrollTo';
 
 export default {
@@ -120,6 +123,11 @@ export default {
       // { label: '显示名称',value: '选择value'}
       default: () => { }
     }
+  },
+  components: {
+    ElInput,
+    Elpopover,
+    ElTree
   },
   data() {
     return {

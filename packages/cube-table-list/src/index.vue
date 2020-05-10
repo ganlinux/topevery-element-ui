@@ -62,14 +62,14 @@
 <script>
 
 import debounce from 'throttle-debounce/debounce';
+import request from 'utils/request';
+import { deepMerge } from 'utils/index.new';
+import emitter from 'mixins/emitter';
 
-import CubeSearchBar from 'element-ui/packages/cube-search-bar';
-import CubeTable from 'element-ui/packages/cube-table';
-import CubeMaxHeight from 'element-ui/packages/cube-max-height';
-
-import request from 'element-ui/src/utils/request';
-import { deepMerge } from 'element-ui/src/utils/index.new';
-import emitter from 'element-ui/src/mixins/emitter';
+import CubeSearchBar from 'packages/cube-search-bar';
+import CubeTable from 'packages/cube-table';
+import CubeMaxHeight from 'packages/cube-max-height';
+import ElPagination from 'packages/pagination';
 
 // import { isObject } from '../../utils/types'
 
@@ -79,7 +79,8 @@ export default {
   components: {
     CubeSearchBar,
     CubeTable,
-    CubeMaxHeight
+    CubeMaxHeight,
+    ElPagination
   },
   mixins: [emitter],
   props: {
@@ -108,7 +109,7 @@ export default {
           tableHeight: 400, // 如果关闭自动开启计算高度 - 这个字段建议传入。
           calcTableHeight: true, // 是否开启表格自动高度计算 - 开启则忽略tableHeight设置的高度
           loadType: 'page', // page 、 scroll 选择分页 还是滚动到底部加载
-          prefixHeight: 36,
+          prefixHeight: 10,
           columns: [],
           data: []
         },
@@ -146,7 +147,6 @@ export default {
     extraParam: {
       deep: true,
       handler(val) {
-        console.log(this.extraParam, 'extraParam-change');
         this.$nextTick(() => {
           setTimeout(() => {
             this.fetchList();

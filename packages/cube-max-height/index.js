@@ -1,4 +1,4 @@
-import component from './src/main';
+import component from './src';
 
 /* istanbul ignore next */
 component.install = function(Vue) {

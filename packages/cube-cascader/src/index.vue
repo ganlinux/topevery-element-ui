@@ -19,11 +19,12 @@
 </template>
 
 <script>
-import ElCascader from '../../cascader';
-import request from 'element-ui/src/utils/request';
-import { deepMerge, noEmptyChildren } from 'element-ui/src/utils/index.new.js';
-import { isObject } from 'element-ui/src/utils/types';
-import emitter from 'element-ui/src/mixins/emitter';
+
+import ElCascader from 'packages/cascader';
+import request from 'utils/request';
+import { deepMerge, noEmptyChildren } from 'utils/index.new.js';
+import { isObject } from 'utils/types';
+import emitter from 'mixins/emitter';
 
 export default {
   name: 'CubeCascader',

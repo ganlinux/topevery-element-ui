@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="SearchBar"
-    class="search-bar"
-  >
+  <div class="cube-search-bar">
     <template v-if="data && data.length">
       <!-- 左边组件类型 -->
       <template v-if="data && data[0] && data[0].length">
@@ -59,31 +56,28 @@
 
           <!-- 特别的组件 -->
           <template v-if="item.type === 'cubeSelectTree'">
-            cubeSelectTree
-            <!-- <CubeSelectTree
+            <CubeSelectTree
               ref="selectTree"
               v-model="item.value"
               :extra-param="item.extraParam ? item.extraParam : {} "
               :config="item.config || {} "
-            /> -->
+            />
           </template>
           <template v-if="item.type === 'cubeSelect'">
-            cubeSelect
-            <!-- <CubeSelect
+            <CubeSelect
               ref="CubeSelect"
               v-model="item.value"
               :extra-param="item.extraParam ? item.extraParam : {} "
               :config="item.config || {} "
-            /> -->
+            />
           </template>
           <template v-if="item.type === 'cubeCascader'">
-            cubeCascader
-            <!-- <CubeCascader
+            <CubeCascader
               ref="CubeCascader"
               v-model="item.value"
               :extra-param="item.extraParam ? item.extraParam : {} "
               :config="item.config || {} "
-            /> -->
+            />
           </template>
 
           <template v-else-if="item.type === 'search'">
@@ -154,7 +148,7 @@
                 >{{ item.name || '更多操作' }}<i class="el-icon-arrow-down el-icon--right" /></el-button>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item
-                    v-for="(itemK,i) in item.labels"
+                    v-for="(itemK,i) in item.options"
                     :key="i"
                     :icon="itemK.icon"
                     :command="itemK.label"
@@ -177,17 +171,18 @@ const commonlyTypes = ['input', 'select', 'option', 'cascader', 'cubeCascader', 
 //  特殊类型
 const cubeType = ['cubeSelect', 'cubeSelectTree'];
 
-import { deepClone } from 'element-ui/src/utils/index.new.js';
-import ElButton from 'element-ui/packages/button';
-import ElInput from 'element-ui/packages/input';
-import ElSelect from 'element-ui/packages/select';
-import ElDropdown from 'element-ui/packages/dropdown';
-import ElDropdownMenu from 'element-ui/packages/dropdown-menu';
-import ElDropdownItem from 'element-ui/packages/dropdown-item';
-import DatePicker from 'element-ui/packages/date-picker';
-// import CubeSelect from '../../CubeSelect';
-// import CubeSelectTree from '../../CubeSelectTree';
-// import CubeCascader from '../../CubeCascader';
+import { deepClone } from 'utils/index.new.js';
+import ElButton from 'packages/button';
+import ElInput from 'packages/input';
+import ElSelect from 'packages/select';
+import ElDropdown from 'packages/dropdown';
+import ElDropdownItem from 'packages/dropdown-item';
+import ElDropdownMenu from 'packages/dropdown-menu';
+import DatePicker from 'packages/date-picker';
+
+import CubeSelect from 'packages/cube-select';
+import CubeSelectTree from 'packages/cube-select-tree';
+import CubeCascader from 'packages/cube-cascader';
 
 export default {
   name: 'CubeSearchBar',
@@ -199,10 +194,11 @@ export default {
     DatePicker,
     ElDropdown,
     ElDropdownItem,
-    ElDropdownMenu
-    // CubeSelect,
-    // CubeCascader,
-    // CubeSelectTree
+    ElDropdownMenu,
+
+    CubeSelect,
+    CubeCascader,
+    CubeSelectTree
   },
   props: {
     size: {

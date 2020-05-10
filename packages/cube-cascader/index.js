@@ -1,4 +1,4 @@
-import component from './src/index';
+import component from './src';
 
 component.install = function(Vue) {
   Vue.component(component.name, component);

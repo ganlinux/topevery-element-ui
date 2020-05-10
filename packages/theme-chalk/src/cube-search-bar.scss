@@ -1,62 +1,72 @@
-.search-bar {
-    width: 100%;
-    background-color: white;
+.cube-search-bar {
+  width: 100%;
+  background-color: white;
+  clear: both;
+  margin-top: -6px;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #dfecf9;
+
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
     clear: both;
-    margin-top: -6px;
-    margin-bottom: 6px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #dfecf9;
-    &:after {
-      visibility: hidden;
-      display: block;
-      font-size: 0;
-      content: " ";
-      clear: both;
-      height: 0;
+    height: 0;
+  }
+
+  .left {
+    float: left;
+    height: 40px;
+
+    >div {
+      margin-right: 4px;
+      margin-top: 10px;
     }
-  
-    .left {
-      float: left;
-      height: 40px;
-      > div {
-        margin-right: 4px;
-        margin-top: 10px;
-      }
-  
-      .el-button {
-        margin-top: 10px;
-        margin-left: 4px;
-      }
-      .el-date-editor {
-        margin-left: 4px;
-        margin-right: 4px;
-      }
-      .el-range-editor--small.el-input__inner {
-        padding-left: 5px;
-        padding-right: 0;
-        width: 226px;
-      }
-      .el-date-editor .el-range-separator {
-        padding: 0;
-        line-height: 24px;
-        margin-left: 3px;
-        margin-right: 5px;
-      }
-      .el-range-editor--small .el-range-input {
-        min-width: 80px;
-      }
-      .el-date-editor--datetimerange {
-        .el-range-input {
-          min-width: 130px;
-        }
-      }
+
+    .el-button {
+      margin-top: 10px;
+      margin-left: 4px;
     }
-  
-    .right {
-      float: right;
-      > div {
-        margin-left: 10px;
-        margin-top: 5px;
+
+    .el-date-editor {
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    .el-range-editor--small.el-input__inner {
+      padding-left: 5px;
+      padding-right: 0;
+      width: 226px;
+    }
+
+    .el-date-editor .el-range-separator {
+      padding: 0;
+      line-height: 24px;
+      margin-left: 3px;
+      margin-right: 5px;
+    }
+
+    .el-range-editor--small .el-range-input {
+      min-width: 80px;
+    }
+
+    .el-date-editor--datetimerange {
+      .el-range-input {
+        min-width: 130px;
       }
     }
   }
+
+  .right {
+    float: right;
+    .el-dropdown {
+      margin: 0;
+    }
+
+    >div {
+      margin-left: 10px;
+    }
+  }
+}

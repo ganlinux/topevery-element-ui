@@ -12,8 +12,8 @@ import SideNav from './components/side-nav';
 import FooterNav from './components/footer-nav';
 import title from './i18n/title';
 
-import './assets/styles/common.scss';
 import 'packages/theme-chalk/src/index.scss';
+import './assets/styles/common.scss';
 import './demo-styles/index.scss';
 import './assets/styles/fonts/style.css';
 import icon from './icon.json';
