@@ -1,18 +1,6 @@
 {
   "zh-CN": [
     {
-      "name": "更新日志",
-      "path": "/changelog"
-    },
-    {
-      "name": "Element React",
-      "href": "https://elemefe.github.io/element-react/"
-    },
-    {
-      "name": "Element Angular",
-      "href": "https://element-angular.faas.ele.me/"
-    },
-    {
       "name": "开发指南",
       "children": [
         {
@@ -22,14 +10,6 @@
         {
           "path": "/quickstart",
           "name": "快速上手"
-        },
-        {
-          "path": "/i18n",
-          "name": "国际化"
-        },
-        {
-          "path": "/custom-theme",
-          "name": "自定义主题"
         },
         {
           "path": "/transition",
@@ -71,6 +51,40 @@
             {
               "path": "/cube-cascader",
               "title": "cubeCascader 级联选择"
+            }
+          ]
+        },
+        {
+          "groupName": "数据-图形-图表",
+          "list": [
+            {
+              "path": "/cube-progress",
+              "title": "cubeProgress 进度"
+            },
+            {
+              "path": "/cube-table",
+              "title": "CubeTable 封装表格"
+            },
+            {
+              "path": "/cube-table-list",
+              "title": "CubeTableList 列表组件"
+            }
+          ]
+        },
+        {
+          "groupName": "界面-布局-新增",
+          "list": [
+            {
+              "path": "/cube-search-bar",
+              "title": "SearchBar 搜索栏"
+            },
+            {
+              "path": "/cube-table",
+              "title": "CubeTable 封装表格"
+            },
+            {
+              "path": "/cube-table-list",
+              "title": "CubeTableList 列表组件"
             }
           ]
         },

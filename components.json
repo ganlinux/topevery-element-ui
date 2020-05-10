@@ -88,5 +88,6 @@
   
   "cube-select": "./packages/cube-select/index.js",
   "cube-select-tree": "./packages/cube-select-tree/index.js",
-  "cube-cascader": "./packages/cube-cascader/index.js"
+  "cube-cascader": "./packages/cube-cascader/index.js",
+  "cube-progress": "./packages/cube-progress/index.js"
 }

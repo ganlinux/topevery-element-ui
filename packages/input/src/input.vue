@@ -28,6 +28,7 @@
         :type="showPassword ? (passwordVisible ? 'text': 'password') : type"
         :disabled="inputDisabled"
         :readonly="readonly"
+        :placeholder="placeholder"
         :autocomplete="autoComplete || autocomplete"
         ref="input"
         @compositionstart="handleCompositionStart"
@@ -153,6 +154,10 @@
         type: String,
         default: 'text'
       },
+      placeholder: {
+        type: String,
+        default: '请输入'
+      },
       autosize: {
         type: [Boolean, Object],
         default: false
@@ -179,7 +184,7 @@
       label: String,
       clearable: {
         type: Boolean,
-        default: false
+        default: true
       },
       showPassword: {
         type: Boolean,

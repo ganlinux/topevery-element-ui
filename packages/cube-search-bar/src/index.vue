@@ -8,7 +8,7 @@
           :key="index"
           class="left"
         >
-
+          <!-- 输入框 -->
           <template v-if="item.type === 'input'">
             <el-input
               v-model="item.value"
@@ -20,6 +20,7 @@
             />
           </template>
 
+          <!-- 下拉选择 -->
           <template v-else-if="item.type === 'option'">
             <el-select
               v-model="item.value"
@@ -42,6 +43,7 @@
             </el-select>
           </template>
 
+          <!-- 日期选择 -->
           <template v-if="item.type === 'date'">
             <el-date-picker
               v-model="item.value"
@@ -54,7 +56,7 @@
             />
           </template>
 
-          <!-- 特别的组件 -->
+          <!-- cubeSelectTree -->
           <template v-if="item.type === 'cubeSelectTree'">
             <CubeSelectTree
               ref="selectTree"
@@ -63,6 +65,7 @@
               :config="item.config || {} "
             />
           </template>
+          <!-- cubeSelect -->
           <template v-if="item.type === 'cubeSelect'">
             <CubeSelect
               ref="CubeSelect"
@@ -71,6 +74,7 @@
               :config="item.config || {} "
             />
           </template>
+          <!-- cubeCascader -->
           <template v-if="item.type === 'cubeCascader'">
             <CubeCascader
               ref="CubeCascader"
