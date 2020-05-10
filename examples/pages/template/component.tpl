@@ -177,7 +177,7 @@
     }
 
     .content {
-      padding-top: 50px;
+      padding-top: 10px;
 
       > {
         h3 {

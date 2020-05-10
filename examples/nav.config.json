@@ -44,8 +44,16 @@
           "groupName": "应用拓展",
           "list": [
             {
+              "path": "/cube-search-bar",
+              "title": "SearchBar 搜索栏"
+            },
+            {
               "path": "/cube-table",
-              "title": "cube-table 表格封装"
+              "title": "CubeTable 封装表格"
+            },
+            {
+              "path": "/cube-table-list",
+              "title": "CubeTableList 列表组件"
             }
           ]
         },

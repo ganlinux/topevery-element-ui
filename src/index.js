@@ -83,6 +83,7 @@ import Avatar from '../packages/avatar/index.js';
 import Drawer from '../packages/drawer/index.js';
 import Popconfirm from '../packages/popconfirm/index.js';
 import CubeTable from '../packages/cube-table/index.js';
+import SearchBar from '../packages/cube-search-bar/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -165,6 +166,7 @@ const components = [
   Drawer,
   Popconfirm,
   CubeTable,
+  SearchBar,
   CollapseTransition
 ];
 
@@ -200,7 +202,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '2.13.1',
+  version: '0.0.10',
   locale: locale.use,
   i18n: locale.i18n,
   install,
@@ -287,5 +289,6 @@ export default {
   Avatar,
   Drawer,
   Popconfirm,
-  CubeTable
+  CubeTable,
+  SearchBar
 };

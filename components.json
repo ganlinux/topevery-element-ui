@@ -81,5 +81,7 @@
   "avatar": "./packages/avatar/index.js",
   "drawer": "./packages/drawer/index.js",
   "popconfirm": "./packages/popconfirm/index.js",
-  "cube-table": "./packages/cube-table/index.js"
+
+  "cube-table": "./packages/cube-table/index.js",
+  "search-bar": "./packages/cube-search-bar/index.js"
 }
