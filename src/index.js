@@ -83,7 +83,11 @@ import Avatar from '../packages/avatar/index.js';
 import Drawer from '../packages/drawer/index.js';
 import Popconfirm from '../packages/popconfirm/index.js';
 import CubeTable from '../packages/cube-table/index.js';
-import SearchBar from '../packages/cube-search-bar/index.js';
+import CubeSearchBar from '../packages/cube-search-bar/index.js';
+import CubeTableList from '../packages/cube-table-list/index.js';
+import CubeSelect from '../packages/cube-select/index.js';
+import CubeSelectTree from '../packages/cube-select-tree/index.js';
+import CubeCascader from '../packages/cube-cascader/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -166,7 +170,11 @@ const components = [
   Drawer,
   Popconfirm,
   CubeTable,
-  SearchBar,
+  CubeSearchBar,
+  CubeTableList,
+  CubeSelect,
+  CubeSelectTree,
+  CubeCascader,
   CollapseTransition
 ];
 
@@ -290,5 +298,9 @@ export default {
   Drawer,
   Popconfirm,
   CubeTable,
-  SearchBar
+  CubeSearchBar,
+  CubeTableList,
+  CubeSelect,
+  CubeSelectTree,
+  CubeCascader
 };

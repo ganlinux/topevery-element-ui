@@ -7,12 +7,12 @@
 
 传入`data` [ [左边配置], [右边配置]], [左边配置]配置一般指定`type`渲染组件，组件回调接收参数`value`,`key`为定义后台检索需要字段。 日期范围/时间范围具体配置请查看如下代码。
 
-:::demo `Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置
+:::demo `Cube-Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置
 
 ```html
   <template>
-    <Search-Bar :data="config1"  />
-    <Search-Bar :data="config2" style="margin-top: 10px;"  />
+    <Cube-Search-Bar :data="config1"  />
+    <Cube-Search-Bar :data="config2" style="margin-top: 10px;"  />
   </template>
 
   <script>
@@ -103,12 +103,12 @@
 
 传入`data` [ [左边配置]], [左边配置]常规配置`{ type: '组件类型', value: null, key: '后台接收检索字段', option:'特定组件选项'... }`等几项约定必填。
 
-:::demo `Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置
+:::demo `Cube-Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置
 
 ```html
   <template>
-    <Search-Bar :data="config1"  />
-    <Search-Bar :data="config2" style="margin-top: 10px;"  />
+    <Cube-Search-Bar :data="config1"  />
+    <Cube-Search-Bar :data="config2" style="margin-top: 10px;"  />
   </template>
 
   <script>
@@ -162,11 +162,11 @@
 V1 版本中的事件响应的通过子组件向外`$emit`触发的，所有`type: 'button'` 被点击之后会触发统一的`clickBtn`再通过回调出来的参数判断是什么具体的操作项触发。例子如下。如果是操作项太多或者有下拉选择的时候。需要做的事件判断就会相对的麻烦
 :::
 
-:::demo `Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置
+:::demo `Cube-Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置
 
 ```html
   <template>
-    <Search-Bar :data="config1" @clickBtn="clickBtn" @command="command"  />
+    <Cube-Search-Bar :data="config1" @clickBtn="clickBtn" @command="command"  />
   </template>
 
   <script>
@@ -247,11 +247,11 @@ V1 版本中的事件响应的通过子组件向外`$emit`触发的，所有`typ
 V2 版本中的事件响应新写法。`type: 'button' ` 中直接传递 `action`事件响应。这样写法就比较简单了。具体如下.(新版本中做了兼容v1写法也是可以支持)
 :::
 
-:::demo `Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置
+:::demo `Cube-Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置
 
 ```html
   <template>
-    <Search-Bar :data="config1" />
+    <Cube-Search-Bar :data="config1" />
   </template>
 
   <script>
@@ -294,15 +294,15 @@ V2 版本中的事件响应新写法。`type: 'button' ` 中直接传递 `action
 ```
 :::
 
-### `Search-Bar` 业务-组件参数搜集
+### `Cube-Search-Bar` 业务-组件参数搜集
 
 组件会收集配置项中传入的`key`集合
 
-:::demo `Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置
+:::demo `Cube-Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置
 
 ```html
   <template>
-    <Search-Bar ref="SearchBar" :data="config1" />
+    <Cube-Search-Bar ref="SearchBar" :data="config1" />
   </template>
 
   <script>
@@ -342,15 +342,15 @@ V2 版本中的事件响应新写法。`type: 'button' ` 中直接传递 `action
 :::
 
 
-### `Search-Bar` 业务-关联检索与基础多选
+### `Cube-Search-Bar` 业务-关联检索与基础多选
 
 组件会收集配置项中传入的`key`集合 `type:option`设置为下拉框选项是业务中最常见的组件。
 multiple:false 或者不设置默认为单选,multiple:true 设置为多选。多选返回可以选择 value的集合。类似'id1,id2,id3...'
 
-:::demo `Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置， `Search-Bar`选择完成会触发`change`事件回调选中数据，可以利用这个事件做搜索数据的联动检索。如下。食物类型的选择决定食物的选择。
+:::demo `Cube-Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置， `Cube-Search-Bar`选择完成会触发`change`事件回调选中数据，可以利用这个事件做搜索数据的联动检索。如下。食物类型的选择决定食物的选择。
 ```html
   <template>
-    <Search-Bar ref="SearchBar" :data="config1" />
+    <Cube-Search-Bar ref="SearchBar" :data="config1" />
   </template>
 
   <script>

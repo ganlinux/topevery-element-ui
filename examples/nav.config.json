@@ -41,7 +41,7 @@
       "name": "组件",
       "groups": [
         {
-          "groupName": "应用拓展",
+          "groupName": "列表-表格-拓展",
           "list": [
             {
               "path": "/cube-search-bar",
@@ -54,6 +54,23 @@
             {
               "path": "/cube-table-list",
               "title": "CubeTableList 列表组件"
+            }
+          ]
+        },
+        {
+          "groupName": "数据-选择-拓展",
+          "list": [
+            {
+              "path": "/cube-select",
+              "title": "cubeSelect 列表选择"
+            },
+            {
+              "path": "/cube-select-tree",
+              "title": "cubeSelectTree 树形选择"
+            },
+            {
+              "path": "/cube-cascader",
+              "title": "cubeCascader 级联选择"
             }
           ]
         },

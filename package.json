@@ -3,6 +3,9 @@
   "version": "0.0.10",
   "description": "A Component Library for Vue.js.",
   "main": "lib/topevery-element-ui.common.js",
+  "license": "MIT",
+  "unpkg": "lib/index.js",
+  "style": "lib/theme-chalk/index.css",
   "files": [
     "lib",
     "src",
@@ -28,20 +31,19 @@
     "pub": "npm run bootstrap && sh build/git-release.sh && sh build/release.sh && node build/bin/gen-indices.js && sh build/deploy-faas.sh",
     "test": "npm run lint && npm run build:theme && cross-env CI_ENV=/dev/ BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test:watch": "npm run build:theme && cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
-    "push": "npm publish"
+    "push": "npm run build:theme && cross-env BABEL_ENV=test karma start test/unit/karma.conf.js"
   },
   "keywords": [
     "eleme",
     "vue",
     "components"
   ],
-  "license": "MIT",
-  "unpkg": "lib/index.js",
-  "style": "lib/theme-chalk/index.css",
   "dependencies": {
     "async-validator": "~1.8.1",
+    "axios": "^0.19.2",
     "babel-helper-vue-jsx-merge-props": "^2.0.0",
     "deepmerge": "^1.2.0",
+    "js-cookie": "^2.2.0",
     "normalize-wheel": "^1.0.1",
     "resize-observer-polyfill": "^1.5.0",
     "throttle-debounce": "^1.0.1"
@@ -100,7 +102,7 @@
     "markdown-it-container": "^2.0.0",
     "mini-css-extract-plugin": "^0.4.1",
     "mocha": "^6.0.2",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss": "^7.0.14",
     "progress-bar-webpack-plugin": "^1.11.0",
@@ -123,5 +125,9 @@
     "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^3.1.11",
     "webpack-node-externals": "^1.7.2"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
 }

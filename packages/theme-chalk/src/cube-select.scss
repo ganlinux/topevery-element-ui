@@ -1,0 +1,36 @@
+.cube-select {
+    position: relative;
+    min-width: 220px;
+    // max-width: 420px;
+    /deep/.el-input-group__append {
+      background: #2f86f6;
+      color: #ffffff;
+      border: 1px solid #2f86f6;
+      cursor: pointer;
+      user-select: none;
+      &:active {
+        opacity: 0.9;
+      }
+    }
+    /deep/.el-popper {
+      margin-top: 2px;
+      width: 100%;
+      z-index: 2000!important;
+      overflow: hidden;
+      position: absolute;
+      left: 0;
+      top: 34px;
+      padding: 4px;
+      .el-tooltip__popper{
+        z-index: 99999!important;
+      }
+    }
+    .pagination {
+      margin-top: 4px;
+      text-align: center;
+      cursor: pointer;
+      /deep/.el-pagination__total {
+        font-size: 12px;
+      }
+    }
+  }

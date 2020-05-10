@@ -96,10 +96,11 @@
     }
 
     .nav-group__title {
-      font-size: 12px;
+      font-size: 16px;
       color: #999;
       line-height: 26px;
       margin-top: 15px;
+      font-weight: 400;
     }
 
     #code-sponsor-widget {

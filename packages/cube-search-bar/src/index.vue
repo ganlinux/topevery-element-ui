@@ -18,7 +18,7 @@
               :class="item.class ? item.class :'w180' "
               :size="size"
               clearable
-              :placeholder="item.placeholder"
+              :placeholder="item.placeholder|| '请输入'"
               @keyup.enter.native="search"
             />
           </template>
@@ -30,7 +30,7 @@
               :size="size"
               clearable
               filterable
-              :placeholder="item.placeholder"
+              :placeholder="item.placeholder|| '请选择'"
               :multiple="item.multiple"
               collapse-tags
               @change="item.change ?item.change($event): null"
@@ -43,6 +43,47 @@
                 :class="item.class"
               />
             </el-select>
+          </template>
+
+          <template v-if="item.type === 'date'">
+            <el-date-picker
+              v-model="item.value"
+              :style="{width:'134px'}"
+              :size="size"
+              value-format="yyyy-MM-dd"
+              :picker-options="dateTimePicker(item.minDate,item.maxDate)"
+              type="date"
+              :placeholder="item.placeholder|| '请选择'"
+            />
+          </template>
+
+          <!-- 特别的组件 -->
+          <template v-if="item.type === 'cubeSelectTree'">
+            cubeSelectTree
+            <!-- <CubeSelectTree
+              ref="selectTree"
+              v-model="item.value"
+              :extra-param="item.extraParam ? item.extraParam : {} "
+              :config="item.config || {} "
+            /> -->
+          </template>
+          <template v-if="item.type === 'cubeSelect'">
+            cubeSelect
+            <!-- <CubeSelect
+              ref="CubeSelect"
+              v-model="item.value"
+              :extra-param="item.extraParam ? item.extraParam : {} "
+              :config="item.config || {} "
+            /> -->
+          </template>
+          <template v-if="item.type === 'cubeCascader'">
+            cubeCascader
+            <!-- <CubeCascader
+              ref="CubeCascader"
+              v-model="item.value"
+              :extra-param="item.extraParam ? item.extraParam : {} "
+              :config="item.config || {} "
+            /> -->
           </template>
 
           <template v-else-if="item.type === 'search'">
@@ -137,22 +178,20 @@ const commonlyTypes = ['input', 'select', 'option', 'cascader', 'cubeCascader', 
 const cubeType = ['cubeSelect', 'cubeSelectTree'];
 
 import { deepClone } from 'element-ui/src/utils/index.new.js';
-
-import ElButton from '../../button';
-import ElInput from '../../input';
-import ElSelect from '../../select';
-import ElDropdown from '../../dropdown';
-import ElDropdownMenu from '../../dropdown-menu';
-import ElDropdownItem from '../../dropdown-item';
-import DatePicker from '../../date-picker';
-
+import ElButton from 'element-ui/packages/button';
+import ElInput from 'element-ui/packages/input';
+import ElSelect from 'element-ui/packages/select';
+import ElDropdown from 'element-ui/packages/dropdown';
+import ElDropdownMenu from 'element-ui/packages/dropdown-menu';
+import ElDropdownItem from 'element-ui/packages/dropdown-item';
+import DatePicker from 'element-ui/packages/date-picker';
 // import CubeSelect from '../../CubeSelect';
 // import CubeSelectTree from '../../CubeSelectTree';
 // import CubeCascader from '../../CubeCascader';
 
 export default {
-  name: 'SearchBar',
-  componentName: 'SearchBar',
+  name: 'CubeSearchBar',
+  componentName: 'CubeSearchBar',
   components: {
     ElButton,
     ElInput,
@@ -279,69 +318,4 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-.search-bar {
-  width: 100%;
-  background-color: white;
-  clear: both;
-  margin-top: -6px;
-  margin-bottom: 6px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid #dfecf9;
-  &:after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: " ";
-    clear: both;
-    height: 0;
-  }
-
-  .left {
-    float: left;
-    height: 40px;
-    > div {
-      margin-right: 4px;
-      margin-top: 10px;
-    }
-
-    .el-button {
-      margin-top: 10px;
-      margin-left: 4px;
-    }
-    .el-date-editor {
-      margin-left: 4px;
-      margin-right: 4px;
-    }
-    .el-range-editor--small.el-input__inner {
-      padding-left: 5px;
-      padding-right: 0;
-      width: 226px;
-    }
-    .el-date-editor .el-range-separator {
-      padding: 0;
-      line-height: 24px;
-      margin-left: 3px;
-      margin-right: 5px;
-    }
-    .el-range-editor--small .el-range-input {
-      min-width: 80px;
-    }
-    .el-date-editor--datetimerange {
-      .el-range-input {
-        min-width: 130px;
-      }
-    }
-  }
-
-  .right {
-    float: right;
-    > div {
-      margin-left: 10px;
-      margin-top: 5px;
-    }
-  }
-}
-</style>
 
