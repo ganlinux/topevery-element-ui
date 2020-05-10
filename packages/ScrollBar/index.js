@@ -1,7 +1,8 @@
-import component from './src/index'
+import Scrollbar from './src/main';
 
-component.install = function(Vue) {
-  Vue.component(component.name, component)
-}
+/* istanbul ignore next */
+Scrollbar.install = function(Vue) {
+  Vue.component(Scrollbar.name, Scrollbar);
+};
 
-export default component
+export default Scrollbar;

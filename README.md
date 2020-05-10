@@ -1,51 +1,37 @@
-## 安装
-
-* npm安装
-
-```sh
-npm install tyelui -S
+## Install
+```shell
+npm install topevery-element-ui -S
 ```
 
-* yarn安装
-```sh
-yarn add tyelui -S
+## Quick Start
+``` javascript
+import Vue from 'vue'
+import Element from 'topevery-element-ui'
+
+Vue.use(Element)
+
+// or
+import { Select, Button } from 'topevery-element-ui'
+
+Vue.component(Select.name, Select)
+Vue.component(Button.name, Button)
 ```
 
-## 使用
+## Browser Support
+Modern browsers and Internet Explorer 10+.
 
-```js
-// 将自动注册所有组件为全局组件
-import tyelui from 'tyelui'
+## Development
+Skip this part if you just want to use Element.
+ 
+## Changelog
+Detailed changes for each release are documented in the [release notes](https://github.com/ElemeFE/element/releases).
 
-Vue.use(tyelui)
-```
+## FAQ
+We have collected some [frequently asked questions](https://github.com/ElemeFE/element/blob/master/FAQ.md). Before reporting an issue, please search if the FAQ has the answer to your problem.
 
-## 按需引入
+## Contribution
+Please make sure to read the contributing guide ([中文](https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.zh-CN.md) | [English](https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.en-US.md) | [Español](https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.es.md) | [Français](https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.fr-FR.md)) before making a pull request.
+ 
 
-按需引入仅支持基于**ES module**的**tree shaking**，按需引入示例如下：
-
-```js
-import { MaxHeight } from 'tyelui'
-
-Vue.use(MaxHeight)
-```
-
-
-
-
-## UMD版
-
-`UMD`版可直接使用`script`标签引入，`UMD`版文件下载请移步[UMD](https://github.com/jiaming743/DataV/tree/master/dist)，引入后将自动把所有组件注册为**Vue全局组件**，引入`DataV`前请确保已引入`Vue`。
-
-
-## 文档开发项目
-
-- template.js 工程化构建views页面结构
-
-``` BASH
-npm run tep 文件夹名称
-```
-
-
-- views文件夹内固定结构自动构建注册为路由页面
-
+## LICENSE
+[MIT](LICENSE)
