@@ -1,7 +1,7 @@
 <!-- 选择组件 提供分页检索选择应数据量大列表卡顿以及分页接口数据选择 -->
 <template>
   <div
-    v-clickOutside="miss"
+    v-clickoutside="miss"
     class="cube-select"
   >
     <el-input
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-
+import Clickoutside from 'element-ui/src/utils/clickoutside';
 import debounce from 'throttle-debounce/debounce';
 import request from 'utils/request';
 import { deepMerge } from 'utils/index.new';
@@ -101,10 +101,11 @@ import { isObject } from 'utils/types';
 import emitter from 'mixins/emitter';
 
 import ElInput from 'packages/input';
-import Elpopover from 'packages/popover';
+import ElPopover from 'packages/popover';
 import ElTable from 'packages/table';
 import ElTableColumn from 'packages/table-column';
 import ElPagination from 'packages/pagination';
+import Loading from 'packages/loading';
 
 export default {
   name: 'CubeSelect',
@@ -130,36 +131,14 @@ export default {
       }
     },
     ElInput,
-    Elpopover,
+    ElPopover,
     ElTable,
     ElTableColumn,
     ElPagination
   },
   directives: {
-    clickOutside: {
-      bind(el, binding, vnode) {
-        function clickHandler(e) {
-          // 这里判断点击的元素是否是本身，是本身，则返回
-          if (el.contains(e.target)) {
-            return false;
-          }
-          // 判断指令中是否绑定了函数
-          if (binding.expression) {
-            // 如果绑定了函数 则调用那个函数，此处binding.value就是handleClose方法
-            binding.value(e);
-          }
-        }
-        // 给当前元素绑定个私有变量，方便在unbind中可以解除事件监听
-        el.__vueClickOutside__ = clickHandler;
-        document.addEventListener('click', clickHandler);
-      },
-      update() { },
-      unbind(el, binding) {
-        // 解除事件监听
-        document.removeEventListener('click', el.__vueClickOutside__);
-        delete el.__vueClickOutside__;
-      }
-    }
+    Clickoutside,
+    loading: Loading.directive
   },
   mixins: [emitter],
   props: {

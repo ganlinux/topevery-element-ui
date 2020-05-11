@@ -117,6 +117,7 @@
 import { deepClone, deepMerge } from 'utils/index.new.js';
 import ElTable from 'packages/table';
 import ElTableColumn from 'packages/table-column';
+import Loading from 'packages/loading';
 
 export default {
   name: 'CubeTable',
@@ -140,7 +141,8 @@ export default {
         selectWrap.removeEventListener('scroll', el.__scrollTableEvent__);
         delete el.__scrollTableEvent__;
       }
-    }
+    },
+    loading: Loading.directive
   },
   components: {
     ElTable,

@@ -2,7 +2,6 @@
 <template>
   <el-cascader
     v-model="selectValue"
-    v-loading="loading"
     :disabled="disabled"
     :filterable="defaultConfig.filterable"
     :debounce="defaultConfig.debounce"

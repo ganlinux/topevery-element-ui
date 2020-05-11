@@ -70,6 +70,7 @@ import CubeSearchBar from 'packages/cube-search-bar';
 import CubeTable from 'packages/cube-table';
 import CubeMaxHeight from 'packages/cube-max-height';
 import ElPagination from 'packages/pagination';
+import Loading from 'packages/loading';
 
 // import { isObject } from '../../utils/types'
 
@@ -92,6 +93,9 @@ export default {
       type: Object,
       default: () => { }
     }
+  },
+  directives: {
+    loading: Loading.directive
   },
   data() {
     return {

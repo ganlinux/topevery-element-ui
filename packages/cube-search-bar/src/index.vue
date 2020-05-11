@@ -179,6 +179,7 @@ import { deepClone } from 'utils/index.new.js';
 import ElButton from 'packages/button';
 import ElInput from 'packages/input';
 import ElSelect from 'packages/select';
+import ElOption from 'packages/option';
 import ElDropdown from 'packages/dropdown';
 import ElDropdownItem from 'packages/dropdown-item';
 import ElDropdownMenu from 'packages/dropdown-menu';
@@ -195,6 +196,7 @@ export default {
     ElButton,
     ElInput,
     ElSelect,
+    ElOption,
     DatePicker,
     ElDropdown,
     ElDropdownItem,

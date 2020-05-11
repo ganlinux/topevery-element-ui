@@ -1,7 +1,7 @@
 <template>
   <div>
+      <!-- v-if="false" -->
     <CubeTableList
-      v-if="false"
       :config="config"
       :extra-param="extraParam"
     />
