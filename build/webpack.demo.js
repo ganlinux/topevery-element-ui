@@ -32,7 +32,7 @@ const webpackConfig = {
   },
   devServer: {
     host: '0.0.0.0',
-    port: 8085,
+    port: isPlay ? 8091 : 8090,
     publicPath: '/',
     hot: true
   },

@@ -7,12 +7,16 @@
     >
       <div class="container">
         <h1>
-            <!-- logo -->
-            topevery-element
+          <!-- logo -->
+          <img
+            :src="logo"
+            alt="logo"
+          >
+          topevery-element
         </h1>
 
         <!-- nav -->
-        <ul class="nav">
+        <ul class="nav"   v-if="false">
           <li
             class="nav-item nav-algolia-search"
             v-show="isComponentPage"
@@ -41,12 +45,14 @@ import Element from 'main/index.js';
 import themeLoader from './theme/loader';
 import bus from '../bus';
 import { ACTION_USER_CONFIG_UPDATE } from './theme/constant.js';
+import logo from '../assets/topImgs/logo.png';
 
 const { version } = Element;
 
 export default {
   data() {
     return {
+      logo,
       active: '',
       versions: [],
       version,
@@ -158,7 +164,7 @@ export default {
 
 .header {
   height: 80px;
-  background-color: #297EFB;
+  background-color: #297efb;
   color: #fff;
   top: 0;
   left: 0;
@@ -174,6 +180,11 @@ export default {
 
     h1 {
       color: #fff;
+      img {
+        position: relative;
+        top: 10px;
+        margin-left: -60px;
+      }
     }
   }
 
@@ -414,5 +425,4 @@ export default {
     }
   }
 }
-
 </style>

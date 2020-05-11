@@ -5,6 +5,7 @@
 ```html
 <template>
   <cube-chart
+    style="width: 100%;height: 100%;"
     autoresize
     theme="cube-blue"
     :options="chartConfig"
