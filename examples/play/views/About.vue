@@ -1,32 +1,18 @@
 <template>
   <div>
-      <!-- v-if="false" -->
-    <CubeTableList
-      :config="config"
-      :extra-param="extraParam"
-    />
-
-    <CubeChart
-      autoresize
-      theme="cube-blue"
-      :options="chartConfig"
-    />
-
+    <CubeTableList :config="config" />
   </div>
 </template>
 
 <script>
 
+
 export default {
   name: 'CubeTableListPage',
   data() {
     return {
-      dialogVisible: false,
-      extraParam: {
-        objType: 2, fenceType: 1, searchType: 2
-      },
       config: {
-        url: 'http://hw-topevery-dev-ui:49526/fenceAlarmSetting/getFenceAlarmRecordSearch',
+        url: '/alarmPersonAttendanceList/getAlarmSimilarTracePersonGpsList',
         search: {
           data: [
             [
@@ -37,9 +23,10 @@ export default {
                 config: {
                   keyName: 'label',
                   keyCode: 'value',
-                  url: '/map/getSectionTree',
-                  focusOnload: false, // 仅仅加载一次
-                  placeholder: '请选择标段-树形选择',
+                  method:'GET',
+                  url: '/static/tree.json',
+                  focusOnload: false, // 获取焦点就加载
+                  placeholder: 'cubeSelectTree',
                   treeDefaultProps: {
                     children: 'children',
                     label: 'label'
@@ -53,9 +40,10 @@ export default {
                 config: {
                   keyName: 'name',
                   keyCode: 'sectionId',
-                  url: '/section/search',
+                  method:'GET',
+                  url: '/static/page.json',
                   searchName: 'sectionName',
-                  focusOnload: false, // 仅仅加载一次
+                  focusOnload: false, // 获取焦点就加载
                   placeholder: '请选择公司-页分',
                   column: [
                     { key: 'name', label: '名称' },
@@ -71,9 +59,9 @@ export default {
                   keyName: 'name',
                   keyCode: 'companyId',
                   method: 'GET',
-                  url: '/contract/getCompanyList',
+                  url: '/static/company.json',
                   searchName: 'sectionName',
-                  focusOnload: true, // 仅仅加载一次
+                  focusOnload: false, // 获取焦点就加载
                   isNoPage: true, // 是否是列表无分页数据
                   placeholder: '请选择公司-无分页分',
                   column: [
@@ -93,7 +81,7 @@ export default {
                   keyName: 'label', // 指定选项标签为选项对象的某个属性值
                   children: 'children', // 指定选项的子选项为选项对象的某个属性
                   method: 'GET',
-                  url: '/customDept/tree',
+                  url: '/static/tree.json',
                   placeholder: '公司名称-级联选择'
                 }
               },
@@ -123,132 +111,54 @@ export default {
               },
               { type: 'search', name: '查询' },
               { type: 'reset', name: '重置' }
-            ],
-            [
-              { type: 'add', name: '新增', action: () => this.add() },
-              { type: 'button', btType: 'danger', icon: 'el-icon-delete', name: '作废' },
-              {
-                type: 'more', options: [
-                  { icon: 'el-icon-paperclip', label: '批量禁用' },
-                  { icon: 'el-icon-document-remove', label: '批量启用' }
-                ]
-              }
             ]
           ]
         },
         table: {
-          tableHeight: 250,
-          calcTableHeight: true, // 是否开启表格自动高度计算
+          tableExpand: true,
+          tableHeight: 400,
+          calcTableHeight: true,
+          loadType: 'scroll',
+          prefixHeight: 0,
           columns: [
             {
-              label: '选择',
-              type: 'selection'
+              label: '展开',
+              type: 'expand'
             },
             {
               label: '序号',
               type: 'index'
             },
             {
-              label: '围栏',
-              key: 'fenceName'
-            },
-            {
-              label: '标段',
+              label: '所属标段',
               key: 'sectionName'
             },
             {
-              label: '公司',
+              label: '所属公司',
               key: 'companyName'
             },
             {
-              label: '车牌号码',
-              key: 'objName'
+              label: '主管单位',
+              key: 'manageDeptName'
             },
             {
-              label: '报警类型',
-              key: 'fenceAlarmTypeName'
+              label: '报警次数',
+              key: 'alarmCount'
             },
             {
-              label: '报警开始时间',
-              key: 'alarmBeginTime'
-            },
-            {
-              label: '报警结束时间',
-              key: 'alarmEndTime'
-            },
-            {
-              label: '持续时间',
-              key: 'alarmTimeStr'
-            },
-            {
-              label: '状态',
-              key: 'alarmResult'
-            },
-            {
-              label: '操作',
-              key: 'drawNum',
-              render: (h, parmas) => {
-                const { row } = parmas;
-                return (
-                  <div class='flex-table-cell'>
-                    <div class='btn-text' onClick={() => this.handlerType(0, row)}>轨迹</div>
-                    <div class='btn-text' onClick={() => this.handlerType(1, row)}>通讯</div>
-                    {!row.isAppeal ? <div class='btn-text' onClick={() => this.checkProcess(row)}>流程</div> : null}
-                  </div>
-                );
-              }
+              label: '报警总人次',
+              key: 'alarmPerson'
             }
           ]
         }
       },
-      chartConfig: {
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'line'
-          }
-        },
-        grid: {
-          top: '4%',
-          left: '2%',
-          right: '4%',
-          bottom: '0%',
-          containLabel: true
-        },
-        xAxis: [
-          {
-            type: 'category',
-            data: ['0时', '4时', '8时', '12时', '16时', '20时', '24时'],
-            axisTick: {
-              alignWithLabel: true
-            }
-          }
-        ],
-        yAxis: [
-          {
-            type: 'value'
-          }
-        ],
-        series: [
-          {
-            name: '访问量',
-            type: 'bar',
-            barWidth: '60%',
-            data: [10, 52, 20, 33, 39, 33, 22]
-          }
-        ]
-      }
-    };
+    }
   },
   mounted() {
-    setTimeout(() => {
-      this.extraParam.fenceType = 2;
-    }, 4000);
+
   },
   methods: {
-    add() {
-      this.dialogVisible = true;
-    }
+
   }
-};
+}
 </script>

@@ -50,10 +50,12 @@ const router = new VueRouter({
 
 router.afterEach(route => {
   // https://github.com/highlightjs/highlight.js/issues/909#issuecomment-131686186
-  Vue.nextTick(() => {
-    const blocks = document.querySelectorAll('pre code:not(.hljs)');
-    Array.prototype.forEach.call(blocks, hljs.highlightBlock);
-  });
+  setTimeout(()=>{
+    Vue.nextTick(() => {
+      const blocks = document.querySelectorAll('pre code:not(.hljs)');
+      Array.prototype.forEach.call(blocks, hljs.highlightBlock);
+    });
+  }, 0);
   const data = title[route.meta.lang];
   for (let val in data) {
     if (new RegExp('^' + val, 'g').test(route.name)) {

@@ -13,7 +13,8 @@
       "error",
       "event",
       "fdescribe"
-    ]
+    ],
+    "no-debugger": 0
   },
   "parserOptions": {
     "ecmaVersion": 6,

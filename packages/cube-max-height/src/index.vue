@@ -29,11 +29,13 @@ export default {
     }
   },
   mounted() {
-    this.computedHeight();
-    this.resizeHeight = debounce(200, () => {
-      this.computedHeight();
+    setTimeout(()=>{ this.computedHeight(); }, 20);
+    this.$nextTick().then(() => {
+      this.resizeHeight = debounce(200, true, () => {
+        this.computedHeight();
+      });
+      window.addEventListener('resize', this.resizeHeight);
     });
-    window.addEventListener('resize', this.resizeHeight);
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.resizeHeight);
