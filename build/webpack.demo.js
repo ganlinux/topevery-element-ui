@@ -12,6 +12,8 @@ const config = require('./config');
 
 const isProd = process.env.NODE_ENV === 'production';
 const isPlay = !!process.env.PLAY_ENV;
+// 如果是打包 文档 引入的 cube-chart 会构建文档代码混淆报错
+const isDocs = process.env.VUE_APP_UI;
 
 const webpackConfig = {
   mode: process.env.NODE_ENV,
@@ -21,7 +23,7 @@ const webpackConfig = {
   output: {
     path: path.resolve(process.cwd(), './examples/element-ui/'),
     // path: path.resolve(process.cwd(), 'docs'),
-    publicPath: process.env.CI_ENV || '',
+    publicPath: process.env.CI_ENV || './',
     filename: '[name].[hash:7].js',
     chunkFilename: isProd ? '[name].[hash:7].js' : '[name].js'
   },
@@ -140,14 +142,23 @@ if (isProd) {
       filename: '[name].[contenthash:7].css'
     })
   );
-  webpackConfig.optimization.minimizer.push(
-    new UglifyJsPlugin({
-      cache: true,
-      parallel: true,
-      sourceMap: false
-    }),
-    new OptimizeCSSAssetsPlugin({})
-  );
+  // todo 如果是打包 文档 引入的 cube-chart 会构建文档代码混淆报错
+  // 这里如果打包的是文档 则跳过处理混淆压缩 暂时 fix 一下
+  // 其实 打包文档的时候 不 care 代码的混淆
+  if (isDocs) {
+    webpackConfig.optimization.minimizer.push(
+      new OptimizeCSSAssetsPlugin({})
+    );
+  } else {
+    webpackConfig.optimization.minimizer.push(
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: false
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    );
+  }
   // https://webpack.js.org/configuration/optimization/#optimizationsplitchunks
   webpackConfig.optimization.splitChunks = {
     cacheGroups: {

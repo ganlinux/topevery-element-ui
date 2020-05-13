@@ -5,8 +5,9 @@
 <script>
 
 // import ECharts modules manually to reduce bundle size
-// import 'echarts/lib/chart/bar'
-// import 'echarts/lib/component/tooltip'
+import 'echarts/lib/chart/bar';
+import 'echarts/lib/chart/line';
+import 'echarts/lib/chart/pie';
 
 import echarts from 'echarts/lib/echarts';
 import debounce from 'throttle-debounce/debounce';
@@ -14,18 +15,30 @@ import { addListener, removeListener } from 'resize-detector';
 const INIT_TRIGGERS = ['theme', 'initOptions', 'autoresize'];
 const REWATCH_TRIGGERS = ['manualUpdate', 'watchShallow'];
 
+import buleTheme from './theme/cube-bule.json';
+import greenTheme from './theme/cube-green.json';
+
+echarts.registerTheme('cube-blue', buleTheme);
+echarts.registerTheme('cube-green', greenTheme);
+
 export default {
   name: 'CubeChart',
   props: {
     // eslint-disable-next-line vue/require-default-prop
     options: Object,
     // eslint-disable-next-line vue/require-default-prop
-    theme: [String, Object],
+    theme: {
+      type: [String, Object],
+      default: ()=> 'cube-blue'
+    },
     // eslint-disable-next-line vue/require-default-prop
     initOptions: Object,
     // eslint-disable-next-line vue/require-default-prop
     group: String,
-    autoresize: Boolean,
+    autoresize: {
+      type: Boolean,
+      default: ()=> true
+    },
     watchShallow: Boolean,
     manualUpdate: Boolean
   },

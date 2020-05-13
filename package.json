@@ -1,6 +1,6 @@
 {
   "name": "topevery-element-ui",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "A Component Library for Vue.js.",
   "main": "lib/topevery.element-ui.common.js",
   "license": "MIT",
@@ -17,6 +17,7 @@
     "bootstrap": "yarn || npm i",
     "build:file": "node build/bin/iconInit.js & node build/bin/build-entry.js & node build/bin/i18n.js & node build/bin/version.js",
     "build:lib": "npm run clean && npm run build:file && npm run lint && webpack --config build/webpack.conf.js && webpack --config build/webpack.common.js && webpack --config build/webpack.component.js && npm run build:utils && npm run build:umd && npm run build:theme",
+    "build:docs": "npm run build:file && cross-env NODE_ENV=production VUE_APP_UI=docs webpack --config build/webpack.demo.js && echo element.eleme.io>>examples/element-ui/CNAME",
     "build:theme": "node build/bin/gen-cssfile && gulp build --gulpfile packages/theme-chalk/gulpfile.js && cp-cli packages/theme-chalk/lib lib/theme-chalk",
     "build:utils": "cross-env BABEL_ENV=utils babel src --out-dir lib --ignore src/index.js",
     "build:umd": "node build/bin/build-locale.js",
