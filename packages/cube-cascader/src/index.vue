@@ -1,11 +1,11 @@
 <!-- 选择组件 提供分页检索选择应数据量大列表卡顿以及分页接口数据选择 -->
 <template>
   <el-cascader
+    :clearable="false"
     v-model="selectValue"
     :disabled="disabled"
     :filterable="defaultConfig.filterable"
     :debounce="defaultConfig.debounce"
-    :clearable="defaultConfig.clearable"
     :placeholder="placeholder2"
     :size="defaultConfig.size"
     :options="options"
@@ -66,7 +66,7 @@ export default {
       // 默认参数
       defaultConfig: {
         placeholder: '请选择',
-        clearable: true,
+        clearable: false,
         filterable: true,
         debounce: 500,
         size: 'small',
@@ -100,17 +100,17 @@ export default {
         this.defaultConfig = deepMerge(this.defaultConfig, configData || {});
         this.placeholder2 = this.defaultConfig.placeholder;
         // 如果是 静态选项
-        const { isStaticOptions, options } = this.defaultConfig;
-        if (isStaticOptions) {
-          this.options = options;
+        const { isStaticOptions, options, children } = this.defaultConfig;
+        if (isStaticOptions && Array.isArray(options)) {
+          this.options = noEmptyChildren(children, options) || [];;;
         }
       }
     },
     'config.options': {
       handler(options) {
-        const { isStaticOptions } = this.defaultConfig;
+        const { isStaticOptions, children } = this.defaultConfig;
         if (Array.isArray(options) && isStaticOptions) {
-          this.options = options;
+          this.options = noEmptyChildren(children, options) || [];;
         }
       }
     }

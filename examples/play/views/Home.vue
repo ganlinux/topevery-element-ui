@@ -89,7 +89,7 @@ export default {
                   children: 'children', // 指定选项的子选项为选项对象的某个属性
                   method: 'GET',
                   options: tree.data,
-                  isStaticOptions: true,
+                  isStaticOptions: false,
                   url: '/static/tree.json',
                   placeholder: '公司名称-级联选择-tree'
                 }
