@@ -20,6 +20,10 @@ import './assets/styles/fonts/style.css';
 import icon from './icon.json';
 import 'highlight.js/styles/atom-one-dark.css';
 
+import './topevery-icon/iconfont.css';
+import topicon from './topevery-icon/iconfont.json';
+import './topevery-icon/iconfont.js';
+
 Vue.use(Element);
 Vue.use(VueRouter);
 Vue.component('demo-block', demoBlock);
@@ -41,7 +45,9 @@ Vue.mixin({
   }
 });
 
+// 数据添加到原型 方便在文档中使用
 Vue.prototype.$icon = icon; // Icon 列表页用
+Vue.prototype.$topicon = topicon.glyphs; // Icon 列表页用
 
 const router = new VueRouter({
   mode: 'hash',

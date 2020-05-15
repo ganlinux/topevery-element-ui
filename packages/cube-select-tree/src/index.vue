@@ -72,6 +72,7 @@ import ElInput from 'packages/input';
 import ElPopover from 'packages/popover';
 import ElTree from 'packages/tree';
 import Loading from 'packages/loading';
+import CuebScrollTo from 'packages/cueb-scroll-to';
 
 // import Scroll2Target from '../../cueb-scroll-to/src/scrollTo';
 
@@ -149,7 +150,6 @@ export default {
     value: {
       immediate: true,
       handler(value) {
-        console.log(value, 'sb');
         // 存在 一定是对象 不然显示很多问题
         if (value && isObject(value)) {
           const { keyName } = this.defaultConfig;
@@ -182,30 +182,30 @@ export default {
   },
   methods: {
     setScroll2Target() {
-      // setTimeout(_ => {
-      //   const { recordSelect } = this;
-      //   const { keyCode } = this.defaultConfig;
-      //   if (recordSelect) {
-      //     const targetKey = recordSelect[keyCode];
-      //     this.$refs['tree'] && this.$refs['tree'].setCurrentKey(targetKey);
-      //     if (this.$el.querySelector('.el-popover')) {
-      //       setTimeout(_ => {
-      //         const targetContainer = this.$el.querySelector('.el-popover');
-      //         const el = this.$el.querySelector('.is-current');
-      //         if (!el) return;
-      //         const options = {
-      //           container: targetContainer,
-      //           easing: 'ease-in',
-      //           force: true,
-      //           cancelable: true,
-      //           x: false,
-      //           y: true
-      //         };
-      //         Scroll2Target.scrollTo(el, 220, options);
-      //       }, 20);
-      //     }
-      //   }
-      // }, 200);
+      setTimeout(_ => {
+        const { recordSelect } = this;
+        const { keyCode } = this.defaultConfig;
+        if (recordSelect) {
+          const targetKey = recordSelect[keyCode];
+          this.$refs['tree'] && this.$refs['tree'].setCurrentKey(targetKey);
+          if (this.$el.querySelector('.el-popover')) {
+            setTimeout(_ => {
+              const targetContainer = this.$el.querySelector('.el-popover');
+              const el = this.$el.querySelector('.is-current');
+              if (!el) return;
+              const options = {
+                container: targetContainer,
+                easing: 'ease-in',
+                force: true,
+                cancelable: true,
+                x: false,
+                y: true
+              };
+              CuebScrollTo.scrollTo(el, 220, options);
+            }, 20);
+          }
+        }
+      }, 200);
     },
     focus() {
       const { recordSelect } = this;

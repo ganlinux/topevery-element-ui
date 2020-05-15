@@ -43,8 +43,8 @@ import AlgoliaSearch from './search.vue';
 import compoLang from '../i18n/component.json';
 import Element from 'main/index.js';
 import themeLoader from './theme/loader';
-import bus from '../bus';
-import { ACTION_USER_CONFIG_UPDATE } from './theme/constant.js';
+// import bus from '../bus';
+// import { ACTION_USER_CONFIG_UPDATE } from './theme/constant.js';
 import logo from '../assets/topImgs/logo.png';
 
 const { version } = Element;
@@ -129,29 +129,29 @@ export default {
   },
 
   created() {
-    const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = _ => {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        const versions = JSON.parse(xhr.responseText);
-        this.versions = Object.keys(versions).reduce((prev, next) => {
-          prev[next] = versions[next];
-          return prev;
-        }, {});
-      }
-    };
-    xhr.open('GET', '/versions.json');
-    xhr.send();
-    let primaryLast = '#409EFF';
-    bus.$on(ACTION_USER_CONFIG_UPDATE, (val) => {
-      let primaryColor = val.global['$--color-primary'];
-      if (!primaryColor) primaryColor = '#409EFF';
-      const base64svg = 'data:image/svg+xml;base64,';
-      const imgSet = document.querySelectorAll('h1 img');
-      imgSet.forEach((img) => {
-        img.src = `${base64svg}${window.btoa(window.atob(img.src.replace(base64svg, '')).replace(primaryLast, primaryColor))}`;
-      });
-      primaryLast = primaryColor;
-    });
+    // const xhr = new XMLHttpRequest();
+    // xhr.onreadystatechange = _ => {
+    //   if (xhr.readyState === 4 && xhr.status === 200) {
+    //     const versions = JSON.parse(xhr.responseText);
+    //     this.versions = Object.keys(versions).reduce((prev, next) => {
+    //       prev[next] = versions[next];
+    //       return prev;
+    //     }, {});
+    //   }
+    // };
+    // xhr.open('GET', '/versions.json');
+    // xhr.send();
+    // let primaryLast = '#409EFF';
+    // bus.$on(ACTION_USER_CONFIG_UPDATE, (val) => {
+    //   let primaryColor = val.global['$--color-primary'];
+    //   if (!primaryColor) primaryColor = '#409EFF';
+    //   const base64svg = 'data:image/svg+xml;base64,';
+    //   const imgSet = document.querySelectorAll('h1 img');
+    //   imgSet.forEach((img) => {
+    //     img.src = `${base64svg}${window.btoa(window.atob(img.src.replace(base64svg, '')).replace(primaryLast, primaryColor))}`;
+    //   });
+    //   primaryLast = primaryColor;
+    // });
   }
 };
 </script>

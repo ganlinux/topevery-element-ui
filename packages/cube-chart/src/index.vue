@@ -5,11 +5,12 @@
 <script>
 
 // import ECharts modules manually to reduce bundle size
+
+import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/pie';
 
-import echarts from 'echarts/lib/echarts';
 import debounce from 'throttle-debounce/debounce';
 import { addListener, removeListener } from 'resize-detector';
 const INIT_TRIGGERS = ['theme', 'initOptions', 'autoresize'];
@@ -28,7 +29,7 @@ export default {
     options: Object,
     // eslint-disable-next-line vue/require-default-prop
     theme: {
-      type: [String, Object],
+      type: String,
       default: ()=> 'cube-blue'
     },
     // eslint-disable-next-line vue/require-default-prop

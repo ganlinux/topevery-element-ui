@@ -21,6 +21,15 @@
       "name": "组件",
       "groups": [
         {
+          "groupName": "其他-新增-模块",
+          "list": [
+            {
+              "path": "/top-icon",
+              "title": "Top-Icon 图标库"
+            }
+          ]
+        },
+        {
           "groupName": "列表-表格-拓展",
           "list": [
             {

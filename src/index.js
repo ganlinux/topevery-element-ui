@@ -194,7 +194,7 @@ const install = function(Vue, opts = {}) {
   Vue.use(Loading.directive);
 
   Vue.prototype.$ELEMENT = {
-    size: opts.size || '',
+    size: opts.size || 'small',
     zIndex: opts.zIndex || 2000
   };
 
@@ -214,7 +214,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '0.0.19',
+  version: '0.0.21',
   locale: locale.use,
   i18n: locale.i18n,
   install,
