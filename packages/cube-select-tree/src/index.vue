@@ -39,7 +39,7 @@
             :default-expand-all="true"
             :expand-on-click-node="false"
             :filter-node-method="filterNode"
-            :data="tableData"
+            :data="options"
             :node-key="defaultConfig.keyCode"
             :props="defaultConfig.treeDefaultProps"
             @node-click="handleNodeClick"
@@ -118,7 +118,7 @@ export default {
       visible: false,
       loading: false,
       selectValue: '',
-      tableData: [],
+      options: [],
       // 默认参数
       defaultConfig: {
         // 显示输入区域
@@ -131,6 +131,8 @@ export default {
         popoverWidth: 320, // 弹层宽度
         inputWidth: '220px', // 输入框宽度
         size: 'small',
+        isStaticOptions: false, // options 选项是否作为 静态使用
+        options: [],
         // 树区域
         selectAny: false,
         treeDefaultProps: {
@@ -171,6 +173,17 @@ export default {
       handler(configData) {
         this.defaultConfig = deepMerge(this.defaultConfig, configData || {});
         this.placeholder2 = this.defaultConfig.placeholder;
+        // 如果是 静态选项
+        const { isStaticOptions, options } = this.defaultConfig;
+        if (isStaticOptions) {
+          this.options = options;
+        }
+      }
+    },
+    'config.options': {
+      handler(options) {
+        const { isStaticOptions } = this.defaultConfig;
+        if (Array.isArray(options) && isStaticOptions) this.options = options || [];
       }
     }
   },
@@ -222,7 +235,7 @@ export default {
       if (focusOnload) {
         this.fetchTableData();
       } else {
-        if (!this.tableData.length) {
+        if (!this.defaultConfig.options.length) {
           this.fetchTableData();
         }
       }
@@ -289,18 +302,16 @@ export default {
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
     },
-    debounceInputChange() {
-
-    },
     input(name) {
       this.inputChange(name);
     },
     fetchTableData() {
       const { extraParam } = this;
-      const { url, method, focusOnload } = this.defaultConfig;
+      const { url, method, focusOnload, isStaticOptions } = this.defaultConfig;
+      if (isStaticOptions) return;
       if (!url) false;
       this.loading = true;
-      this.tableData = [];
+      this.defaultConfig.options = [];
       // const params = Object.keys(extraParam).length ? { ...extraParam } : null
       const params = isObject(extraParam) ? { ...extraParam } : {};
       const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data';
@@ -309,7 +320,7 @@ export default {
         if (data.success) {
           const result = data.data;
           if (Array.isArray(result)) {
-            this.tableData = result || [];
+            this.defaultConfig.options = result || [];
             if (focusOnload) {
               // 显示到选取区域
               setTimeout(_ => {

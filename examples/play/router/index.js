@@ -1,4 +1,5 @@
-import Home from '../views/Home.vue'
+import Home from '../views/Home.vue';
+import About from '../views/About.vue';
 
 export default [
   {
@@ -9,6 +10,6 @@ export default [
   {
     path: '/about',
     name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: About
   }
-]
+];

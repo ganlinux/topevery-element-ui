@@ -34,7 +34,7 @@
       >
         <el-table
           ref="tablePage"
-          :data="tableData"
+          :data="defaultConfig.isStaticOptions ? filterTableData : tableData"
           style="width: 100%"
           size="mini"
           :height="defaultConfig.tableHeight"
@@ -97,7 +97,7 @@ import Clickoutside from 'element-ui/src/utils/clickoutside';
 import debounce from 'throttle-debounce/debounce';
 import request from 'utils/request';
 import { deepMerge } from 'utils/index.new';
-import { isObject } from 'utils/types';
+import { isObject, isArray } from 'utils/types';
 import emitter from 'mixins/emitter';
 
 import ElInput from 'packages/input';
@@ -172,6 +172,7 @@ export default {
       loading: false,
       selectValue: '',
       tableData: [],
+      filterTableData: [], // 静态选项表格
       // 默认参数
       defaultConfig: {
         keyName: 'label', // 显示选择名称
@@ -190,6 +191,8 @@ export default {
           { key: 'name', label: '名称' },
           { key: 'code', label: '编码' }
         ],
+        isStaticOptions: false, // options 选项是否作为 静态使用
+        options: [],
         // 请求额外设置参数 -  网络数据加载区域
         searchName: 'name',
         method: 'POST',
@@ -228,6 +231,19 @@ export default {
       handler(configData) {
         this.defaultConfig = deepMerge(this.defaultConfig, configData || {});
         this.placeholder2 = this.defaultConfig.placeholder;
+        // 如果是 静态选项
+        const { isStaticOptions, options } = this.defaultConfig;
+        if (isStaticOptions && isArray(options)) {
+          this.filterTableData = options;
+          // 过滤使用拷贝
+          this.staticTableData = JSON.parse(JSON.stringify(options)) ;
+        }
+      }
+    },
+    'config.options': {
+      handler(options) {
+        const { isStaticOptions } = this.defaultConfig;
+        if (Array.isArray(options) && isStaticOptions) this.filterTableData = options || [];
       }
     }
   },
@@ -262,6 +278,11 @@ export default {
 
       this.$emit('focus');
       this.$emit('visibleChange', true);
+
+      const { isStaticOptions } = this.defaultConfig;
+      if (isStaticOptions) {
+        this.doFilterTable('');
+      }
 
       setTimeout(_ => {
         this.setTableCurrentRow();
@@ -301,8 +322,8 @@ export default {
     setTableCurrentRow() {
       const { recordSelect } = this;
       if (!recordSelect) return;
-      const { keyCode } = this.defaultConfig;
-      const currentRow = this.tableData.find((item) => item[keyCode] === recordSelect[keyCode]) || null;
+      const { keyCode, isStaticOptions } = this.defaultConfig;
+      const currentRow = !isStaticOptions ? this.tableData.find((item) => item[keyCode] === recordSelect[keyCode]) || null : this.filterTableData.find((item) => item[keyCode] === recordSelect[keyCode]) || null;
       this.$refs['tablePage'] && this.$refs['tablePage'].setCurrentRow(currentRow);
     },
     hidePopover() {
@@ -323,14 +344,32 @@ export default {
       this.$emit('change', row);
       this.visible = false;
     },
-    input() {
-      this.inputChange();
+    input(e) {
+      const { isStaticOptions } = this.defaultConfig;
+      if (!isStaticOptions) {
+        this.inputChange();
+      } else {
+        this.doFilterTable(e);
+      }
+    },
+    doFilterTable(selectValue) {
+      const { staticTableData } = this;
+      if (selectValue) {
+        this.filterTableData = staticTableData.filter(dataNews => {
+          return Object.keys(dataNews).some(key => {
+            return String(dataNews[key]).toLowerCase().indexOf(selectValue) > -1;
+          });
+        });
+      } else {
+        this.filterTableData = staticTableData;
+      }
     },
     fetchTableData() {
       const { extraParam, selectValue } = this;
-      const { url, method, searchName, isNoPage } = this.defaultConfig;
-      const { currentPage, size } = this.defaultConfig.pagination;
+      const { url, method, searchName, isNoPage, isStaticOptions } = this.defaultConfig;
+      if (isStaticOptions) return;
       if (!url) false;
+      const { currentPage, size } = this.defaultConfig.pagination;
       this.tableData = [];
       this.loading = true;
       const searchParams = { [searchName]: selectValue };

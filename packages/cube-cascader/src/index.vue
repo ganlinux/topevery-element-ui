@@ -8,7 +8,7 @@
     :clearable="defaultConfig.clearable"
     :placeholder="placeholder2"
     :size="defaultConfig.size"
-    :options="defaultConfig.options"
+    :options="options"
     :props="{checkStrictly: defaultConfig.selectAny, emitPath:false, expandTrigger:'hover'}"
     :value="defaultConfig.keyCode"
     :label="defaultConfig.keyName"
@@ -62,6 +62,7 @@ export default {
       placeholder2: '请选择',
       loading: false,
       selectValue: '',
+      options: [],
       // 默认参数
       defaultConfig: {
         placeholder: '请选择',
@@ -70,6 +71,7 @@ export default {
         debounce: 500,
         size: 'small',
         selectAny: false, // 是否可选任意一级
+        isStaticOptions: false, // options 选项是否作为 静态使用
         options: [],
         keyCode: 'value', // 指定选项的值为选项对象的某个属性值
         keyName: 'label', // 指定选项标签为选项对象的某个属性值
@@ -97,17 +99,25 @@ export default {
       handler(configData) {
         this.defaultConfig = deepMerge(this.defaultConfig, configData || {});
         this.placeholder2 = this.defaultConfig.placeholder;
+        // 如果是 静态选项
+        const { isStaticOptions, options } = this.defaultConfig;
+        if (isStaticOptions) {
+          this.options = options;
+        }
       }
     },
     'config.options': {
       handler(options) {
-        if (Array.isArray(options)) this.defaultConfig.options = options || [];
+        const { isStaticOptions } = this.defaultConfig;
+        if (Array.isArray(options) && isStaticOptions) {
+          this.options = options;
+        }
       }
     }
   },
   mounted() {
-    const { focusOnload } = this.defaultConfig;
-    if (!focusOnload) {
+    const { isStaticOptions } = this.defaultConfig;
+    if (!isStaticOptions) {
       this.fetchTableData();
     }
   },
@@ -133,17 +143,17 @@ export default {
     },
     fetchTableData() {
       const { extraParam } = this;
-      const { url, method } = this.defaultConfig;
+      const { url, method, children, isStaticOptions } = this.defaultConfig;
+      if (isStaticOptions) return;
       if (!url) return;
-      // this.loading = true
-      this.defaultConfig.options = [];
+      this.options = [];
       const params = isObject(extraParam) ? { ...extraParam } : {};
       const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data';
       request({ url, method: method.toUpperCase(), [paramsKey]: params }).then((data) => {
         this.loading = false;
         if (data.success) {
           const result = data.data;
-          if (Array.isArray(result)) this.defaultConfig.options = noEmptyChildren(result) || [];
+          if (Array.isArray(result)) this.options = noEmptyChildren(children, result) || [];
         }
       }).catch(e => {
         this.loading = false;

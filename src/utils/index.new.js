@@ -262,20 +262,20 @@ export function deepClone(source) {
   return targetObj;
 }
 
-export function noEmptyChildren(data = [], newArr = []) {
+export function noEmptyChildren(children='children', data = [], newArr = []) {
   for (let index = 0; index < data.length; index++) {
     const element = data[index];
     const rowItem = {};
-    if (element.children && element.children.length) {
+    if (element[children] && element[children].length) {
       rowItem.label = element.label;
       rowItem.value = element.value;
-      rowItem.children = [];
+      rowItem[children] = [];
     } else {
       rowItem.label = element.label;
       rowItem.value = element.value;
     }
-    if (element.children && element.children.length) {
-      rowItem.children = noEmptyChildren(element.children);
+    if (element[children] && element[children].length) {
+      rowItem[children] = noEmptyChildren(children='children', element.children);
     }
     newArr.push(rowItem);
   }
