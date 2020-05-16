@@ -1,15 +1,15 @@
 <template>
   <div class="cueb-charts" />
 </template>
-
 <script>
 
 // import ECharts modules manually to reduce bundle size
-
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/pie';
+import 'echarts/lib/component/tooltip';
+// import 'echarts/lib/component/title';
 
 import debounce from 'throttle-debounce/debounce';
 import { addListener, removeListener } from 'resize-detector';
@@ -72,6 +72,10 @@ export default {
     });
   },
   mounted() {
+    // 当前组件添加 静态属性方法 用于渐变配置
+    if (!this.$echarts) {
+      this.$echarts = echarts;
+    }
     // auto init if `options` is already provided
     if (this.options) {
       this.init();
@@ -150,6 +154,9 @@ export default {
     },
     init(options) {
       if (this.chart) return;
+
+      console.log(this.theme, 'theme');
+
       const chart = echarts.init(this.$el, this.theme, this.initOptions);
       if (this.group) chart.group = this.group;
       chart.setOption(options || this.manualOptions || this.options || {}, true);
@@ -211,7 +218,7 @@ export default {
         }
       });
       this.chart = chart;
-      this.$emit('chartReady', chart);
+      this.$emit('ready', chart);
     },
     initOptionsWatcher() {
       if (this.__unwatchOptions) {

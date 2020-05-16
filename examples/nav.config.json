@@ -77,23 +77,6 @@
           ]
         },
         {
-          "groupName": "界面-布局-新增",
-          "list": [
-            {
-              "path": "/cube-search-bar",
-              "title": "SearchBar 搜索栏"
-            },
-            {
-              "path": "/cube-table",
-              "title": "CubeTable 封装表格"
-            },
-            {
-              "path": "/cube-table-list",
-              "title": "CubeTableList 列表组件"
-            }
-          ]
-        },
-        {
           "groupName": "Basic",
           "list": [
             {
