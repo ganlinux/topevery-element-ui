@@ -299,192 +299,204 @@ render表格展示用法。
   <div>
     <el-row>
       <p class="table-tip"> 操作栏:有图标 操作项1定义宽度  <span class="code"> 80px</span> </p>
-      <cube-Table :data="tableData" :columns="columns" ref="cubeTable" />
+      <cube-Table :config="config1" />
     </el-row>
      <el-row>
       <p class="table-tip"> 操作栏:有图标 操作项2定义宽度  <span class="code"> 140px</span> </p>
-      <cube-Table :data="tableData" :columns="columns2" ref="cubeTable" />
+      <cube-Table :config="config2" />
     </el-row>
      <el-row>
       <p class="table-tip"> 操作栏:有图标 操作项3定义宽度  <span class="code"> 180px</span> </p>
-      <cube-Table :data="tableData" :columns="columns3" ref="cubeTable" />
+      <cube-Table :config="config3" />
     </el-row>
      <el-row>
       <p class="table-tip"> 操作栏:有图标 操作项大于3 定义更多操作宽度  <span class="code"> 180px</span> </p>
-      <cube-Table :data="tableData" :columns="columns4" ref="cubeTable" />
+      <cube-Table :config="config4" />
     </el-row>
   </div>
   </template>
 
   <script>
+
+ 
+  const tableData = [{
+    "name": "Don Schoen Jr.",
+    "email": "Buck_Aufderhar13@gmail.com",
+    "text": "exercitationem autem omnis",
+    'results': 45
+  }]
     export default {
       data() {
         return {
-          tableData:[
-            {
-              "name": "Don Schoen Jr.",
-              "email": "Buck_Aufderhar13@gmail.com",
-              "text": "exercitationem autem omnis",
-              'results': 45
-            }
-          ],
-          columns:[
-            { label: '选项',  type: 'selection'},
-            { label: '序号', type: 'index' },
-            { label: '姓名', key: 'name' },
-            { label: '邮箱', key: 'email' },
-            { 
-              label: '描述', 
-              key: 'text', 
-              render: (h, parmas) => {
-                const { row } = parmas
-                return <span> { row.text } </span>
-              }
-            },
-            { 
-              label: '业绩', 
-              key: 'text', 
-              render: (h, parmas) => {
-                const { row } = parmas
-                return <span> { row.results } 万 </span>
-              }
-            },
-            { 
-              label: '操作',
-              width: 80,
-              render: (h, parmas) => {
-                const { row } = parmas
-                return (<div class="flex-box-table-row"> 
-                  <div class="btn-text" onClick={ ()=>this.handler('查看') }> 
-                    <i class="el-icon-view" /> 查看 
-                  </div>
-               </div>)
-              }
-            },
-          ],
-          columns2:[
-            { label: '选项',  type: 'selection'},
-            { label: '序号', type: 'index' },
-            { label: '姓名', key: 'name' },
-            { label: '邮箱', key: 'email' },
-            { 
-              label: '描述', 
-              key: 'text', 
-              render: (h, parmas) => {
-                const { row } = parmas
-                return <span> { row.text } </span>
-              }
-            },
-            { 
-              label: '业绩', 
-              key: 'text', 
-              render: (h, parmas) => {
-                const { row } = parmas
-                return <span> { row.results } 万 </span>
-              }
-            },
-            { label: '操作',
-              width:140,
-              render: (h, parmas) => {
-                const { row } = parmas
-                return (<div class="flex-box-table-row"> 
-                  <div class="btn-text" onClick={ ()=>this.handler('编辑') }> 
-                    <i class="el-icon-edit-outline" /> 编辑 
-                  </div>
-                  <div class="btn-text" onClick={ ()=>this.handler('查看') }> 
-                    <i class="el-icon-view" /> 查看 
-                  </div>
-               </div>)
-              }
-            },
-          ],
-          columns3:[
-            { label: '选项',  type: 'selection'},
-            { label: '序号', type: 'index' },
-            { label: '姓名', key: 'name' },
-            { label: '邮箱', key: 'email' },
-            { 
-              label: '描述', 
-              key: 'text', 
-              render: (h, parmas) => {
-                const { row } = parmas
-                return <span> { row.text } </span>
-              }
-            },
-            { 
-              label: '业绩', 
-              key: 'text', 
-              render: (h, parmas) => {
-                const { row } = parmas
-                return <span> { row.results } 万 </span>
-              }
-            },
-            { 
-              label: '操作',
-              width:180,
-              render: (h, parmas) => {
-                const { row } = parmas
-                return (<div class="flex-box-table-row"> 
-                  <div class="btn-text" onClick={ ()=>this.handler('编辑') }> 
-                    <i class="el-icon-edit-outline" /> 编辑 
-                  </div>
-                  <div class="btn-text" onClick={ ()=>this.handler('查看') }> 
-                    <i class="el-icon-view" /> 查看 
-                  </div>
-                  <div class="delete-text"  onClick={ ()=>this.handler('删除') }> 
-                    <i class="el-icon-delete" /> 删除 
-                  </div>
-               </div>)
-              }
-            },
-          ],
-          columns4:[
-            { label: '选项',  type: 'selection'},
-            { label: '序号', type: 'index' },
-            { label: '姓名', key: 'name' },
-            { label: '邮箱', key: 'email' },
-            { 
-              label: '描述', 
-              key: 'text', 
-              render: (h, parmas) => {
-                const { row } = parmas
-                return <span> { row.text } </span>
-              }
-            },
-            { 
-              label: '业绩', 
-              key: 'text', 
-              render: (h, parmas) => {
-                const { row } = parmas
-                return <span> { row.results } 万 </span>
-              }
-            },
-            { 
-              label: '操作',
-              width:180,
-              render: (h, parmas) => {
-                const { row } = parmas
-                return (<div class="flex-box-table-row"> 
-                  <div class="btn-text" onClick={ ()=>this.handler('编辑') }> 
-                    <i class="el-icon-edit-outline" /> 编辑 
-                  </div>
-                  <div class="btn-text" onClick={ ()=>this.handler('查看') }> 
-                    <i class="el-icon-view" /> 查看 
-                  </div>
-                  <el-dropdown>
-                  <div class="btn-text"> 
-                    <i class="el-icon-more" />更多 
-                  </div>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item>停用</el-dropdown-item>
-                      <el-dropdown-item>启用</el-dropdown-item>
-                      <el-dropdown-item>提交审核</el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown>
-               </div>)
-              }
-            },
-          ]
+          config1:{
+            data: tableData,
+            columns:[
+              { label: '选项',  type: 'selection'},
+              { label: '序号', type: 'index' },
+              { label: '姓名', key: 'name' },
+              { label: '邮箱', key: 'email' },
+              { 
+                label: '描述', 
+                key: 'text', 
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return <span> { row.text } </span>
+                }
+              },
+              { 
+                label: '业绩', 
+                key: 'text', 
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return <span> { row.results } 万 </span>
+                }
+              },
+              { 
+                label: '操作',
+                width: 80,
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return (<div class="flex-box-table-row"> 
+                    <div class="btn-text" onClick={ ()=>this.handler('查看') }> 
+                      <i class="el-icon-view" /> 查看 
+                    </div>
+                </div>)
+                }
+              },
+            ],
+          },
+          config2:{
+            data: tableData,
+            columns:[
+              { label: '选项',  type: 'selection'},
+              { label: '序号', type: 'index' },
+              { label: '姓名', key: 'name' },
+              { label: '邮箱', key: 'email' },
+              { 
+                label: '描述', 
+                key: 'text', 
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return <span> { row.text } </span>
+                }
+              },
+              { 
+                label: '业绩', 
+                key: 'text', 
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return <span> { row.results } 万 </span>
+                }
+              },
+              { label: '操作',
+                width:140,
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return (<div class="flex-box-table-row"> 
+                    <div class="btn-text" onClick={ ()=>this.handler('编辑') }> 
+                      <i class="el-icon-edit-outline" /> 编辑 
+                    </div>
+                    <div class="btn-text" onClick={ ()=>this.handler('查看') }> 
+                      <i class="el-icon-view" /> 查看 
+                    </div>
+                 </div>)
+                }
+              },
+            ],
+          },
+          config3:{
+            data: tableData,
+            columns:[
+              { label: '选项',  type: 'selection'},
+              { label: '序号', type: 'index' },
+              { label: '姓名', key: 'name' },
+              { label: '邮箱', key: 'email' },
+              { 
+                label: '描述', 
+                key: 'text', 
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return <span> { row.text } </span>
+                }
+              },
+              { 
+                label: '业绩', 
+                key: 'text', 
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return <span> { row.results } 万 </span>
+                }
+              },
+              { 
+                label: '操作',
+                width:180,
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return (<div class="flex-box-table-row"> 
+                    <div class="btn-text" onClick={ ()=>this.handler('编辑') }> 
+                      <i class="el-icon-edit-outline" /> 编辑 
+                    </div>
+                    <div class="btn-text" onClick={ ()=>this.handler('查看') }> 
+                      <i class="el-icon-view" /> 查看 
+                    </div>
+                    <div class="delete-text"  onClick={ ()=>this.handler('删除') }> 
+                      <i class="el-icon-delete" /> 删除 
+                    </div>
+                </div>)
+                }
+              },
+            ]
+          },
+          config4:{
+            data: tableData,
+            columns:[
+              { label: '选项',  type: 'selection'},
+              { label: '序号', type: 'index' },
+              { label: '姓名', key: 'name' },
+              { label: '邮箱', key: 'email' },
+              { 
+                label: '描述', 
+                key: 'text', 
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return <span> { row.text } </span>
+                }
+              },
+              { 
+                label: '业绩', 
+                key: 'text', 
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return <span> { row.results } 万 </span>
+                }
+              },
+              { 
+                label: '操作',
+                width:180,
+                render: (h, parmas) => {
+                  const { row } = parmas
+                  return (<div class="flex-box-table-row"> 
+                    <div class="btn-text" onClick={ ()=>this.handler('编辑') }> 
+                      <i class="el-icon-edit-outline" /> 编辑 
+                    </div>
+                    <div class="btn-text" onClick={ ()=>this.handler('查看') }> 
+                      <i class="el-icon-view" /> 查看 
+                    </div>
+                    <el-dropdown>
+                    <div class="btn-text"> 
+                      <i class="el-icon-more" />更多 
+                    </div>
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>停用</el-dropdown-item>
+                        <el-dropdown-item>启用</el-dropdown-item>
+                        <el-dropdown-item>提交审核</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                </div>)
+                }
+              },
+            ]
+          }
         }
       },
        methods: {

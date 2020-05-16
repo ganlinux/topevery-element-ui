@@ -1,6 +1,6 @@
 <!-- 选择组件 提供分页检索选择应数据量大列表卡顿以及分页接口数据选择 -->
 <template>
-  <div
+  <span
     v-clickoutside="miss"
     class="cube-select"
   >
@@ -88,7 +88,7 @@
         />
       </div>
     </el-popover>
-  </div>
+  </span>
 
 </template>
 
@@ -198,8 +198,6 @@ export default {
         method: 'POST',
         url: '',
         focusOnload: true,
-        // 选择返回值设置
-        selectValuekey: [],
         pagination: {
           size: 10, // 分页每页默认显示10条
           currentPage: 1, // 当前默认第一页
@@ -209,6 +207,28 @@ export default {
     };
   },
   watch: {
+    config: {
+      immediate: true,
+      handler(configData) {
+        this.defaultConfig = deepMerge(this.defaultConfig, configData || {});
+        this.placeholder2 = this.defaultConfig.placeholder;
+        // 如果是 静态选项
+        const { isStaticOptions, options } = this.defaultConfig;
+        if (isStaticOptions && isArray(options)) {
+          this.filterTableData = options;
+          this.staticTableData = JSON.parse(JSON.stringify(options)) ; // 模拟前端检索使用
+        }
+      }
+    },
+    'config.options': {
+      handler(options) {
+        const { isStaticOptions } = this.defaultConfig;
+        if (isStaticOptions && isArray(options)) {
+          this.filterTableData = options;
+          this.staticTableData = JSON.parse(JSON.stringify(options)) ; // 模拟前端检索使用
+        }
+      }
+    },
     value: {
       immediate: true,
       handler(value, valueOld) {
@@ -224,26 +244,6 @@ export default {
           this.recordSelect = null;
           this.placeholder2 = this.defaultConfig.placeholder;
         }
-      }
-    },
-    config: {
-      immediate: true,
-      handler(configData) {
-        this.defaultConfig = deepMerge(this.defaultConfig, configData || {});
-        this.placeholder2 = this.defaultConfig.placeholder;
-        // 如果是 静态选项
-        const { isStaticOptions, options } = this.defaultConfig;
-        if (isStaticOptions && isArray(options)) {
-          this.filterTableData = options;
-          // 过滤使用拷贝
-          this.staticTableData = JSON.parse(JSON.stringify(options)) ;
-        }
-      }
-    },
-    'config.options': {
-      handler(options) {
-        const { isStaticOptions } = this.defaultConfig;
-        if (Array.isArray(options) && isStaticOptions) this.filterTableData = options || [];
       }
     }
   },

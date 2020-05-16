@@ -66,7 +66,6 @@ export default {
       // 默认参数
       defaultConfig: {
         placeholder: '请选择',
-        clearable: false,
         filterable: true,
         debounce: 500,
         size: 'small',
@@ -76,24 +75,12 @@ export default {
         keyCode: 'value', // 指定选项的值为选项对象的某个属性值
         keyName: 'label', // 指定选项标签为选项对象的某个属性值
         children: 'children', // 指定选项的子选项为选项对象的某个属性
-        method: 'GET',
         url: '',
-        focusOnload: false // 是否获取焦点就加载 、 如果false则只会加载请求一次数据
+        method: 'GET'
       }
     };
   },
   watch: {
-    value: {
-      immediate: true,
-      handler(value) {
-        if (value) {
-          this.selectValue = value;
-        } else {
-          this.selectValue = '';
-          this.placeholder2 = this.defaultConfig.placeholder;
-        }
-      }
-    },
     config: {
       immediate: true,
       handler(configData) {
@@ -111,6 +98,17 @@ export default {
         const { isStaticOptions, children } = this.defaultConfig;
         if (Array.isArray(options) && isStaticOptions) {
           this.options = noEmptyChildren(children, options) || [];;
+        }
+      }
+    },
+    value: {
+      immediate: true,
+      handler(value) {
+        if (value) {
+          this.selectValue = value;
+        } else {
+          this.selectValue = '';
+          this.placeholder2 = this.defaultConfig.placeholder;
         }
       }
     }

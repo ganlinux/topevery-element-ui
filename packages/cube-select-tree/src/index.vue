@@ -1,6 +1,6 @@
 <!-- 选择组件 提供分页检索选择应数据量大列表卡顿以及分页接口数据选择 -->
 <template>
-  <div
+  <span
     v-clickoutside="miss"
     class="cube-select-tree"
     :style="{width: defaultConfig.inputWidth ? defaultConfig.inputWidth : 'auto' }"
@@ -55,7 +55,7 @@
         />
       </el-popover>
     </transition>
-  </div>
+  </span>
 
 </template>
 
@@ -149,6 +149,24 @@ export default {
     };
   },
   watch: {
+    config: {
+      immediate: true,
+      handler(configData) {
+        this.defaultConfig = deepMerge(this.defaultConfig, configData || {});
+        this.placeholder2 = this.defaultConfig.placeholder;
+        // 如果是 静态选项
+        const { isStaticOptions, options } = this.defaultConfig;
+        if (isStaticOptions) {
+          this.options = options;
+        }
+      }
+    },
+    'config.options': {
+      handler(options) {
+        const { isStaticOptions } = this.defaultConfig;
+        if (Array.isArray(options) && isStaticOptions) this.options = options || [];
+      }
+    },
     value: {
       immediate: true,
       handler(value) {
@@ -166,24 +184,6 @@ export default {
           this.placeholder2 = this.defaultConfig.placeholder;
           this.$refs['tree'] && this.$refs['tree'].setCurrentKey(null);
         }
-      }
-    },
-    config: {
-      immediate: true,
-      handler(configData) {
-        this.defaultConfig = deepMerge(this.defaultConfig, configData || {});
-        this.placeholder2 = this.defaultConfig.placeholder;
-        // 如果是 静态选项
-        const { isStaticOptions, options } = this.defaultConfig;
-        if (isStaticOptions) {
-          this.options = options;
-        }
-      }
-    },
-    'config.options': {
-      handler(options) {
-        const { isStaticOptions } = this.defaultConfig;
-        if (Array.isArray(options) && isStaticOptions) this.options = options || [];
       }
     }
   },

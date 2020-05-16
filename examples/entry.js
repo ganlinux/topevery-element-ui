@@ -18,7 +18,12 @@ import './assets/styles/common.scss';
 import './demo-styles/index.scss';
 import './assets/styles/fonts/style.css';
 import icon from './icon.json';
-import 'highlight.js/styles/atom-one-dark.css';
+import 'highlight.js/styles/dracula.css';
+
+import tree from './assets/mock/tree.json';
+import list from './assets/mock/list.json';
+import page from './assets/mock/page.json';
+import section from './assets/mock/section.json';
 
 import './topevery-icon/iconfont.css';
 import topicon from './topevery-icon/iconfont.json';
@@ -45,9 +50,18 @@ Vue.mixin({
   }
 });
 
+// 其他npm 包使用
+import Clipboard from 'v-clipboard';
+Vue.use(Clipboard);
+
 // 数据添加到原型 方便在文档中使用
 Vue.prototype.$icon = icon; // Icon 列表页用
 Vue.prototype.$topicon = topicon.glyphs; // Icon 列表页用
+
+Vue.prototype.$mockTree = tree.data;
+Vue.prototype.$mockList = list.data;
+Vue.prototype.$mockPage = page.data;
+Vue.prototype.$mockSection = section.data;
 
 const router = new VueRouter({
   mode: 'hash',

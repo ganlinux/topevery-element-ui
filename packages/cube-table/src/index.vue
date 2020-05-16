@@ -335,7 +335,6 @@ export default {
       }
     },
     'config.data': {
-      immediate: true,
       handler(data) {
         this.initConfig.data = data || [];
         if (this.initSeletTheFirst) {

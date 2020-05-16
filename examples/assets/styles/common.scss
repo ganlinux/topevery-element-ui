@@ -1,8 +1,9 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Helvetica Neue',Helvetica,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',SimSun,sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', SimSun, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
@@ -14,7 +15,7 @@ html, body {
 
 #app {
   height: 100%;
-  
+
   &.is-component {
     overflow-y: hidden;
 
@@ -31,7 +32,7 @@ html, body {
       left: 0;
       top: 0;
       z-index: 1500;
-      
+
       .container {
         padding: 0;
       }
@@ -51,7 +52,10 @@ code {
   border-radius: 4px;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -87,15 +91,25 @@ button, input, select, textarea {
 .page-container {
   padding-top: 55px;
 
+  ul {
+    margin: 0;
+    padding-left: 10px;
+  }
+
   h2 {
     font-size: 28px;
     color: #1f2d3d;
     margin: 0;
   }
+
   h3 {
     font-size: 22px;
   }
-  h2, h3, h4, h5 {
+
+  h2,
+  h3,
+  h4,
+  h5 {
     font-weight: normal;
     color: #1f2f3d;
 
@@ -147,10 +161,13 @@ button, input, select, textarea {
     }
   }
 }
+
 .demo {
   margin: 20px 0;
 }
+
 @media (max-width: 1140px) {
+
   .container,
   .page-container {
     width: 100%;
@@ -158,6 +175,7 @@ button, input, select, textarea {
 }
 
 @media (max-width: 768px) {
+
   .container,
   .page-container {
     padding: 0 20px;

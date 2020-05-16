@@ -1,6 +1,7 @@
 .cube-select {
     position: relative;
     min-width: 220px;
+    display: inline-block;
     // max-width: 420px;
     /deep/.el-input-group__append {
       background: #2f86f6;
