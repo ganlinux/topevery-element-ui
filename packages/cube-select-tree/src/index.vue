@@ -39,8 +39,8 @@
             :default-expand-all="true"
             :expand-on-click-node="false"
             :filter-node-method="filterNode"
-            :data="options"
             :node-key="defaultConfig.keyCode"
+            :data="options"
             :props="defaultConfig.treeDefaultProps"
             @node-click="handleNodeClick"
           />
@@ -144,7 +144,7 @@ export default {
         url: '',
         focusOnload: true,
         // 选择返回值设置
-        selectValuekey: []
+        otherProps: []
       }
     };
   },
@@ -270,16 +270,15 @@ export default {
       this.$emit('hidePopover');
     },
     handleNodeClick(row) {
-      const { selectAny, keyName, keyCode, selectValuekey } = this.defaultConfig;
+      const { selectAny, keyName, keyCode, otherProps } = this.defaultConfig;
       // 可设置返回对象内容
-      const selectValuekeyParams = {};
-      if (Array.isArray(selectValuekey) && selectValuekey.length) {
-        for (const item of selectValuekey) {
-          selectValuekeyParams[item] = row[item];
+      const otherPropsParams = {};
+      if (Array.isArray(otherProps) && otherProps.length) {
+        for (const item of otherProps) {
+          otherPropsParams[item] = row[item];
         }
       }
-      const params = { [keyCode]: row[keyCode], [keyName]: row[keyName], ...selectValuekeyParams };
-
+      const params = { [keyCode]: row[keyCode], [keyName]: row[keyName], ...otherPropsParams };
       if (selectAny) {
         // 选择最后任意
         this.visible = false;
@@ -311,7 +310,7 @@ export default {
       if (isStaticOptions) return;
       if (!url) false;
       this.loading = true;
-      this.defaultConfig.options = [];
+      this.options = [];
       // const params = Object.keys(extraParam).length ? { ...extraParam } : null
       const params = isObject(extraParam) ? { ...extraParam } : {};
       const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data';
@@ -320,7 +319,7 @@ export default {
         if (data.success) {
           const result = data.data;
           if (Array.isArray(result)) {
-            this.defaultConfig.options = result || [];
+            this.options = result || [];
             if (focusOnload) {
               // 显示到选取区域
               setTimeout(_ => {
