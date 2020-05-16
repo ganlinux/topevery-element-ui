@@ -22,6 +22,7 @@
       "groups": [
         {
           "groupName": "其他-新增-模块",
+          "new": true,
           "list": [
             {
               "path": "/top-icon",
@@ -31,6 +32,7 @@
         },
         {
           "groupName": "列表-表格-拓展",
+          "new": true,
           "list": [
             {
               "path": "/cube-search-bar",
@@ -48,6 +50,7 @@
         },
         {
           "groupName": "数据-选择-拓展",
+          "new": true,
           "list": [
             {
               "path": "/cube-select",
@@ -65,6 +68,7 @@
         },
         {
           "groupName": "数据-图形-图表",
+          "new": true,
           "list": [
             {
               "path": "/cube-progress",
@@ -72,7 +76,7 @@
             },
             {
               "path": "/cube-chart",
-              "title": "cubeChart 图表"
+              "title": "cubeChart 可视化图表"
             }
           ]
         },

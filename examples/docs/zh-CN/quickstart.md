@@ -26,7 +26,6 @@ new Vue({
 
 以上代码便完成了 Element 的引入。需要注意的是，样式文件需要单独引入。
 
-#### 按需引入 - cube 开头的组件暂时不支持按需引入
 
 借助 [babel-plugin-component](https://github.com/QingWei-Li/babel-plugin-component)，我们可以只引入需要的组件，以达到减小项目体积的目的。
 

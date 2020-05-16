@@ -4,6 +4,7 @@ import entry from './app';
 import VueRouter from 'vue-router';
 import Element from 'main/index.js';
 import hljs from 'highlight.js';
+import echarts from 'echarts/lib/echarts';
 
 import routes from './route.config';
 import demoBlock from './components/demo-block';
@@ -18,7 +19,7 @@ import './assets/styles/common.scss';
 import './demo-styles/index.scss';
 import './assets/styles/fonts/style.css';
 import icon from './icon.json';
-import 'highlight.js/styles/dracula.css';
+import 'highlight.js/styles/atom-one-dark.css';
 
 import tree from './assets/mock/tree.json';
 import list from './assets/mock/list.json';
@@ -62,6 +63,7 @@ Vue.prototype.$mockTree = tree.data;
 Vue.prototype.$mockList = list.data;
 Vue.prototype.$mockPage = page.data;
 Vue.prototype.$mockSection = section.data;
+Vue.prototype.$echarts = echarts;
 
 const router = new VueRouter({
   mode: 'hash',
