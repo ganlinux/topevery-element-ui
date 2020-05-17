@@ -83,7 +83,7 @@
               { type: 'reset', name: '重置' }
             ],
             [
-              { type: 'button', name: '添加', keyType: 'success', icon: 'el-icon-plus' }
+              { type: 'button', name: '添加', keyType: 'success', icon: 'el-icon-plus',ifShow:()=> true }
             ]
           ]
         }

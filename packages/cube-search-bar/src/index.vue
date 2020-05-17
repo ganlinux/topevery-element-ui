@@ -134,6 +134,7 @@
                 :plain="true"
                 :size="size"
                 :icon="item.icon"
+                v-if="item.ifShow ? item.ifShow(): true"
                 :type="item.btType"
                 @click="item.click ? item.click($event) : null"
                 @click.stop="item.action ? item.action() :clickBtn(item)"

@@ -154,9 +154,6 @@ export default {
     },
     init(options) {
       if (this.chart) return;
-
-      console.log(this.theme, 'theme');
-
       const chart = echarts.init(this.$el, this.theme, this.initOptions);
       if (this.group) chart.group = this.group;
       chart.setOption(options || this.manualOptions || this.options || {}, true);
