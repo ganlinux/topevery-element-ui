@@ -2,9 +2,10 @@
 
 :::tip
 - 在保留当前页面状态的情况下，告知用户并承载相关操作。
-- 基于dialog封装修改。默认可视区域内居中显示
+- 基于dialog封装。默认底部操作内居中显示
 - 新增全屏弹窗样式
 - 内容大于可视区域组件会计算合适高度，达到最佳可视高度。
+- 修复了v1版本，弹窗动画时渲染计算偏差。
 :::
 
 ### 基本用法
@@ -203,6 +204,53 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
 ```
 :::
 
+
+### 常规使用2
+
+测试弹窗使用栅格布局对弹窗样式的影响
+
+:::demo
+
+```html
+<el-button type="text" @click="centerDialogVisible = true">点击打开 Dialog</el-button>
+
+<cube-dialog
+  title="提示"
+  :visible.sync="centerDialogVisible">
+  <div v-if="centerDialogVisible">
+    <el-row :gutter="20">
+      <el-col :span="16"><div class="grid-content bg-purple"> 弹窗内容 - layout </div></el-col>
+      <el-col :span="8"><div class="grid-content bg-purple"> 弹窗内容 - layout </div></el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="8"><div class="grid-content bg-purple"> 弹窗内容 - layout </div></el-col>
+      <el-col :span="8"><div class="grid-content bg-purple"> 弹窗内容 - layout </div></el-col>
+      <el-col :span="4"><div class="grid-content bg-purple"> 弹窗内容 - layout </div></el-col>
+      <el-col :span="4"><div class="grid-content bg-purple"> 弹窗内容 - layout </div></el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="4"><div class="grid-content bg-purple"> 弹窗内容 - layout </div></el-col>
+      <el-col :span="16"><div class="grid-content bg-purple"> 弹窗内容 - layout </div></el-col>
+      <el-col :span="4"><div class="grid-content bg-purple"> 弹窗内容 - layout </div></el-col>
+    </el-row>
+  </div>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="centerDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+  </span>
+</cube-dialog>
+
+<script>
+  export default {
+    data() {
+      return {
+        centerDialogVisible: false
+      };
+    }
+  };
+</script>
+```
+:::
 
 ### 全屏弹窗
 

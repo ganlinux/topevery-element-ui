@@ -3,7 +3,8 @@
 用于展示操作进度，告知用户当前状态和预期。
 
 ::: tip 
-新增激活属性、环形进度内容可以自定义传入
+ - 新增激活属性动效进度状态
+ - 环形进度内容支持插入自定义内容。更好的贴合我们的业务。
 :::
 
 ### 线形进度条
@@ -11,11 +12,11 @@
 :::demo Progress 组件设置`percentage`属性即可，表示进度条对应的百分比，**必填**，必须在 0-100。通过 `format` 属性来指定进度条文字内容。
 
 ```html
-<cube-progress  :percentage="50"></cube-progress>
-<cube-progress  :percentage="100" :format="format"></cube-progress>
-<cube-progress  :percentage="100" status="success"></cube-progress>
-<cube-progress  :percentage="100" status="warning"></cube-progress>
-<cube-progress  :percentage="50" status="exception"></cube-progress>
+<cube-progress active :percentage="50"></cube-progress>
+<cube-progress active :percentage="100" :format="format"></cube-progress>
+<cube-progress active :percentage="100" status="success"></cube-progress>
+<cube-progress active :percentage="100" status="warning"></cube-progress>
+<cube-progress active :percentage="50" status="exception"></cube-progress>
 
 <script>
   export default {
@@ -50,11 +51,11 @@
 :::demo
 
 ```html
-<cube-progress :percentage="percentage" :color="customColor"></cube-progress>
+<cube-progress active :percentage="percentage" :color="customColor"></cube-progress>
 
-<cube-progress :percentage="percentage" :color="customColorMethod"></cube-progress>
+<cube-progress active :percentage="percentage" :color="customColorMethod"></cube-progress>
 
-<cube-progress :percentage="percentage" :color="customColors"></cube-progress>
+<cube-progress active :percentage="percentage" :color="customColors"></cube-progress>
 <div>
   <el-button-group>
     <el-button icon="el-icon-minus" @click="decrease"></el-button>
@@ -108,15 +109,63 @@
 ### 环形进度条
 
 Progress 组件可通过 `type` 属性来指定使用环形进度条，在环形进度条中，还可以通过 `width` 属性来设置其大小。
+`slot="content"` 完成自定义内容的插入。
 
 :::demo
 
 ```html
-<cube-progress type="circle" :percentage="0"></cube-progress>
-<cube-progress type="circle" :percentage="25"></cube-progress>
-<cube-progress type="circle" :percentage="100" status="success"></cube-progress>
-<cube-progress type="circle" :percentage="70" status="warning"></cube-progress>
-<cube-progress type="circle" :percentage="50" status="exception"></cube-progress>
+<cube-progress type="circle" :width="180" :percentage="percentage">
+  <div slot="content">
+    <div> 清扫完成率 </div>
+    <div> {{percentage}}% </div>
+  </div>
+</cube-progress>
+<cube-progress type="circle" :width="180" :percentage="percentage" status="success">
+  <div slot="content">
+    <div> 机扫完成率 </div>
+    <div> {{percentage}}% </div>
+  </div>
+</cube-progress>
+<cube-progress type="circle" :width="180" :percentage="percentage" status="warning">
+  <div slot="content">
+    <div> 洒水完成率 </div>
+    <div> {{percentage}}% </div>
+  </div>
+</cube-progress>
+<cube-progress type="circle" :width="180" :percentage="percentage" status="exception">
+  <div slot="content">
+    <div> 作业完成率 </div>
+    <div> {{percentage}}% </div>
+  </div>
+</cube-progress>
+
+<div>
+  <el-button-group>
+    <el-button icon="el-icon-minus" @click="decrease"></el-button>
+    <el-button icon="el-icon-plus" @click="increase"></el-button>
+  </el-button-group>
+</div>
+
+<script>
+  export default {
+    data() {
+      return {
+        percentage: 10,
+      };
+    },
+    methods: {
+      increase() {
+        this.percentage += 10;
+        if (this.percentage >= 100) this.percentage = 100;
+      },
+      decrease() {
+        this.percentage -= 10;
+        if (this.percentage < 0) this.percentage = 0;
+      }
+    }
+  }
+</script>
+
 ```
 :::
 
@@ -126,7 +175,12 @@ Progress 组件可通过 `type` 属性来指定使用环形进度条，在环形
 
 ```html
 
-<cube-progress type="dashboard" :percentage="percentage" :color="colors"></cube-progress>
+<cube-progress type="dashboard" :percentage="percentage" :color="colors">
+   <div slot="content">
+    <div> 洒水完成率 </div>
+    <div> {{percentage}}% </div>
+  </div>
+</cube-progress>
 <div>
   <el-button-group>
     <el-button icon="el-icon-minus" @click="decrease"></el-button>

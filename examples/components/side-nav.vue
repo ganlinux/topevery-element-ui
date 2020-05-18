@@ -12,25 +12,6 @@
         v-for="(item, key) in data"
         :key="key"
       >
-        <ul
-          class="pure-menu-list sub-nav"
-          v-if="item.children"
-        >
-          <li
-            class="nav-item"
-            v-for="(navItem, key) in item.children"
-            :key="key"
-          >
-            <router-link
-              class=""
-              active-class="active"
-              :to="base + navItem.path"
-              exact
-              v-text="navItem.title || navItem.name"
-            >
-            </router-link>
-          </li>
-        </ul>
         <template v-if="item.groups">
           <div
             class="nav-group"

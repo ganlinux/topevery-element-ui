@@ -52,12 +52,16 @@
           <div> 定制内容 </div>
         </slot>
       </template>
-      <template v-if="!$slots.content && type === 'circle'">
+      <template v-else-if="!$slots.content && type === 'circle'">
         <template v-if="!status">{{ content }}</template>
         <div v-else>
           <i :class="iconClass" />
-          <div> {{ contentText }} </div>
         </div>
+      </template>
+      <template v-if="$slots.content && type === 'dashboard'">
+        <slot name="content">
+          <div> 定制内容 </div>
+        </slot>
       </template>
       <template v-if="type === 'line'">
         <template v-if="!status">{{ content }}</template>
