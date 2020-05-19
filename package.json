@@ -44,6 +44,7 @@
     "async-validator": "~1.8.1",
     "axios": "^0.19.2",
     "babel-helper-vue-jsx-merge-props": "^2.0.0",
+    "better-scroll": "^1.15.2",
     "deepmerge": "^1.2.0",
     "echarts": "^4.7.0",
     "js-cookie": "^2.2.0",

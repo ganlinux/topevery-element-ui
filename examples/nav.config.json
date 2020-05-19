@@ -22,15 +22,15 @@
           "list": [
             {
               "path": "/cube-dialog",
-              "title": "cubeDialog 对话框"
+              "title": "CubeDialog 对话框"
             },
             {
               "path": "/cube-viewer",
-              "title": "cubeViewer 图片浏览"
+              "title": "CubeViewer 图片浏览"
             },
             {
               "path": "/cube-split",
-              "title": "cubeSplit 拖动面板"
+              "title": "CubeSplit 拖拽面板"
             }
           ]
         },
@@ -58,15 +58,15 @@
           "list": [
             {
               "path": "/cube-select",
-              "title": "cubeSelect 列表选择"
+              "title": "CubeSelect 列表选择"
             },
             {
               "path": "/cube-select-tree",
-              "title": "cubeSelectTree 树形选择"
+              "title": "CubeSelectTree 树形选择"
             },
             {
               "path": "/cube-cascader",
-              "title": "cubeCascader 级联选择"
+              "title": "CubeCascader 级联选择"
             }
           ]
         },
@@ -80,11 +80,11 @@
             },
             {
               "path": "/cube-progress",
-              "title": "cubeProgress 进度"
+              "title": "CubeProgress 进度"
             },
             {
               "path": "/cube-chart",
-              "title": "cubeChart 可视化图表"
+              "title": "CubeChart 可视化图表"
             }
           ]
         },

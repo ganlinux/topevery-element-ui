@@ -94,5 +94,6 @@
   "cube-viewer": "./packages/cube-viewer/index.js",
   "cube-chart": "./packages/cube-chart/index.js",
 
-  "cube-dialog": "./packages/cube-dialog/index.js"
+  "cube-dialog": "./packages/cube-dialog/index.js",
+  "cube-split": "./packages/-cube-split/index.js"
 }

@@ -1,115 +1,98 @@
-.cube-split-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-  .cube-split-pane {
-    position: absolute;
-    //滚动条 ++ 
-    // padding: 6px;
-    overflow: auto;
-  }
-  .cube-split-pane.left-pane,
-  .cube-split-pane.right-pane {
-    top: 0;
-    bottom: 0;
-  }
-  .cube-split-pane.left-pane {
-    left: 0;
-  }
-  .cube-split-pane.right-pane {
-    right: 0;
-  }
-  .cube-split-pane.top-pane,
-  .cube-split-pane.bottom-pane {
-    left: 0;
-    right: 0;
-  }
-  .cube-split-pane.top-pane {
-    top: 0;
-  }
-  .cube-split-pane.bottom-pane {
-    bottom: 0;
-  }
-  .cube-split-pane-moving {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-  .cube-split-trigger {
-    border: 1px solid #dcdee2;
-  }
-  .cube-split-trigger-con {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-  }
-  .cube-split-trigger-bar-con {
-    position: absolute;
-    overflow: hidden;
-  }
-  .cube-split-trigger-bar-con.vertical {
-    left: 0px;
-    top: 50%;
-    height: 32px;
-    transform: translate(0, -50%);
-  }
-  .cube-split-trigger-bar-con.horizontal {
-    left: 50%;
-    top: 0px;
-    width: 32px;
-    transform: translate(-50%, 0);
-  }
-  .cube-split-trigger-vertical {
-    width: 4px;
-    height: 100%;
-    background: #f8f8f9;
-    border-top: none;
-    border-bottom: none;
-    cursor: col-resize;
+// index
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
 
-    // left: -5px;
-    position: relative;
-  }
-  .cube-split-trigger-vertical .cube-split-trigger-bar {
-    width: 4px;
-    height: 1px;
-    background: rgba(23, 35, 61, 0.25);
-    float: left;
-    margin-top: 3px;
-  }
-  .cube-split-trigger-horizontal {
-    height: 4px;
-    width: 100%;
-    background: #f8f8f9;
-    border-left: none;
-    border-right: none;
-    cursor: row-resize;
-  }
-  .cube-split-trigger-horizontal .cube-split-trigger-bar {
-    height: 4px;
-    width: 1px;
-    background: rgba(23, 35, 61, 0.25);
-    float: left;
-    margin-right: 3px;
-  }
-  .cube-split-horizontal > .cube-split-trigger-con {
-    top: 50%;
-    height: 100%;
-    width: 0;
-  }
-  .cube-split-vertical > .cube-split-trigger-con {
-    left: 50%;
-    height: 0;
-    width: 100%;
-  }
-  .cube-split .no-select {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-  
+.vue-splitter-container {
+  height: 100%;
+  position: relative;
+  // min-height: 220px;
+}
+
+.vue-splitter-container-mask {
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+//pane
+.splitter-pane {
+  overflow: auto;
+  scrollbar-width: 0;
+  -ms-overflow-style: none; /* IE 11 */
+  scrollbar-width: none; /* Firefox 64 */
+}
+// 谷歌内核
+.splitter-pane::-webkit-scrollbar {
+  display: none !important;
+  width: 0px;
+  height: 0px;
+}
+
+
+.splitter-pane.vertical.splitter-paneL {
+  position: absolute;
+  left: 0px;
+  height: 100%;
+  padding-right: 3px;
+}
+
+.splitter-pane.vertical.splitter-paneR {
+  position: absolute;
+  right: 0px;
+  height: 100%;
+  padding-left: 3px;
+}
+
+.splitter-pane.horizontal.splitter-paneL {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+
+.splitter-pane.horizontal.splitter-paneR {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  padding-top: 3px;
+}
+
+// 触发栏
+.splitter-pane-resizer {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #000;
+  position: absolute;
+  opacity: .2;
+  z-index: 1;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
+}
+
+.splitter-pane-resizer.horizontal {
+  height: 11px;
+  margin: -5px 0;
+  border-top: 4px solid rgba(255, 255, 255, 0);
+  border-bottom: 4px solid rgba(255, 255, 255, 0);
+  cursor: row-resize;
+  width: 100%;
+}
+
+.splitter-pane-resizer.vertical {
+  width: 11px;
+  height: 100%;
+  margin-left: -5px;
+  border-left: 4px solid rgba(255, 255, 255, 0);
+  border-right: 4px solid rgba(255, 255, 255, 0);
+  cursor: col-resize;
+}

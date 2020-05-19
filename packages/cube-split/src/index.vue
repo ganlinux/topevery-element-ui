@@ -1,185 +1,132 @@
 <template>
-  <div ref="outerWrapper" :class="wrapperClasses">
-    <div v-if="isHorizontal" :class="`${prefix}-horizontal`">
-      <div :style="{right: `${anotherOffset}%`}" class="left-pane" :class="paneClasses">
-        <slot name="left" />
-      </div>
-      <div :class="`${prefix}-trigger-con`" :style="{left: `${offset}%`}" @mousedown="handleMousedown">
-        <slot name="trigger">
-          <trigger mode="vertical" />
-        </slot>
-      </div>
-      <div :style="{left: `${offset}%`}" class="right-pane" :class="paneClasses">
-        <slot name="right" />
-      </div>
-    </div>
-    <div v-else :class="`${prefix}-vertical`">
-      <div :style="{bottom: `${anotherOffset}%`}" class="top-pane" :class="paneClasses">
-        <slot name="top" />
-      </div>
-      <div :class="`${prefix}-trigger-con`" :style="{top: `${offset}%`}" @mousedown="handleMousedown">
-        <slot name="trigger">
-          <trigger mode="horizontal" />
-        </slot>
-      </div>
-      <div :style="{top: `${offset}%`}" class="bottom-pane" :class="paneClasses">
-        <slot name="bottom" />
-      </div>
-    </div>
+  <div
+    :style="{ cursor, userSelect}"
+    class="vue-splitter-container clearfix"
+    @mouseup="onMouseUp"
+    @mousemove="onMouseMove"
+  >
+
+    <!-- v-betterScroll -->
+    <pane
+      class="splitter-pane splitter-paneL"
+      :split="split"
+      :style="{ [type]: percent+'%'}"
+    >
+      <slot name="paneL"></slot>
+    </pane>
+
+    <resizer
+      :className="className"
+      :style="{ [resizeType]: percent+'%'}"
+      :split="split"
+      @mousedown.native="onMouseDown"
+      @click.native="onClick"
+    ></resizer>
+
+    <pane
+      class="splitter-pane splitter-paneR"
+      :split="split"
+      :style="{ [type]: 100-percent+'%'}"
+    >
+      <slot name="paneR"></slot>
+    </pane>
+    <div
+      class="vue-splitter-container-mask"
+      v-if="active"
+    ></div>
   </div>
 </template>
 
 <script>
 
-import { oneOf } from 'utils/index.new.js';
-import { on, off } from 'utils/dom';
-import Trigger from './trigger.vue';
+import Resizer from './resizer.vue';
+import Pane from './pane.vue';
+import ElScrollbar from 'packages/scrollbar';
 
 export default {
-  name: 'CubeSplit',
-  components: {
-    Trigger
-  },
+  name: 'cubeSplit',
+  components: { Resizer, Pane, ElScrollbar },
   props: {
-    value: {
-      type: [Number, String],
-      default: 0.5
+    minPercent: {
+      type: Number,
+      default: 10
     },
-    mode: {
+    defaultPercent: {
+      type: Number,
+      default: 50
+    },
+    split: {
       validator(value) {
-        return oneOf(value, ['horizontal', 'vertical']);
+        return ['vertical', 'horizontal'].indexOf(value) >= 0;
       },
-      default: 'horizontal'
+      default: ()=>'vertical'
     },
-    min: {
-      type: [Number, String],
-      default: '40px'
-    },
-    max: {
-      type: [Number, String],
-      default: '40px'
-    }
-  },
-  /**
- * Events
- * @on-move-start
- * @on-moving 返回值：事件对象，但是在事件对象中加入了两个参数：atMin(当前是否在最小值处), atMax(当前是否在最大值处)
- * @on-move-end
- */
-  data() {
-    return {
-      prefix: 'cube-split',
-      offset: 0,
-      oldOffset: 0,
-      isMoving: false,
-      computedMin: 0,
-      computedMax: 0,
-      currentValue: 0.5
-    };
+    className: String
   },
   computed: {
-    wrapperClasses() {
-      return [
-        `${this.prefix}-wrapper`,
-        this.isMoving ? 'no-select' : ''
-      ];
+    userSelect() {
+      return this.active ? 'none' : '';
     },
-    paneClasses() {
-      return [
-        `${this.prefix}-pane`,
-        {
-          [`${this.prefix}-pane-moving`]: this.isMoving
-        }
-      ];
-    },
-    isHorizontal() {
-      return this.mode === 'horizontal';
-    },
-    anotherOffset() {
-      return 100 - this.offset;
-    },
-    valueIsPx() {
-      return typeof this.value === 'string';
-    },
-    offsetSize() {
-      return this.isHorizontal ? 'offsetWidth' : 'offsetHeight';
+    cursor() {
+      return this.active ? (this.split === 'vertical' ? 'col-resize' : 'row-resize') : '';
     }
   },
   watch: {
-    value(val) {
-      if (val !== this.currentValue) {
-        this.currentValue = val;
-        this.computeOffset();
-      }
+    defaultPercent(newValue, oldValue) {
+      this.percent = newValue;
     }
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.computeOffset();
-    });
-    on(window, 'resize', this.computeOffset);
-  },
-  beforeDestroy() {
-    off(window, 'resize', this.computeOffset);
+  data() {
+    return {
+      active: false,
+      hasMoved: false,
+      height: null,
+      percent: this.defaultPercent,
+      type: this.split === 'vertical' ? 'width' : 'height',
+      resizeType: this.split === 'vertical' ? 'left' : 'top'
+    };
   },
   methods: {
-    px2percent(numerator, denominator) {
-      return parseFloat(numerator) / parseFloat(denominator);
+    onClick() {
+      if (!this.hasMoved) {
+        this.percent = 50;
+        this.$emit('resize', this.percent);
+      }
     },
-    getComputedThresholdValue(type) {
-      const size = this.$refs.outerWrapper[this.offsetSize];
-      if (this.valueIsPx) return typeof this[type] === 'string' ? this[type] : size * this[type];
-      else return typeof this[type] === 'string' ? this.px2percent(this[type], size) : this[type];
+    onMouseDown() {
+      this.active = true;
+      this.hasMoved = false;
     },
-    getMin(value1, value2) {
-      if (this.valueIsPx) return `${Math.min(parseFloat(value1), parseFloat(value2))}px`;
-      else return Math.min(value1, value2);
+    onMouseUp() {
+      this.active = false;
     },
-    getMax(value1, value2) {
-      if (this.valueIsPx) return `${Math.max(parseFloat(value1), parseFloat(value2))}px`;
-      else return Math.max(value1, value2);
-    },
-    getAnotherOffset(value) {
-      let res = 0;
-      if (this.valueIsPx) res = `${this.$refs.outerWrapper[this.offsetSize] - parseFloat(value)}px`;
-      else res = 1 - value;
-      return res;
-    },
-    handleMove(e) {
-      const pageOffset = this.isHorizontal ? e.pageX : e.pageY;
-      const offset = pageOffset - this.initOffset;
-      const outerWidth = this.$refs.outerWrapper[this.offsetSize];
-      let value = this.valueIsPx ? `${parseFloat(this.oldOffset) + offset}px` : (this.px2percent(outerWidth * this.oldOffset + offset, outerWidth));
-      const anotherValue = this.getAnotherOffset(value);
-      if (parseFloat(value) <= parseFloat(this.computedMin)) value = this.getMax(value, this.computedMin);
-      if (parseFloat(anotherValue) <= parseFloat(this.computedMax)) value = this.getAnotherOffset(this.getMax(anotherValue, this.computedMax));
-      e.atMin = this.value === this.computedMin;
-      e.atMax = this.valueIsPx ? this.getAnotherOffset(this.value) === this.computedMax : this.getAnotherOffset(this.value).toFixed(5) === this.computedMax.toFixed(5);
-      this.$emit('input', value);
-      this.$emit('on-moving', e);
-    },
-    handleUp() {
-      this.isMoving = false;
-      off(document, 'mousemove', this.handleMove);
-      off(document, 'mouseup', this.handleUp);
-      this.$emit('on-move-end');
-    },
-    handleMousedown(e) {
-      this.initOffset = this.isHorizontal ? e.pageX : e.pageY;
-      this.oldOffset = this.value;
-      this.isMoving = true;
-      on(document, 'mousemove', this.handleMove);
-      on(document, 'mouseup', this.handleUp);
-      this.$emit('on-move-start');
-    },
-    computeOffset() {
-      this.$nextTick(() => {
-        this.computedMin = this.getComputedThresholdValue('min');
-        this.computedMax = this.getComputedThresholdValue('max');
-        // https://github.com/view-design/ViewUI/commit/d827b6405c365b9b7c130448f509724564cad8c1
-        // todo 这里对 px 没有适配，先还原
-        this.offset = (this.valueIsPx ? this.px2percent(this.value, this.$refs.outerWrapper[this.offsetSize]) : this.value) * 10000 / 100;
-      });
+    onMouseMove(e) {
+      if (e.buttons === 0 || e.which === 0) {
+        this.active = false;
+      }
+      if (this.active) {
+        let offset = 0;
+        let target = e.currentTarget;
+        if (this.split === 'vertical') {
+          while (target) {
+            offset += target.offsetLeft;
+            target = target.offsetParent;
+          }
+        } else {
+          while (target) {
+            offset += target.offsetTop;
+            target = target.offsetParent;
+          }
+        }
+        const currentPage = this.split === 'vertical' ? e.pageX : e.pageY;
+        const targetOffset = this.split === 'vertical' ? e.currentTarget.offsetWidth : e.currentTarget.offsetHeight;
+        const percent = Math.floor(((currentPage - offset) / targetOffset) * 10000) / 100;
+        if (percent > this.minPercent && percent < 100 - this.minPercent) {
+          this.percent = percent;
+        }
+        this.$emit('resize', this.percent);
+        this.hasMoved = true;
+      }
     }
   }
 };
