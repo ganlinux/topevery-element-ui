@@ -89,8 +89,9 @@ import CubeSelect from '../packages/cube-select/index.js';
 import CubeSelectTree from '../packages/cube-select-tree/index.js';
 import CubeCascader from '../packages/cube-cascader/index.js';
 import CubeProgress from '../packages/cube-progress/index.js';
-import CubeDialog from '../packages/cube-dialog/index.js';
+import CubeViewer from '../packages/cube-viewer/index.js';
 import CubeChart from '../packages/cube-chart/index.js';
+import CubeDialog from '../packages/cube-dialog/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -179,8 +180,9 @@ const components = [
   CubeSelectTree,
   CubeCascader,
   CubeProgress,
-  CubeDialog,
+  CubeViewer,
   CubeChart,
+  CubeDialog,
   CollapseTransition
 ];
 
@@ -194,7 +196,7 @@ const install = function(Vue, opts = {}) {
 
   Vue.use(InfiniteScroll);
   Vue.use(Loading.directive);
-
+  Vue.use(CubeViewer.directive);
   Vue.prototype.$ELEMENT = {
     size: opts.size || 'small',
     zIndex: opts.zIndex || 2000
@@ -310,6 +312,7 @@ export default {
   CubeSelectTree,
   CubeCascader,
   CubeProgress,
-  CubeDialog,
-  CubeChart
+  CubeViewer,
+  CubeChart,
+  CubeDialog
 };

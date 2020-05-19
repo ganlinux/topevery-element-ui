@@ -3,7 +3,7 @@
 一般是配合`CubeTable`表格组件组件组合成列表组件。做列表业务的顶部数据检索区域。
 左右两个区块，左边做数据过滤检索，右边是功能操作项。
 
-### 基础配置使用
+### 基础配置使用 - 输入框(input)、 下拉(option)、 日期(date 、2020-05-18)
 
 传入`data` [ [左边配置], [右边配置]], [左边配置]配置一般指定`type`渲染组件，组件回调接收参数`value`,`key`为定义后台检索需要字段。 日期范围/时间范围具体配置请查看如下代码。
 
@@ -11,86 +11,238 @@
 
 ```html
   <template>
-    <Cube-Search-Bar :data="config1"  />
-    <Cube-Search-Bar :data="config2" style="margin-top: 10px;"  />
+    <Cube-Search-Bar ref="SearchBar" :data="config"  />
   </template>
 
   <script>
 
-  const treeOptions = [
-    {
-      'children': [
-        {
-          'id': 'dfe94228-c7a1-4c55-8f81-90eea9af8d25',
-          'value': 'dfe94228-c7a1-4c55-8f81-90eea9af8d25',
-          'label': '实时监管',
-          'name': '实时监管',
-          'parentId': '6db88dec-1ef6-4588-9bd5-cb8e110e329d',
-        },
-        {
-          'id': '3e9edd9f-0512-4152-8f39-bc1e1bb4d608',
-          'value': '3e9edd9f-0512-4152-8f39-bc1e1bb4d608',
-          'parentId': '6db88dec-1ef6-4588-9bd5-cb8e110e329d',
-          'label': '数据报表',
-          'name': '数据报表',
-        },
-        {
-          'children': [
-            {
-              'id': '3e9edd9f-0512-4152-8f39-bc1e1bb4d6082',
-              'value': '3e9edd9f-0512-4152-8f39-bc1e1bb4d6083',
-              'parentId': '6db88dec-1ef6-4588-9bd5-cb8e110e329dx',
-              'label': '集成管理A',
-              'name': '集成管理A',
-            }
-          ],
-          'id': 'e6581203-dd21-4a79-89dc-e04bc3fc3181',
-          'value': 'e6581203-dd21-4a79-89dc-e04bc3fc3181',
-          'parentId': '6db88dec-1ef6-4588-9bd5-cb8e110e329d',
-          'label': '集成管理',
-          'name': '集成管理',
-        }
-      ],
-      'id': '6db88dec-1ef6-4588-9bd5-cb8e110e329d',
-      'label': '首页数据',
-      'name': '首页数据',
-    }
-  ]
-
-
     export default {
       data() {
         return {
-          config1:[
+          config:[
             [
-              { type: 'input', value: null, key: 'carName', placeholder: '输入框' },
-              { type: 'option', value: null, key: 'insuredState', placeholder: '下拉框', options: [
+              { type: 'input', value: null, key: 'inputKey', placeholder: '输入框' },
+              { type: 'option', value: null, key: 'optionKey', placeholder: '下拉框', options: [
                 { value: '1', label: '未到期' },
                 { value: '2', label: '已到期' },
                 { value: '3', label: '未参保' }],
                 change: (e)=> this.change(e)
               },
-              { type: 'date', value: null, key: 'carName', placeholder: '日期' },
-              { type: 'search', name: '查询', icon: 'el-icon-search' },
-              { type: 'reset', name: '重置' }
-            ]
-          ],
-          config2:[
-            [
-              { type: 'multiple-date', value: null, dateTimeRange: false, key1: 'BeginDate', key2: 'EndDate ', placeholder1: '开始日期', placeholder2: '结束日期' },
-              { type: 'multiple-date', value: null, dateTimeRange: true, key1: 'BeginDate', key2: 'EndDate ', placeholder1: '开始时间', placeholder2: '结束时间' },
+              { type: 'date', value: null, key: 'dateKey', placeholder: '日期' },
               { type: 'search', name: '查询', icon: 'el-icon-search' },
               { type: 'reset', name: '重置' }
             ],
             [
-              { type: 'button', name: '添加', keyType: 'success', icon: 'el-icon-plus',ifShow:()=> true }
+              { type: 'button', name: '参数收集', keyType: 'primary', plain: true, icon: 'el-icon-s-order' , action: ()=> this.handlerClick('参数收集') }
             ]
           ]
         }
       },
       methods: {
         change(e){
-          console.log(e)
+          this.$message(e,'选择改变触发');
+        },
+        handlerClick(){
+          const params = this.$refs['SearchBar'].getSearchParams()
+          this.$alert( params , '收集参数', {
+            confirmButtonText: '确定',
+            callback: action => {}
+          });
+        }
+      },
+    }
+  </script>
+```
+:::
+
+
+### cube组件配置使用 - 树形选择(cubeSelectTree)、 分页列表(cubeSelect)、 级联选择(cubeCascader)
+
+传入`data` [ [左边配置], [右边配置]], [左边配置]配置一般指定`type`渲染组件，组件回调接收参数`value`,`key`为定义后台检索需要字段。 日期范围/时间范围具体配置请查看如下代码。
+
+:::demo `Cube-Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置
+
+```html
+  <template>
+    <Cube-Search-Bar ref="SearchBar" :data="config"  />
+  </template>
+
+  <script>
+
+    export default {
+      data() {
+        return {
+          config:[
+            [
+              {
+                type: 'cubeSelectTree',
+                value: null,
+                key: 'cubeSelectTreeKey',
+                config: {
+                  keyName: 'label',
+                  keyCode: 'value',
+                  // url: '/static/tree.json',  // 动态
+                  // focusOnload: false, // 动态
+                  placeholder: '请选择标段',
+                  isStaticOptions: true, // 静态,
+                  options: this.$mockTree, // 静态
+                  treeDefaultProps: {
+                    children: 'children',
+                    label: 'label'
+                  }
+                }
+              },
+              {
+                type: 'cubeSelect',
+                value: null,
+                key: 'cubeSelectKey',
+                config: {
+                  keyName: 'code',
+                  keyCode: 'sectionId',
+                  // method: 'GET',
+                  // url: '/static/section.json',
+                  // searchName: 'sectionName',
+                  isNoPage: true, //设置不分页
+                  isStaticOptions: true, // 设置为静态属性使用,
+                  options: this.$mockSection.records, 
+                  placeholder: '标段选择-分页',
+                  column: [ 
+                    { key: 'code', label: '名称' },
+                    { key: 'statusStr', label: '状态' }
+                  ]
+                }
+              },
+              {
+                type: 'cubeCascader',
+                value: null,
+                key: 'cubeCascaderKey',
+                config: {
+                  keyCode: 'value',
+                  keyName: 'label', 
+                  children: 'children', 
+                  // method: 'GET',
+                  // url: '/static/tree.json',
+                  isStaticOptions: true,
+                  options: this.$mockTree,
+                }
+              },
+              { type: 'search', name: '查询', icon: 'el-icon-search' },
+              { type: 'reset', name: '重置' }
+            ],
+            [
+              { type: 'button', name: '参数收集', keyType: 'primary', plain:true, icon: 'el-icon-s-order' , action: ()=> this.handlerClick('参数收集') }
+            ]
+          ]
+        }
+      },
+      methods: {
+        change(e){
+          this.$message(e,'选择改变触发');
+        },
+        handlerClick(){
+          const params = this.$refs['SearchBar'].getSearchParams()
+          this.$alert( params , '收集参数', {
+            confirmButtonText: '确定',
+            callback: action => {}
+          });
+        }
+      },
+    }
+  </script>
+```
+:::
+
+
+### 时间范围配置使用 - 日期范围(daterange)；日期时间范围(datetimerange)、
+
+传入`data` [ [左边配置], [右边配置]], [左边配置]配置一般指定`type`渲染组件，组件回调接收参数`value`,`key`为定义后台检索需要字段。 日期范围/时间范围具体配置请查看如下代码。
+
+:::demo `Cube-Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置
+
+```html
+  <template>
+    <Cube-Search-Bar ref="SearchBar" :data="config"  />
+  </template>
+
+  <script>
+
+    export default {
+      data() {
+        return {
+          config:[
+            [
+              { type: 'daterange', value: null, key1: 'beginDate1', key2: 'endDate1',
+               placeholder1: '开始日期', placeholder2: '结束日期' },
+              { type: 'datetimerange', value: null, key1: 'beginDate2', key2: 'endDate2',
+               placeholder1: '开始时间', placeholder2: '结束时间' },
+              { type: 'search', name: '查询', icon: 'el-icon-search' },
+              { type: 'reset', name: '重置' }
+            ],
+            [
+              { type: 'button', name: '参数收集', keyType: 'primary', 
+              plain:true, icon: 'el-icon-s-order' , action: ()=> this.handlerClick('参数收集') }
+            ]
+          ]
+        }
+      },
+      methods: {
+        change(e){
+          this.$message(e,'选择改变触发');
+        },
+        handlerClick(){
+          const params = this.$refs['SearchBar'].getSearchParams()
+          this.$alert( params , '收集参数', {
+            confirmButtonText: '确定',
+            callback: action => {}
+          });
+        }
+      },
+    }
+  </script>
+```
+:::
+
+
+### 其他范围配置使用 - 月份范围(monthrange)；日期时间范围(datetimerange)、
+
+传入`data` [ [左边配置], [右边配置]], [左边配置]配置一般指定`type`渲染组件，组件回调接收参数`value`,`key`为定义后台检索需要字段。 日期范围/时间范围具体配置请查看如下代码。
+
+:::demo `Cube-Search-Bar`元素中注入`data`对象数组配置搜索栏类型。以及相关参数配置
+
+```html
+  <template>
+    <Cube-Search-Bar ref="SearchBar" :data="config"  />
+  </template>
+
+  <script>
+
+    export default {
+      data() {
+        return {
+          config:[
+            [
+              { type: 'monthrange', value: null, key1: 'beginDate1', key2: 'endDate1'},
+              { type: 'monthrange', value: null, key1: 'beginDate2', key2: 'endDate2'},
+              { type: 'search', name: '查询', icon: 'el-icon-search' },
+              { type: 'reset', name: '重置' }
+            ],
+            [
+              { type: 'button', name: '参数收集', keyType: 'primary', 
+              plain:true, icon: 'el-icon-s-order' , action: ()=> this.handlerClick('参数收集') }
+            ]
+          ]
+        }
+      },
+      methods: {
+        change(e){
+          this.$message(e,'选择改变触发');
+        },
+        handlerClick(){
+          const params = this.$refs['SearchBar'].getSearchParams()
+          this.$alert( params , '收集参数', {
+            confirmButtonText: '确定',
+            callback: action => {}
+          });
         }
       },
     }
@@ -322,7 +474,7 @@ V2 版本中的事件响应新写法。`type: 'button' ` 中直接传递 `action
               { type: 'reset', name: '重置' }
             ],
             [
-              { type: 'button', name: '参数收集', keyType: 'primary', icon: 'el-icon-s-order' , action: ()=> this.handlerClick('参数收集') }
+              { type: 'button', name: '参数收集', keyType: 'primary', plain:true, icon: 'el-icon-s-order' , action: ()=> this.handlerClick('参数收集') }
             ]
           ]
         }
@@ -387,9 +539,9 @@ multiple:false 或者不设置默认为单选,multiple:true 设置为多选。�
         handlerClick(mes) {
           const params = this.$refs['SearchBar'].getSearchParams()
           this.$alert( params , '收集参数', {
-          confirmButtonText: '确定',
-          callback: action => {}
-        });
+            confirmButtonText: '确定',
+            callback: action => {}
+          });
         },
         //找到key对应的数据对象
         findeKeyItem(key){
@@ -450,22 +602,11 @@ multiple:false 或者不设置默认为单选,multiple:true 设置为多选。�
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | data | 显示的数据 | array | — | — |
-| indent      | 展示树形数据时，树节点的缩进 | Number | — | 16 |
-| lazy        | 是否懒加载子节点数据 | Boolean | — | — |
-| load        | 加载子节点数据的函数，lazy 为 true 时生效，函数第二个参数包含了节点的层级信息 | Function(row, treeNode, resolve) | — | — |
-| tree-props  | 渲染嵌套数据的配置选项 | Object | — | { hasChildren: 'hasChildren', children: 'children' } |
 
 ### SearchBar Methods
 | 方法名 | 说明 | 参数 |
 | ---- | ---- | ---- |
 | clearSelection | 用于多选表格，清空用户的选择 | — |
-| toggleRowSelection | 用于多选表格，切换某一行的选中状态，如果使用了第二个参数，则是设置这一行选中与否（selected 为 true 则选中） | row, selected |
-| toggleAllSelection | 用于多选表格，切换所有行的选中状态 | - |
-| toggleRowExpansion | 用于可展开表格与树形表格，切换某一行的展开状态，如果使用了第二个参数，则是设置这一行展开与否（expanded 为 true 则展开） | row, expanded |
-| setCurrentRow | 用于单选表格，设定某一行为选中行，如果调用时不加参数，则会取消目前高亮行的选中状态。 | row |
-| clearSort | 用于清空排序条件，数据会恢复成未排序的状态 | — |
-| clearFilter | 不传入参数时用于清空所有过滤条件，数据会恢复成未过滤的状态，也可传入由columnKey组成的数组以清除指定列的过滤条件 | columnKey |
 | doLayout | 对 Table 进行重新布局。当 Table 或其祖先元素由隐藏切换为显示时，可能需要调用此方法 | — |
-| sort | 手动对 Table 进行排序。参数`prop`属性指定排序列，`order`指定排序顺序。 | prop: string, order: string |
 
  

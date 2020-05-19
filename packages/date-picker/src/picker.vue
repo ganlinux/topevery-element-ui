@@ -362,7 +362,7 @@ export default {
     disabled: Boolean,
     clearable: {
       type: Boolean,
-      default: true
+      default: false
     },
     id: {
       default: '',

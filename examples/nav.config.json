@@ -22,7 +22,15 @@
           "list": [
             {
               "path": "/cube-dialog",
-              "title": "cube-dialog 对话框"
+              "title": "cubeDialog 对话框"
+            },
+            {
+              "path": "/cube-viewer",
+              "title": "cubeViewer 图片浏览"
+            },
+            {
+              "path": "/cube-split",
+              "title": "cubeSplit 拖动面板"
             }
           ]
         },

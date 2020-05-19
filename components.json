@@ -91,6 +91,8 @@
   "cube-cascader": "./packages/cube-cascader/index.js",
   
   "cube-progress": "./packages/cube-progress/index.js",
-  "cube-dialog": "./packages/cube-dialog/index.js",
-  "cube-chart": "./packages/cube-chart/index.js"
+  "cube-viewer": "./packages/cube-viewer/index.js",
+  "cube-chart": "./packages/cube-chart/index.js",
+
+  "cube-dialog": "./packages/cube-dialog/index.js"
 }

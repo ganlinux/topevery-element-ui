@@ -43,22 +43,10 @@
             </el-select>
           </template>
 
-          <!-- 日期选择 -->
-          <template v-if="item.type === 'date'">
-            <el-date-picker
-              v-model="item.value"
-              :style="{width:'134px'}"
-              :size="size"
-              value-format="yyyy-MM-dd"
-              :picker-options="dateTimePicker(item.minDate,item.maxDate)"
-              type="date"
-              :placeholder="item.placeholder|| '请选择'"
-            />
-          </template>
-
           <!-- cubeSelectTree -->
           <template v-if="item.type === 'cubeSelectTree'">
             <CubeSelectTree
+              :size="size"
               ref="selectTree"
               v-model="item.value"
               :extra-param="item.extraParam ? item.extraParam : {} "
@@ -69,6 +57,7 @@
           <template v-if="item.type === 'cubeSelect'">
             <CubeSelect
               ref="CubeSelect"
+              :size="size"
               v-model="item.value"
               :extra-param="item.extraParam ? item.extraParam : {} "
               :config="item.config || {} "
@@ -77,10 +66,69 @@
           <!-- cubeCascader -->
           <template v-if="item.type === 'cubeCascader'">
             <CubeCascader
+              :size="size"
               ref="CubeCascader"
               v-model="item.value"
               :extra-param="item.extraParam ? item.extraParam : {} "
               :config="item.config || {} "
+            />
+          </template>
+
+          <!-- 日期选择 -->
+          <template v-if="item.type === 'date'">
+            <el-date-picker
+              :picker-options="item.pickerOptions || datePickerOptions"
+              v-model="item.value"
+              :style="{width:'134px'}"
+              :size="size"
+              type="date"
+              :value-format="item.format || 'yyyy-MM-dd'"
+              :placeholder="item.placeholder|| '请选择'"
+            />
+          </template>
+
+          <!-- daterange 日期范围-->
+          <template v-if="item.type === 'daterange'">
+            <el-date-picker
+              v-model="item.value"
+              :size="size"
+              type="daterange"
+              range-separator="至"
+              :picker-options="item.pickerOptions||daterangePickerOptions"
+              :class="item.class?item.class:'w300'"
+              :value-format="item.format || 'yyyy-MM-dd'"
+              :start-placeholder="item.placeholder1||'开始日期'"
+              :end-placeholder="item.placeholder2||'结束日期'"
+            />
+          </template>
+
+          <!-- datetimerange 日期时间范围 -->
+          <template v-if="item.type === 'datetimerange'">
+            <el-date-picker
+              v-model="item.value"
+              :size="size"
+              type="datetimerange"
+              range-separator="至"
+              :picker-options="item.pickerOptions||{}"
+              :class="item.class?item.class:'w320'"
+              :value-format="item.format || 'yyyy-MM-dd HH:mm:ss'"
+              :start-placeholder="item.placeholder1"
+              :end-placeholder="item.placeholder2"
+            />
+          </template>
+
+          <!-- daterange 月份范围-->
+          <template v-if="item.type === 'monthrange'">
+            <el-date-picker
+              v-model="item.value"
+              :size="size"
+              type="monthrange"
+              range-separator="至"
+              :picker-options="item.pickerOptions|| monthrangePickerOptions"
+              :class="item.class?item.class:'w300'"
+              :value-format="item.format || 'yyyy-MM'"
+              :start-placeholder="item.placeholder1||'开始月份'"
+              :end-placeholder="item.placeholder2||'结束结束'"
             />
           </template>
 
@@ -131,9 +179,9 @@
 
             <template v-if="item.type === 'button'">
               <el-button
-                :plain="true"
                 :size="size"
                 :icon="item.icon"
+                :plain="item.plain"
                 v-if="item.ifShow ? item.ifShow(): true"
                 :type="item.btType"
                 @click="item.click ? item.click($event) : null"
@@ -172,7 +220,9 @@
 <script>
 
 //  常量类型
-const commonlyTypes = ['input', 'select', 'option', 'cascader', 'cubeCascader', 'date', 'datetime', 'date-month', 'tree'];
+const commonlyTypes = ['input', 'select', 'option', 'cascader', 'cubeCascader', 'date', 'datetime', 'date-month'];
+
+const timeRangeTime = ['daterange', 'datetimerange', 'monthrange'];
 //  特殊类型
 const cubeType = ['cubeSelect', 'cubeSelectTree'];
 
@@ -219,6 +269,81 @@ export default {
   },
   data() {
     return {
+      datePickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [{
+          text: '今天',
+          onClick(picker) {
+            picker.$emit('pick', new Date());
+          }
+        }, {
+          text: '昨天',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24);
+            picker.$emit('pick', date);
+          }
+        }, {
+          text: '一周前',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', date);
+          }
+        }]
+      },
+      daterangePickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
+      monthrangePickerOptions: {
+        shortcuts: [{
+          text: '本月',
+          onClick(picker) {
+            picker.$emit('pick', [new Date(), new Date()]);
+          }
+        }, {
+          text: '今年至今',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date(new Date().getFullYear(), 0);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近六个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setMonth(start.getMonth() - 6);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      }
     };
   },
   created() {
@@ -250,9 +375,6 @@ export default {
           }
         }
       }
-      if (this.$refs['selectTree']) {
-        this.$refs['selectTree'][0].clear();
-      }
       this.$emit('reset', this.getSearchParams());
     },
     search() {
@@ -267,9 +389,9 @@ export default {
         for (let i = 0; i < items.length; i++) {
           const item = items[i];
           if (commonlyTypes.indexOf(item['type']) !== -1) {
-            params[item['key']] = item.multiple ? item.value.toString() : item.value;
-          } else if (item['type'] === 'multiple-date') {
-            if (item.value != null) {
+            params[item['key']] = item.multiple ? item.value ? item.value.toString() : item.value : item.value;
+          } else if (timeRangeTime.includes(item['type'])) {
+            if (item.value) {
               params[item['key1']] = item.value[0] ? item.value[0] : '';
               params[item['key2']] = item.value[1] ? item.value[1] : '';
             } else {
@@ -277,7 +399,10 @@ export default {
               params[item['key2']] = null;
             }
           } else if (cubeType.includes(item['type'])) {
-            params[item['key']] = item.value ? item.value[item.config.keyCode] ? item.value[item.config.keyCode] : '' : '';
+            // 处理cube选择组件
+            if (item.config && item.config.keyCode) {
+              params[item['key']] = item.value ? item.value[item.config.keyCode] ? item.value[item.config.keyCode] : '' : '';
+            }
           } else if (item['type'] === 'search') {
             break;
           }

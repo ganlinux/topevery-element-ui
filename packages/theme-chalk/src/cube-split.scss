@@ -1,0 +1,115 @@
+.cube-split-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .cube-split-pane {
+    position: absolute;
+    //滚动条 ++ 
+    // padding: 6px;
+    overflow: auto;
+  }
+  .cube-split-pane.left-pane,
+  .cube-split-pane.right-pane {
+    top: 0;
+    bottom: 0;
+  }
+  .cube-split-pane.left-pane {
+    left: 0;
+  }
+  .cube-split-pane.right-pane {
+    right: 0;
+  }
+  .cube-split-pane.top-pane,
+  .cube-split-pane.bottom-pane {
+    left: 0;
+    right: 0;
+  }
+  .cube-split-pane.top-pane {
+    top: 0;
+  }
+  .cube-split-pane.bottom-pane {
+    bottom: 0;
+  }
+  .cube-split-pane-moving {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .cube-split-trigger {
+    border: 1px solid #dcdee2;
+  }
+  .cube-split-trigger-con {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+  }
+  .cube-split-trigger-bar-con {
+    position: absolute;
+    overflow: hidden;
+  }
+  .cube-split-trigger-bar-con.vertical {
+    left: 0px;
+    top: 50%;
+    height: 32px;
+    transform: translate(0, -50%);
+  }
+  .cube-split-trigger-bar-con.horizontal {
+    left: 50%;
+    top: 0px;
+    width: 32px;
+    transform: translate(-50%, 0);
+  }
+  .cube-split-trigger-vertical {
+    width: 4px;
+    height: 100%;
+    background: #f8f8f9;
+    border-top: none;
+    border-bottom: none;
+    cursor: col-resize;
+
+    // left: -5px;
+    position: relative;
+  }
+  .cube-split-trigger-vertical .cube-split-trigger-bar {
+    width: 4px;
+    height: 1px;
+    background: rgba(23, 35, 61, 0.25);
+    float: left;
+    margin-top: 3px;
+  }
+  .cube-split-trigger-horizontal {
+    height: 4px;
+    width: 100%;
+    background: #f8f8f9;
+    border-left: none;
+    border-right: none;
+    cursor: row-resize;
+  }
+  .cube-split-trigger-horizontal .cube-split-trigger-bar {
+    height: 4px;
+    width: 1px;
+    background: rgba(23, 35, 61, 0.25);
+    float: left;
+    margin-right: 3px;
+  }
+  .cube-split-horizontal > .cube-split-trigger-con {
+    top: 50%;
+    height: 100%;
+    width: 0;
+  }
+  .cube-split-vertical > .cube-split-trigger-con {
+    left: 50%;
+    height: 0;
+    width: 100%;
+  }
+  .cube-split .no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  

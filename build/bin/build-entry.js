@@ -29,7 +29,7 @@ const install = function(Vue, opts = {}) {
 
   Vue.use(InfiniteScroll);
   Vue.use(Loading.directive);
-
+  Vue.use(CubeViewer.directive);
   Vue.prototype.$ELEMENT = {
     size: opts.size || 'small',
     zIndex: opts.zIndex || 2000

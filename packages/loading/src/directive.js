@@ -86,7 +86,6 @@ loadingDirective.install = Vue => {
       el.instance.hiding = false;
     }
   };
-
   Vue.directive('loading', {
     bind: function(el, binding, vnode) {
       const textExr = el.getAttribute('element-loading-text');

@@ -307,3 +307,12 @@ export function isKorean(text) {
   const reg = /([(\uAC00-\uD7AF)|(\u3130-\u318F)])+/gi;
   return reg.test(text);
 }
+
+export function oneOf(value, validList) {
+  for (let i = 0; i < validList.length; i++) {
+    if (value === validList[i]) {
+      return true
+    }
+  }
+  return false
+}

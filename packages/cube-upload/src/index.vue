@@ -43,9 +43,12 @@
       name="list"
       tag="div"
     >
-      <div v-if="fileList.length" class="uploadList">
+      <div
+        v-if="fileList.length"
+        class="uploadList"
+      >
         <transition-group
-          v-viewer="{movable: false}"
+          v-cube-viewer="{movable: false}"
           class="el-upload-list"
           name="list"
           tag="ul"
@@ -69,16 +72,32 @@
                   :src="item.url"
                   :data-original="getSourceFileUrl(item)"
                 />
-                <div v-else class="el-icon-document" />
+                <div
+                  v-else
+                  class="el-icon-document"
+                />
               </template>
               <template v-else>
-                <div v-if="isImg(item)" class="el-icon-picture" />
-                <div v-else class="el-icon-document" />
+                <div
+                  v-if="isImg(item)"
+                  class="el-icon-picture"
+                />
+                <div
+                  v-else
+                  class="el-icon-document"
+                />
               </template>
               <!-- 操作工具 -->
               <div class="upload-files-mark">
-                <i v-if="isImg(item) && previewUrl" class="el-icon-zoom-in" @click="zoomImgs(index)" />
-                <i class="el-icon-download" @click="handleDownload(item)" />
+                <i
+                  v-if="isImg(item)"
+                  class="el-icon-zoom-in"
+                  @click="zoomImgs(index)"
+                />
+                <i
+                  class="el-icon-download"
+                  @click="handleDownload(item)"
+                />
               </div>
             </div>
             <div class="upload-progress">
@@ -89,7 +108,10 @@
                 :percentage="item.progressPercent"
                 :show-text="false"
               />
-              <div v-if="item.progressPercent" class="progress-text">
+              <div
+                v-if="item.progressPercent"
+                class="progress-text"
+              >
                 {{ item.progressPercent +'%' }}
               </div>
             </div>
@@ -108,10 +130,8 @@
 
 <script>
 
-// import 'viewerjs/dist/viewer.css'
-// import Viewer from 'v-viewer'
-// import Vue from 'vue'
-// Vue.use(Viewer)
+import ElUpload from 'packages/upload';
+import viewerDirective from 'packages/cube-viewer/src/directive';
 
 export default {
   name: 'CubeUpload',
@@ -165,9 +185,17 @@ export default {
       default: false
     }
   },
+  directives: {
+    viewerDirective
+  },
+  components: {
+    ElUpload
+  },
   data() {
     return {
-      fileList: [] // 上传文件
+      fileList: [
+
+      ] // 上传文件
     };
   },
   computed: {
@@ -182,10 +210,7 @@ export default {
         if (itemList && Array.isArray(itemList) && itemList.length) {
           const arr = [];
           for (const item of itemList) {
-            arr.push({
-              url: this.getPreviewFileUrl(item),
-              ...item
-            });
+            arr.push({ url: this.getPreviewFileUrl(item), ...item });
           }
           this.fileList = arr;
         }
@@ -210,7 +235,8 @@ export default {
     },
     uploadBeforeUpload(file) {
       const testmsg = file.name.substring(file.name.lastIndexOf('.'));
-      const isTrue = this.acceptType.includes(testmsg); // '.jpg, .jpeg, .png, .pdf, .docx, .doc, .wps, .xlsx, .xml, .xls'
+      // '.jpg, .jpeg, .png, .pdf, .docx, .doc, .wps, .xlsx, .xml, .xls'
+      const isTrue = this.acceptType.includes(testmsg);
       const isLt2M = file.size / 1024 / 1024 < 30;
       if (!isTrue) {
         this.$message({
@@ -316,14 +342,14 @@ export default {
     padding: 0 10px;
     border-radius: 6px;
     margin: 4px 0;
-    .el-icon-upload{
+    .el-icon-upload {
       font-size: 14px;
     }
     .up-tip {
       color: #e5a147;
     }
-    &:hover{
-      border-color: #409EFF;
+    &:hover {
+      border-color: #409eff;
     }
   }
   .uploadList {

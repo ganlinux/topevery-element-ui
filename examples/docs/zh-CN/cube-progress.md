@@ -3,7 +3,7 @@
 用于展示操作进度，告知用户当前状态和预期。
 
 ::: tip 
- - 新增激活属性动效进度状态
+ - 新增激活属性动效化进度状态
  - 环形进度内容支持插入自定义内容。更好的贴合我们的业务。
 :::
 
@@ -114,25 +114,25 @@ Progress 组件可通过 `type` 属性来指定使用环形进度条，在环形
 :::demo
 
 ```html
-<cube-progress type="circle" :width="180" :percentage="percentage">
+<cube-progress type="circle" :width="160" :percentage="percentage">
   <div slot="content">
     <div> 清扫完成率 </div>
     <div> {{percentage}}% </div>
   </div>
 </cube-progress>
-<cube-progress type="circle" :width="180" :percentage="percentage" status="success">
+<cube-progress type="circle" :width="160" :percentage="percentage" status="success">
   <div slot="content">
     <div> 机扫完成率 </div>
     <div> {{percentage}}% </div>
   </div>
 </cube-progress>
-<cube-progress type="circle" :width="180" :percentage="percentage" status="warning">
+<cube-progress type="circle" :width="160" :percentage="percentage" status="warning">
   <div slot="content">
     <div> 洒水完成率 </div>
     <div> {{percentage}}% </div>
   </div>
 </cube-progress>
-<cube-progress type="circle" :width="180" :percentage="percentage" status="exception">
+<cube-progress type="circle" :width="160" :percentage="percentage" status="exception">
   <div slot="content">
     <div> 作业完成率 </div>
     <div> {{percentage}}% </div>
@@ -175,7 +175,7 @@ Progress 组件可通过 `type` 属性来指定使用环形进度条，在环形
 
 ```html
 
-<cube-progress type="dashboard" :percentage="percentage" :color="colors">
+<cube-progress type="dashboard" :width="160" :percentage="percentage" :color="colors">
    <div slot="content">
     <div> 洒水完成率 </div>
     <div> {{percentage}}% </div>
