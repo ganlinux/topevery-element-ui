@@ -5,7 +5,6 @@
     @mouseup="onMouseUp"
     @mousemove="onMouseMove"
   >
-
     <!-- v-betterScroll -->
     <pane
       class="splitter-pane splitter-paneL"
@@ -41,11 +40,10 @@
 
 import Resizer from './resizer.vue';
 import Pane from './pane.vue';
-import ElScrollbar from 'packages/scrollbar';
 
 export default {
-  name: 'cubeSplit',
-  components: { Resizer, Pane, ElScrollbar },
+  name: 'CubeSplit',
+  components: { Resizer, Pane },
   props: {
     minPercent: {
       type: Number,
@@ -59,7 +57,7 @@ export default {
       validator(value) {
         return ['vertical', 'horizontal'].indexOf(value) >= 0;
       },
-      default: ()=>'vertical'
+      default: () => 'vertical'
     },
     className: String
   },

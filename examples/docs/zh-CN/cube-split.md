@@ -33,7 +33,7 @@
 
 ### 垂直上下分割
 
-如下可能在文档中因为文档的问题可能不生效。真实环境可以放心使用。指数文档没有该预览效果。
+如下可能在文档中因为文档的问题可能不生效。真实环境可以放心使用。文档没有该预览效果。
 
 :::demo
 ```html
@@ -89,6 +89,7 @@
 <el-button type="text" @click="dialogVisible = true"> 在非全屏弹窗中的使用分割面板 </el-button>
 
 <cube-dialog
+  :mainHeight.sync="mainHeight"
   title="在非全屏弹窗中的使用组合使用"
   :visible.sync="dialogVisible">
     <!-- 期待一个高度 -->
@@ -123,6 +124,7 @@
   export default {
     data() {
       return {
+        mainHeight:200,
         dialogVisible: false
       };
     },

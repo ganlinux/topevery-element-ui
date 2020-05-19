@@ -192,12 +192,13 @@ export default {
   },
   methods: {
     computedHeight() {
-      // console.log('computedHeight');
+      console.log('--computedHeight--');
       if (!this.visible) return;
       // p判断容器高度是否大于可视区高度
       const { fullscreen } = this;
       const innerHieght = window.innerHeight || 400;
       const divHieght = this.$refs['scroll-bar'] && this.$refs['scroll-bar'].offsetHeight || 200;
+      this.$emit('update:mainHeight', divHieght);
       if (divHieght > innerHieght && !fullscreen) {
         this.maxHeight = (Math.abs(innerHieght) * this.percentage).toFixed(0) + 'px';
       } else {

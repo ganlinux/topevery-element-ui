@@ -5,6 +5,7 @@
 
 <script>
 export default {
+  name: 'Resizer',
   props: {
     split: {
       validator(value) {
