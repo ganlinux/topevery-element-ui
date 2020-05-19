@@ -177,7 +177,7 @@ export default {
       this.open();
       if (this.appendToBody) {
         document.body.appendChild(this.$el);
-        this.addResize();
+        // this.addResize();
       }
     }
   },
