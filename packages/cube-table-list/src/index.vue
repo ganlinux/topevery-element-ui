@@ -12,7 +12,7 @@
     </div>
     <CubeMaxHeight
       :height.sync="height"
-      v-loading="loading"
+      v-loading="true"
       element-loading-text="拼命加载中"
       element-loading-spinner="el-icon-loading"
       element-loading-background="rgba(242, 248, 254, 0.9)"

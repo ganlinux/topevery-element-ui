@@ -11,8 +11,8 @@
 ```html
 <template>
     <div>
-        <cube-Table-List :config="config" /> 
-
+        <cube-upload />
+        <cube-Table-List :config="config" v-if="false" /> 
         <cube-dialog
         title="提示"
         :visible.sync="centerDialogVisible">
@@ -35,7 +35,8 @@
             centerDialogVisible:false,
             config: {
                 method: 'GET',
-                url: 'https://easy-mock.com/mock/5eba3414a2293e5119c96985/page/list',
+                // url: 'https://easy-mock.com/mock/5eba3414a2293e5119c96985/page/list',
+                url: 'http://120.79.246.119:5080/myblog/ws/art/api/article/40',
                 search: {
                     data: [
                         [
