@@ -31,6 +31,10 @@
             {
               "path": "/cube-split",
               "title": "CubeSplit 拖拽面板"
+            },
+            {
+              "path": "/cube-layout",
+              "title": "界面&弹窗&布局"
             }
           ]
         },

@@ -101,7 +101,7 @@ export default {
     return {
       name: 'CubeTable',
       height: 0,
-      loading: false,
+      loading: true,
       initConfig: {
         method: 'POST',
         url: '',
@@ -178,15 +178,12 @@ export default {
       if (loadType === 'page') this.initConfig.table.data = [];
       const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data';
       request({ url, method: method, [paramsKey]: params }).then((data) => {
-        this.loading = false;
+        // this.loading = false;
         if (data.success) {
           const result = data.data;
           if (Array.isArray(result.records)) {
             if (loadType === 'page') {
-              const listMock = result.records.map((item) => {
-                return { ...item, id: this.$guid_dev() };
-              }) || [];
-              this.initConfig.table.data = listMock || result.records || [];
+              this.initConfig.table.data = result.records || [];
               this.initConfig.pagination.total = result.total || 0;
             } else {
               const list = this.initConfig.table.data.map((item) => item.sectionId);
@@ -201,7 +198,7 @@ export default {
           }
         }
       }).catch(e => {
-        this.loading = false;
+        // this.loading = false;
       });
     },
     handlerReset() {

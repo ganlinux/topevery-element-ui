@@ -36,7 +36,8 @@
                 keyName: 'label',
                 keyCode: 'id',
                 method: 'GET',
-                url: '/static/tree.json',
+                // url: '/static/tree.json',
+                url:'https://easy-mock.com/mock/5eba3414a2293e5119c96985/map/getSectionTree',
                 placeholder: '标段选择',
                 treeDefaultProps: {
                     children: 'children',
@@ -77,7 +78,8 @@
                 keyName: 'label',
                 keyCode: 'id',
                 method: 'GET',
-                url: '/static/tree.json',
+                // url: '/static/tree.json',
+                url:'https://easy-mock.com/mock/5eba3414a2293e5119c96985/map/getSectionTree',
                 placeholder: '标段选择',
                 treeDefaultProps: {
                     children: 'children',
