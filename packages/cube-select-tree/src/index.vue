@@ -62,11 +62,11 @@
 <script>
 
 import debounce from 'throttle-debounce/debounce';
-import request from 'utils/request';
-import { deepMerge } from 'utils/index.new';
-import { isObject } from 'utils/types';
-import emitter from 'mixins/emitter';
-import Clickoutside from 'element-ui/src/utils/clickoutside';
+import request from 'topevery-element-ui/src/utils/request';
+import { deepMerge } from 'topevery-element-ui/src/utils/index.new';
+import { isObject } from 'topevery-element-ui/src/utils/types';
+import emitter from 'topevery-element-ui/src/mixins/emitter';
+import Clickoutside from 'topevery-element-ui/src/utils/clickoutside';
 
 import ElInput from 'packages/input';
 import ElPopover from 'packages/popover';

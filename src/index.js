@@ -94,8 +94,8 @@ import CubeChart from '../packages/cube-chart/index.js';
 import CubeDialog from '../packages/cube-dialog/index.js';
 import CubeSplit from '../packages/cube-split/index.js';
 import CubeUpload from '../packages/cube-upload/index.js';
-import locale from 'element-ui/src/locale';
-import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
+import locale from 'topevery-element-ui/src/locale';
+import CollapseTransition from 'topevery-element-ui/src/transitions/collapse-transition';
 
 const components = [
   Pagination,
@@ -222,7 +222,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '0.0.22',
+  version: '0.0.23',
   locale: locale.use,
   i18n: locale.i18n,
   install,

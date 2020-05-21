@@ -164,7 +164,7 @@ if (isProd) {
     cacheGroups: {
       vendor: {
         test: /\/src\//,
-        name: 'element-ui',
+        name: 'topevery-element-ui',
         chunks: 'all'
       }
     }
