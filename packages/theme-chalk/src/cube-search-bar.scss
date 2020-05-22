@@ -1,0 +1,91 @@
+
+@import "mixins/mixins";
+@import "mixins/utils";
+
+@import "checkbox";
+@import "tag";
+@import "tooltip";
+@import "common/var";
+
+
+
+.cube-search-bar {
+  width: 100%;
+  background-color: white;
+  clear: both;
+  margin-top: -6px;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #dfecf9;
+
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+
+  .left {
+    float: left;
+    height: 40px;
+
+    .cube-select,
+    .cube-select-tree,
+    >div {
+      margin-right: 4px;
+      margin-top: 10px;
+    }
+
+    .el-button {
+      margin-top: 10px;
+      margin-left: 4px;
+    }
+
+    .el-date-editor {
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+
+    .el-range-editor--small.el-date-editor--daterange {
+      padding-left: 5px;
+      padding-right: 0;
+      width: 232px;
+    }
+
+    .el-range-editor--small.el-date-editor--datetimerange {
+      padding-left: 5px;
+      padding-right: 0;
+      width: 314px;
+    }
+
+    .el-date-editor .el-range-separator {
+      padding: 0;
+      line-height: 24px;
+      margin-left: 3px;
+      margin-right: 5px;
+    }
+
+    .el-range-editor--small .el-range-input {
+      min-width: 80px;
+    }
+
+    .el-date-editor--datetimerange {
+      .el-range-input {
+        min-width: 130px;
+      }
+    }
+  }
+
+  .right {
+    float: right;
+    .el-dropdown {
+      margin: 0;
+    }
+
+    >div {
+      margin-left: 4px;
+    }
+  }
+}

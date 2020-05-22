@@ -1,0 +1,57 @@
+// Animation
+
+$animation-time         : .3s;
+$animation-time-quick   : .15s;
+$transition-time        : .2s;
+$ease-in-out            : ease-in-out;
+
+.cube-progress{
+  margin-bottom: 10px;
+  .line-progress{
+    .active {
+      &:before {
+        content: "";
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        border-radius: 10px;
+        animation: progress-active 2s $ease-in-out infinite;
+      }
+    }
+  }
+  .line-vertical-progress{
+    .active {
+      &:before {
+        top: auto;
+        animation: progress-active-vertical 2s $ease-in-out infinite;
+      }
+    }
+  }
+
+}
+
+@keyframes progress-active {
+  0% {
+    opacity: 0.3;
+    width: 0;
+  }
+  100% {
+    opacity: 0;
+    width: 100%;
+  }
+}
+
+@keyframes progress-active-vertical {
+  0% {
+    opacity: 0.3;
+    height: 0;
+  }
+  100% {
+    opacity: 0;
+    height: 100%;
+  }
+}
