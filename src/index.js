@@ -94,6 +94,7 @@ import CubeChart from '../packages/cube-chart/index.js';
 import CubeDialog from '../packages/cube-dialog/index.js';
 import CubeSplit from '../packages/cube-split/index.js';
 import CubeUpload from '../packages/cube-upload/index.js';
+import CubeTitle from '../packages/cube-title/index.js';
 import locale from 'topevery-element-ui/src/locale';
 import CollapseTransition from 'topevery-element-ui/src/transitions/collapse-transition';
 
@@ -187,6 +188,7 @@ const components = [
   CubeDialog,
   CubeSplit,
   CubeUpload,
+  CubeTitle,
   CollapseTransition
 ];
 
@@ -320,5 +322,6 @@ export default {
   CubeChart,
   CubeDialog,
   CubeSplit,
-  CubeUpload
+  CubeUpload,
+  CubeTitle
 };

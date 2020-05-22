@@ -33,10 +33,10 @@
               "title": "CubeSplit 拖拽面板"
             },
             {
-              "path": "/cube-layout",
-              "title": "界面&弹窗&布局"
+              "path": "/cube-title",
+              "title": "CubeTitle 标题区块"
             }
-          ]
+          ] 
         },
         {
           "groupName": "列表-表格-拓展",

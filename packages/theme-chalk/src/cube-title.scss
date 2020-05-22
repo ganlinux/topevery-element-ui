@@ -1,0 +1,47 @@
+.cube-title {
+    width: 100%;
+    .cube-title-top {
+        height: 2.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: aliceblue;
+        .title {
+            display: flex;
+            align-items: center;
+            padding-left: .625rem;
+            font-size: 1rem;
+        }
+        .tag {
+            position: relative;
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                width: 4px;
+                height: 90%;
+                background: #2f86f6;
+            }
+        }
+    }
+    .el-collapse-item__arrow {
+        margin: 0 8px 0 auto;
+        transition: transform .3s;
+        font-weight: 300;
+        cursor: pointer;
+
+        &.is-active {
+            transform: rotate(90deg);
+        }
+    }
+    .cube-title-content {
+        padding: .625rem;
+    }
+    .canCollapse{
+        color: #2f86f6;
+        font-size: .75rem;
+        display: inline-block;
+        cursor: pointer;
+    }
+    margin-bottom: .25rem;
+}
