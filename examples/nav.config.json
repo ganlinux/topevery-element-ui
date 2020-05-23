@@ -17,6 +17,15 @@
           ]
         },
         {
+          "groupName": "开发-样例-模块",
+          "list": [
+            {
+              "path": "/cube-sample",
+              "title": "开发重难点样例"
+            }
+          ]
+        },
+        {
           "groupName": "其他-新增-模块",
           "new": true,
           "list": [
