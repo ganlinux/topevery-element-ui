@@ -1,3 +1,11 @@
+/*
+ * @Author: shiliangL
+ * @Date: 2020-05-22 11:02:08
+ * @LastEditTime: 2020-05-25 14:33:11
+ * @LastEditors: Do not edit
+ * @Description:
+ * @FilePath: /topevery-element-ui-v2/examples/entry.js
+ */
 
 import Vue from 'vue';
 import entry from './app';
@@ -64,6 +72,11 @@ Vue.prototype.$mockList = list.data;
 Vue.prototype.$mockPage = page.data;
 Vue.prototype.$mockSection = section.data;
 Vue.prototype.$echarts = echarts;
+
+// 设置文档调试url
+const $baseURL = localStorage.getItem('$baseURL') ? JSON.parse(localStorage.getItem('$baseURL')) : 'http://221.10.126.230:5002' ;
+console.log($baseURL, '$baseURL-调试');
+Vue.prototype.$baseURL = $baseURL;
 
 const router = new VueRouter({
   mode: 'hash',
