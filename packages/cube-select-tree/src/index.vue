@@ -72,9 +72,7 @@ import ElInput from 'packages/input';
 import ElPopover from 'packages/popover';
 import ElTree from 'packages/tree';
 import Loading from 'packages/loading';
-import CuebScrollTo from 'packages/cueb-scroll-to';
-
-// import Scroll2Target from '../../cueb-scroll-to/src/scrollTo';
+import CuebScrollTo from 'packages/cube-scroll-to';
 
 export default {
   name: 'CubeSelectTree',

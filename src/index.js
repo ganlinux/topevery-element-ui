@@ -94,6 +94,7 @@ import CubeChart from '../packages/cube-chart/index.js';
 import CubeDialog from '../packages/cube-dialog/index.js';
 import CubeSplit from '../packages/cube-split/index.js';
 import CubeUpload from '../packages/cube-upload/index.js';
+import CubeScrollTo from '../packages/cube-scroll-to/index.js';
 import CubeTitle from '../packages/cube-title/index.js';
 import locale from 'topevery-element-ui/src/locale';
 import CollapseTransition from 'topevery-element-ui/src/transitions/collapse-transition';
@@ -188,6 +189,7 @@ const components = [
   CubeDialog,
   CubeSplit,
   CubeUpload,
+  CubeScrollTo,
   CubeTitle,
   CollapseTransition
 ];
@@ -215,6 +217,7 @@ const install = function(Vue, opts = {}) {
   Vue.prototype.$prompt = MessageBox.prompt;
   Vue.prototype.$notify = Notification;
   Vue.prototype.$message = Message;
+  Vue.prototype.$cuebscrollto = CubeScrollTo;
 
 };
 
@@ -224,7 +227,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '0.0.24',
+  version: '0.0.25',
   locale: locale.use,
   i18n: locale.i18n,
   install,
@@ -323,5 +326,6 @@ export default {
   CubeDialog,
   CubeSplit,
   CubeUpload,
+  CubeScrollTo,
   CubeTitle
 };

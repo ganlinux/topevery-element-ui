@@ -97,6 +97,7 @@
   "cube-dialog": "./packages/cube-dialog/index.js",
   "cube-split": "./packages/cube-split/index.js",
   "cube-upload": "./packages/cube-upload/index.js",
+  "cube-scroll-to": "./packages/cube-scroll-to/index.js",
 
   "cube-title": "./packages/cube-title/index.js"
 }
