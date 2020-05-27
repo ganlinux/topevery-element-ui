@@ -1,3 +1,4 @@
+
 var Components = require('../../components.json');
 var fs = require('fs');
 var render = require('json-templater/string');
@@ -30,6 +31,8 @@ const install = function(Vue, opts = {}) {
   Vue.use(InfiniteScroll);
   Vue.use(Loading.directive);
   Vue.use(CubeViewer.directive);
+  Vue.use(CubeScrollTo.directive);
+
   Vue.prototype.$ELEMENT = {
     size: opts.size || 'small',
     zIndex: opts.zIndex || 2000
@@ -42,7 +45,7 @@ const install = function(Vue, opts = {}) {
   Vue.prototype.$prompt = MessageBox.prompt;
   Vue.prototype.$notify = Notification;
   Vue.prototype.$message = Message;
-  Vue.prototype.$cuebscrollto = CubeScrollTo;
+  Vue.prototype.$cuebscrollto = CubeScrollTo.scrollTo;
 
 };
 
@@ -78,7 +81,7 @@ ComponentNames.forEach(name => {
     package: name
   }));
 
-  if (['Loading', 'MessageBox', 'Notification', 'Message', 'InfiniteScroll'].indexOf(componentName) === -1) {
+  if (['Loading', 'MessageBox', 'Notification', 'Message', 'InfiniteScroll', 'CubeScrollTo'].indexOf(componentName) === -1) {
     installTemplate.push(render(INSTALL_COMPONENT_TEMPLATE, {
       name: componentName,
       component: name
