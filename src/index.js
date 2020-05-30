@@ -97,6 +97,7 @@ import CubeUpload from '../packages/cube-upload/index.js';
 import CubeTitle from '../packages/cube-title/index.js';
 import locale from 'topevery-element-ui/src/locale';
 import CollapseTransition from 'topevery-element-ui/src/transitions/collapse-transition';
+import Cookies from 'js-cookie';
 
 const components = [
   Pagination,
@@ -196,6 +197,8 @@ const install = function(Vue, opts = {}) {
   locale.use(opts.locale);
   locale.i18n(opts.i18n);
 
+  Cookies.set('TokenKey', opts.adminToken || 'Ty-Admin-Token');
+
   components.forEach(component => {
     Vue.component(component.name, component);
   });
@@ -207,7 +210,15 @@ const install = function(Vue, opts = {}) {
     size: opts.size || 'small',
     zIndex: opts.zIndex || 2000
   };
-
+  // 配置后台数据结构
+  Vue.prototype.$FETCH = {
+    code: opts.code || 'code',
+    data: opts.data || 'data',
+    list: opts.list || 'list',
+    success: opts.success || 'success',
+    pageList: opts.page || 'records',
+    totalList: opts.total || 'total'
+  };
   Vue.prototype.$loading = Loading.service;
   Vue.prototype.$msgbox = MessageBox;
   Vue.prototype.$alert = MessageBox.alert;

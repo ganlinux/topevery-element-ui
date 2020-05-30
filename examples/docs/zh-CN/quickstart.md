@@ -12,7 +12,7 @@
 
 ```javascript
 import Vue from 'vue';
-import ElementUI from 'topevery-element-ui/lib';
+import ElementUI from 'topevery-element-ui';
 import 'topevery-element-ui/lib/theme-chalk/index.css';
 import App from './App.vue';
 

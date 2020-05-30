@@ -209,39 +209,41 @@ export default {
         this.initConfig.table.data = [];
       }
       const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data';
-      request({ url, method: method, [paramsKey]: params }).then((data) => {
+      const { data, success, pageList, totalList } = this.$FETCH;
+      request({ url, method: method, [paramsKey]: params }).then((response) => {
+        console.log(response, 'data');
         if (this.createLoading) {
           this.createLoading.close();
         }
-        if (data.success) {
+        if (response[success]) {
           // 判断标识 数据结构是否是分页数据结构
           if (!['list', 'page'].includes(tableDataType)) {
             console.error('表格数据类型传入错误 tableDataType 可选值page、list');
             return;
           }
           if (tableDataType === 'page') {
-            const result = data.data;
-            if (Array.isArray(result.records) && result.records.length) {
+            const result = response[data];
+            if (Array.isArray(result[pageList]) && result[pageList].length) {
               if (loadType === 'page') {
-                this.initConfig.table.data = result.records || [];
-                this.initConfig.pagination.total = result.total || 0;
+                this.initConfig.table.data = result[pageList] || [];
+                this.initConfig.pagination.total = result[totalList] || 0;
               } else {
                 // 判断rowKey是否在数据中存在
-                if (!result.records[0][rowKey]) {
+                if (!result[pageList][0][rowKey]) {
                   console.error('请核实是否传入rowKey唯一值');
                   return;
                 }
                 const list = this.initConfig.table.data.map((item) => item[rowKey]) || [];
-                for (const item of result.records) {
+                for (const item of result[pageList]) {
                   if (!list.includes(item[rowKey])) {
                     this.initConfig.table.data.push(item);
                   }
                 }
-                this.initConfig.pagination.total = result.total || 0;
+                this.initConfig.pagination.total = result[totalList] || 0;
               }
             }
           } else {
-            const result = data.data;
+            const result = response[data];
             if (Array.isArray(result) && result.length) {
               this.initConfig.table.data = result || [];
             }

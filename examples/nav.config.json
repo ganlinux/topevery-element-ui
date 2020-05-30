@@ -13,6 +13,10 @@
             {
               "path": "/quickstart",
               "title": "快速上手"
+            },
+            {
+              "path": "/updatelog",
+              "title": "更新日志"
             }
           ]
         },

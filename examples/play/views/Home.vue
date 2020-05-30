@@ -1198,6 +1198,9 @@ export default {
     //     dataIndex: index
     //   });
     // }
+  },
+  mounted() {
+    console.log(this.$ELEMENT);
   }
 };
 </script>
