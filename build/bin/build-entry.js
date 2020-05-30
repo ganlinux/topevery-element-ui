@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-05-27 14:04:26
- * @LastEditTime: 2020-05-30 13:31:29
+ * @LastEditTime: 2020-05-30 13:36:04
  * @LastEditors: Do not edit
  * @Description:
  * @FilePath: /topevery-element-ui-v2/build/bin/build-entry.js
@@ -41,6 +41,8 @@ const install = function(Vue, opts = {}) {
   Vue.use(InfiniteScroll);
   Vue.use(Loading.directive);
   Vue.use(CubeViewer.directive);
+  Vue.use(CubeScrollTo.directive);
+
   Vue.prototype.$ELEMENT = {
     size: opts.size || 'small',
     zIndex: opts.zIndex || 2000
@@ -60,6 +62,7 @@ const install = function(Vue, opts = {}) {
   Vue.prototype.$prompt = MessageBox.prompt;
   Vue.prototype.$notify = Notification;
   Vue.prototype.$message = Message;
+  Vue.prototype.$cuebscrollto = CubeScrollTo.scrollTo;
 
 };
 
@@ -95,7 +98,7 @@ ComponentNames.forEach(name => {
     package: name
   }));
 
-  if (['Loading', 'MessageBox', 'Notification', 'Message', 'InfiniteScroll'].indexOf(componentName) === -1) {
+  if (['Loading', 'MessageBox', 'Notification', 'Message', 'InfiniteScroll', 'CubeScrollTo'].indexOf(componentName) === -1) {
     installTemplate.push(render(INSTALL_COMPONENT_TEMPLATE, {
       name: componentName,
       component: name

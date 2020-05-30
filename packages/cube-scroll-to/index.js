@@ -14,4 +14,6 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 CuebScrollTo.install = install;
+CuebScrollTo.directive = CuebScrollTo;
+
 export default CuebScrollTo;

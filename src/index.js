@@ -95,6 +95,7 @@ import CubeDialog from '../packages/cube-dialog/index.js';
 import CubeSplit from '../packages/cube-split/index.js';
 import CubeUpload from '../packages/cube-upload/index.js';
 import CubeTitle from '../packages/cube-title/index.js';
+import CubeScrollTo from '../packages/cube-scroll-to/index.js';
 import locale from 'topevery-element-ui/src/locale';
 import CollapseTransition from 'topevery-element-ui/src/transitions/collapse-transition';
 import Cookies from 'js-cookie';
@@ -206,6 +207,8 @@ const install = function(Vue, opts = {}) {
   Vue.use(InfiniteScroll);
   Vue.use(Loading.directive);
   Vue.use(CubeViewer.directive);
+  Vue.use(CubeScrollTo.directive);
+
   Vue.prototype.$ELEMENT = {
     size: opts.size || 'small',
     zIndex: opts.zIndex || 2000
@@ -226,6 +229,7 @@ const install = function(Vue, opts = {}) {
   Vue.prototype.$prompt = MessageBox.prompt;
   Vue.prototype.$notify = Notification;
   Vue.prototype.$message = Message;
+  Vue.prototype.$cuebscrollto = CubeScrollTo.scrollTo;
 
 };
 
@@ -235,7 +239,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '0.0.24',
+  version: '0.0.25',
   locale: locale.use,
   i18n: locale.i18n,
   install,
@@ -334,5 +338,6 @@ export default {
   CubeDialog,
   CubeSplit,
   CubeUpload,
-  CubeTitle
+  CubeTitle,
+  CubeScrollTo
 };
