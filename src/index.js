@@ -217,7 +217,6 @@ const install = function(Vue, opts = {}) {
   Vue.prototype.$FETCH = {
     code: opts.code || 'code',
     data: opts.data || 'data',
-    list: opts.list || 'list',
     success: opts.success || 'success',
     pageList: opts.page || 'records',
     totalList: opts.total || 'total'
