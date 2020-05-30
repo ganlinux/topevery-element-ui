@@ -41,6 +41,7 @@
             <template
               v-if="column.type==='expand'"
               slot-scope="props"
+              :row="props.row"
             >
               <template v-if="column.type==='expand'">
                 <slot
@@ -173,6 +174,10 @@ export default {
     rowKey: {
       type: String,
       default: () => 'id'
+    },
+    expandOnly: { // 是否设置唯一展开 默认展开唯一
+      type: Boolean,
+      default: ()=> true
     },
     loading: {
       type: Boolean,
@@ -353,15 +358,19 @@ export default {
       this.$refs[this.name] && this.$refs[this.name].setCurrentRow(row);
       this.tableRowClick(row);
     },
+    // 这个东西需要配合 rowKey
     expandChange(row, expandedRows) {
       const that = this;
-      if (expandedRows.length) {
-        that.expandKeysArray = [];
-        if (row) {
-          that.expandKeysArray.push(row.id);
+      const { expandOnly, rowKey } = this;
+      if (expandOnly) {
+        if (expandedRows.length) {
+          that.expandKeysArray = [];
+          if (row) {
+            that.expandKeysArray.push(row[rowKey]);
+          }
+        } else {
+          that.expandKeysArray = [];
         }
-      } else {
-        that.expandKeysArray = [];
       }
       this.$emit('expandChange', row, expandedRows);
     },

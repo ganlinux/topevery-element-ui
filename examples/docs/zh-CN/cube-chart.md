@@ -11,7 +11,7 @@
 :::
 
 
-echarts 具体分包情况描述如下，按需引入即可。
+echarts 具体分包情况描述如下，按需引入即可。更多其他的可以查看`echarts` 源码文件
 `````` JS
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/chart/line'
@@ -33,12 +33,14 @@ import 'echarts/map/js/world'
 
 ### 柱形图表基本配置用法
 
+组件渲染初始化完成会触发`ready`事件对外暴露`chart`实例对象
+
 :::demo
 ```html
 <template>
 <div class="cube-chart-list">
   <div class="title"> 柱形图表 </div>
-  <cube-chart style="width: 100%;height: 100%;" autoresize :options="chartConfig"/>
+  <cube-chart @ready="ready" style="width: 100%;height: 100%;" autoresize :options="chartConfig"/>
 </div>
 </template>
 
@@ -80,7 +82,13 @@ export default {
         ]
       }
     };
-  }
+  },
+  methods: {
+    ready(chart){
+      console.log(chart);
+      this.$message({message: '图表初始化完成',type: 'info'})
+    }
+  },
 };
 </script>
 ```

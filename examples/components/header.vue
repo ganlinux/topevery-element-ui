@@ -9,6 +9,7 @@
         <h1>
           <!-- logo -->
           <img
+            @click="openDialog"
             :src="logo"
             alt="logo"
           >
@@ -16,7 +17,10 @@
         </h1>
 
         <!-- nav -->
-        <ul class="nav"   v-if="false">
+        <ul
+          class="nav"
+          v-if="false"
+        >
           <li
             class="nav-item nav-algolia-search"
             v-show="isComponentPage"
@@ -33,11 +37,58 @@
         </ul>
       </div>
     </header>
+
+    <cube-dialog
+      title="cookie配置调试"
+      append-to-body
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <el-form
+        :model="form"
+        ref="form"
+        label-width="80px"
+      >
+        <el-form-item
+          label="key"
+          prop="key"
+          :rules="[{ required: true, message: '请输入', trigger: 'change' }]"
+        >
+          <el-input v-model="form.key"></el-input>
+        </el-form-item>
+        <el-form-item
+          label="value"
+          prop="value"
+          :rules="[{ required: true, message: '请输入', trigger: 'change' }]"
+        >
+          <el-input v-model="form.value"></el-input>
+        </el-form-item>
+        <el-form-item
+          label="baseURL"
+          prop="baseURL"
+          :rules="[{ required: true, message: '请输入', trigger: 'change' }]"
+        >
+          <el-input v-model="form.baseURL"></el-input>
+        </el-form-item>
+      </el-form>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button @click="resetForm('form')">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="submitForm('form')"
+        >确 定</el-button>
+      </span>
+    </cube-dialog>
+
   </div>
 </template>
 
 <script>
 
+import Cookies from 'js-cookie';
 // import { getTestEle } from './theme/loader/api.js';
 import AlgoliaSearch from './search.vue';
 import compoLang from '../i18n/component.json';
@@ -56,8 +107,14 @@ export default {
       active: '',
       versions: [],
       version,
+      dialogVisible: false,
       verDropdownVisible: true,
       langDropdownVisible: true,
+      form: {
+        key: 'Ty-Admin-Token',
+        baseURL: 'http://221.10.126.230:5002',
+        value: ''
+      },
       langs: {
         'zh-CN': '中文',
         'en-US': 'English',
@@ -108,6 +165,32 @@ export default {
     // testInnerImg.src = `https://private-alipayobjects.alipay.com/alipay-rmsdeploy-image/rmsportal/VmvVUItLdPNqKlNGuRHi.png?t=${Date.now()}`;
   },
   methods: {
+    openDialog() {
+      const { key } = this.form;
+      this.form.value = Cookies.set(key);
+      this.form.baseURL = localStorage.getItem('$baseURL') ? JSON.parse(localStorage.getItem('$baseURL')) : 'http://221.10.126.230:5002' ;
+      this.dialogVisible = true;
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          const { key, value, baseURL } = this.form;
+          Cookies.set(key, value);
+          this.dialogVisible = false;
+          localStorage.setItem('$baseURL', JSON.stringify(baseURL));
+          this.$message({ message: '配置成功，正在重新载入...', type: 'success'});
+          setTimeout(_=>{
+            location.reload();
+          }, 2000);
+        } else {
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+      this.dialogVisible = false;
+    },
     switchVersion(version) {
       if (version === this.version) return;
       location.href = `${location.origin}/${this.versions[version]}/${location.hash} `;
@@ -181,6 +264,7 @@ export default {
     h1 {
       color: #fff;
       img {
+        cursor: pointer;
         position: relative;
         top: 10px;
         margin-left: -60px;

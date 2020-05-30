@@ -94,8 +94,11 @@ import CubeChart from '../packages/cube-chart/index.js';
 import CubeDialog from '../packages/cube-dialog/index.js';
 import CubeSplit from '../packages/cube-split/index.js';
 import CubeUpload from '../packages/cube-upload/index.js';
+import CubeTitle from '../packages/cube-title/index.js';
+import CubeScrollTo from '../packages/cube-scroll-to/index.js';
 import locale from 'topevery-element-ui/src/locale';
 import CollapseTransition from 'topevery-element-ui/src/transitions/collapse-transition';
+import Cookies from 'js-cookie';
 
 const components = [
   Pagination,
@@ -187,12 +190,15 @@ const components = [
   CubeDialog,
   CubeSplit,
   CubeUpload,
+  CubeTitle,
   CollapseTransition
 ];
 
 const install = function(Vue, opts = {}) {
   locale.use(opts.locale);
   locale.i18n(opts.i18n);
+
+  Cookies.set('TokenKey', opts.adminToken || 'Ty-Admin-Token');
 
   components.forEach(component => {
     Vue.component(component.name, component);
@@ -201,11 +207,20 @@ const install = function(Vue, opts = {}) {
   Vue.use(InfiniteScroll);
   Vue.use(Loading.directive);
   Vue.use(CubeViewer.directive);
+  Vue.use(CubeScrollTo.directive);
+
   Vue.prototype.$ELEMENT = {
     size: opts.size || 'small',
     zIndex: opts.zIndex || 2000
   };
-
+  // 配置后台数据结构
+  Vue.prototype.$FETCH = {
+    code: opts.code || 'code',
+    data: opts.data || 'data',
+    success: opts.success || 'success',
+    pageList: opts.page || 'records',
+    totalList: opts.total || 'total'
+  };
   Vue.prototype.$loading = Loading.service;
   Vue.prototype.$msgbox = MessageBox;
   Vue.prototype.$alert = MessageBox.alert;
@@ -213,6 +228,7 @@ const install = function(Vue, opts = {}) {
   Vue.prototype.$prompt = MessageBox.prompt;
   Vue.prototype.$notify = Notification;
   Vue.prototype.$message = Message;
+  Vue.prototype.$cuebscrollto = CubeScrollTo.scrollTo;
 
 };
 
@@ -222,7 +238,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '0.0.24',
+  version: '0.0.25',
   locale: locale.use,
   i18n: locale.i18n,
   install,
@@ -320,5 +336,7 @@ export default {
   CubeChart,
   CubeDialog,
   CubeSplit,
-  CubeUpload
+  CubeUpload,
+  CubeTitle,
+  CubeScrollTo
 };

@@ -85,16 +85,15 @@
   "cube-table": "./packages/cube-table/index.js",
   "cube-search-bar": "./packages/cube-search-bar/index.js",
   "cube-table-list": "./packages/cube-table-list/index.js",
-  
   "cube-select": "./packages/cube-select/index.js",
   "cube-select-tree": "./packages/cube-select-tree/index.js",
   "cube-cascader": "./packages/cube-cascader/index.js",
-  
   "cube-progress": "./packages/cube-progress/index.js",
   "cube-viewer": "./packages/cube-viewer/index.js",
   "cube-chart": "./packages/cube-chart/index.js",
-
   "cube-dialog": "./packages/cube-dialog/index.js",
   "cube-split": "./packages/cube-split/index.js",
-  "cube-upload": "./packages/cube-upload/index.js"
+  "cube-upload": "./packages/cube-upload/index.js",
+  "cube-title": "./packages/cube-title/index.js",
+  "cube-scroll-to": "./packages/cube-scroll-to/index.js"
 }
