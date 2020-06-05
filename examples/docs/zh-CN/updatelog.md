@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-05-30 12:25:29
- * @LastEditTime: 2020-05-30 13:15:26
+ * @LastEditTime: 2020-06-05 15:45:37
  * @LastEditors: Do not edit
  * @Description: 
  * @FilePath: /topevery-element-ui-v2/examples/docs/zh-CN/updatelog.md
@@ -23,3 +23,7 @@ Vue.use(Element, {
     total:'total'
 });
 ```
+
+- 2020年06月05日 - 0.0.30
+
+新增业务级联组件cube-select-cascad，配置化快速实现业务数据二级联动。
