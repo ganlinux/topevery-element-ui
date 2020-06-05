@@ -82,6 +82,10 @@
               "title": "CubeSelectTree 树形选择"
             },
             {
+              "path": "/cube-select-cascade",
+              "title": "CubeSelectCascade 数据级联"
+            },
+            {
               "path": "/cube-cascader",
               "title": "CubeCascader 级联选择"
             }

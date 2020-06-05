@@ -68,11 +68,11 @@ import { isObject } from 'topevery-element-ui/src/utils/types';
 import emitter from 'topevery-element-ui/src/mixins/emitter';
 import Clickoutside from 'topevery-element-ui/src/utils/clickoutside';
 
-import ElInput from 'packages/input';
-import ElPopover from 'packages/popover';
-import ElTree from 'packages/tree';
-import Loading from 'packages/loading';
-import CuebScrollTo from 'packages/cube-scroll-to';
+import ElInput from 'topevery-element-ui/packages/input';
+import ElPopover from 'topevery-element-ui/packages/popover';
+import ElTree from 'topevery-element-ui/packages/tree';
+import Loading from 'topevery-element-ui/packages/loading';
+import CuebScrollTo from 'topevery-element-ui/packages/cube-scroll-to';
 
 export default {
   name: 'CubeSelectTree',

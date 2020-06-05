@@ -96,6 +96,7 @@ import CubeSplit from '../packages/cube-split/index.js';
 import CubeUpload from '../packages/cube-upload/index.js';
 import CubeTitle from '../packages/cube-title/index.js';
 import CubeScrollTo from '../packages/cube-scroll-to/index.js';
+import CubeSelectCascade from '../packages/cube-select-cascade/index.js';
 import locale from 'topevery-element-ui/src/locale';
 import CollapseTransition from 'topevery-element-ui/src/transitions/collapse-transition';
 import Cookies from 'js-cookie';
@@ -191,6 +192,7 @@ const components = [
   CubeSplit,
   CubeUpload,
   CubeTitle,
+  CubeSelectCascade,
   CollapseTransition
 ];
 
@@ -338,5 +340,6 @@ export default {
   CubeSplit,
   CubeUpload,
   CubeTitle,
-  CubeScrollTo
+  CubeScrollTo,
+  CubeSelectCascade
 };

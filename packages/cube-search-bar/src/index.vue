@@ -227,18 +227,18 @@ const timeRangeTime = ['daterange', 'datetimerange', 'monthrange'];
 const cubeType = ['cubeSelect', 'cubeSelectTree'];
 
 import { deepClone } from 'utils/index.new.js';
-import ElButton from 'packages/button';
-import ElInput from 'packages/input';
-import ElSelect from 'packages/select';
-import ElOption from 'packages/option';
-import ElDropdown from 'packages/dropdown';
-import ElDropdownItem from 'packages/dropdown-item';
-import ElDropdownMenu from 'packages/dropdown-menu';
-import DatePicker from 'packages/date-picker';
+import ElButton from 'topevery-element-ui/packages/button';
+import ElInput from 'topevery-element-ui/packages/input';
+import ElSelect from 'topevery-element-ui/packages/select';
+import ElOption from 'topevery-element-ui/packages/option';
+import ElDropdown from 'topevery-element-ui/packages/dropdown';
+import ElDropdownItem from 'topevery-element-ui/packages/dropdown-item';
+import ElDropdownMenu from 'topevery-element-ui/packages/dropdown-menu';
+import DatePicker from 'topevery-element-ui/packages/date-picker';
 
-import CubeSelect from 'packages/cube-select';
-import CubeSelectTree from 'packages/cube-select-tree';
-import CubeCascader from 'packages/cube-cascader';
+import CubeSelect from 'topevery-element-ui/packages/cube-select';
+import CubeSelectTree from 'topevery-element-ui/packages/cube-select-tree';
+import CubeCascader from 'topevery-element-ui/packages/cube-cascader';
 
 export default {
   name: 'CubeSearchBar',

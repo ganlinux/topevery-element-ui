@@ -75,6 +75,14 @@
   }
 }
 
+@mixin b2($block) {
+  $B: $cubenamespace+'-'+$block !global;
+
+  .#{$B} {
+    @content;
+  }
+}
+
 @mixin e($element) {
   $E: $element !global;
   $selector: &;

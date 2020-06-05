@@ -100,12 +100,12 @@ import { deepMerge } from 'topevery-element-ui/src/utils/index.new';
 import { isObject, isArray } from 'topevery-element-ui/src/utils/types';
 import emitter from 'topevery-element-ui/src/mixins/emitter';
 
-import ElInput from 'packages/input';
-import ElPopover from 'packages/popover';
-import ElTable from 'packages/table';
-import ElTableColumn from 'packages/table-column';
-import ElPagination from 'packages/pagination';
-import Loading from 'packages/loading';
+import ElInput from 'topevery-element-ui/packages/input';
+import ElPopover from 'topevery-element-ui/packages/popover';
+import ElTable from 'topevery-element-ui/packages/table';
+import ElTableColumn from 'topevery-element-ui/packages/table-column';
+import ElPagination from 'topevery-element-ui/packages/pagination';
+import Loading from 'topevery-element-ui/packages/loading';
 
 export default {
   name: 'CubeSelect',
@@ -191,6 +191,7 @@ export default {
           { key: 'name', label: '名称' },
           { key: 'code', label: '编码' }
         ],
+        relativeKey: '', // 关联依赖加载 如果不穿则不会加载
         isStaticOptions: false, // options 选项是否作为 静态使用
         options: [],
         // 请求额外设置参数 -  网络数据加载区域
@@ -246,6 +247,14 @@ export default {
         }
       }
     }
+    // extraParam: {
+    //   deep: true,
+    //   handler(value, valueOld) {
+    //     if (value && isObject(value)) {
+    //       this.fetchTableData();
+    //     }
+    //   }
+    // }
   },
   beforeDestroy() {
     this.recordSelect = null;
@@ -330,8 +339,11 @@ export default {
       this.$emit('visibleChange', false);
     },
     rowClick(row) {
+      const { copySelectValue } = this;
       const { keyName, keyCode, otherProps } = this.defaultConfig;
+      const isChange = copySelectValue === row[keyName];
       this.selectValue = row[keyName];
+      this.copySelectValue = row[keyName];
       this.recordSelect = row;
       const params = {};
       if (Array.isArray(otherProps) && otherProps.length) {
@@ -339,10 +351,10 @@ export default {
           params[item] = row[item];
         }
       }
+      this.visible = false;
       const paramsList = { [keyCode]: row[keyCode], [keyName]: row[keyName], ...params };
       this.$emit('input', paramsList);
-      this.$emit('change', row);
-      this.visible = false;
+      if (!isChange) this.$emit('change', row);
     },
     input(e) {
       const { isStaticOptions } = this.defaultConfig;
@@ -366,8 +378,11 @@ export default {
     },
     fetchTableData() {
       const { extraParam, selectValue } = this;
-      const { url, method, searchName, isNoPage, isStaticOptions } = this.defaultConfig;
-      if (isStaticOptions) return;
+      const { url, method, searchName, isNoPage, isStaticOptions, relativeKey } = this.defaultConfig;
+      if (relativeKey) {
+        if (!extraParam[relativeKey]) return; // 不传递关联key 不需要加载
+      }
+      if (isStaticOptions) return; // 作为静态数据 不需要加载
       if (!url) false;
       const { currentPage, size } = this.defaultConfig.pagination;
       this.tableData = [];
