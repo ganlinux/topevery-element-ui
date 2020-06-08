@@ -67,15 +67,15 @@
 <script>
 
 import debounce from 'throttle-debounce/debounce';
-import request from 'utils/request';
-import { deepMerge } from 'utils/index.new';
-import emitter from 'mixins/emitter';
+import request from 'topevery-element-ui/utils/request';
+import { deepMerge } from 'topevery-element-ui/utils/index.new';
+import emitter from 'topevery-element-ui/mixins/emitter';
 
-import CubeSearchBar from 'packages/cube-search-bar';
-import CubeTable from 'packages/cube-table';
-import CubeMaxHeight from 'packages/cube-max-height';
-import ElPagination from 'packages/pagination';
-import Loading from 'packages/loading';
+import CubeSearchBar from 'topevery-element-ui/packages/cube-search-bar';
+import CubeTable from 'topevery-element-ui/packages/cube-table';
+import CubeMaxHeight from 'topevery-element-ui/packages/cube-max-height';
+import ElPagination from 'topevery-element-ui/packages/pagination';
+import Loading from 'topevery-element-ui/packages/loading';
 
 // import { isObject } from '../../utils/types'
 

@@ -115,10 +115,10 @@
 
 <script>
 
-import { deepClone, deepMerge } from 'utils/index.new.js';
-import ElTable from 'packages/table';
-import ElTableColumn from 'packages/table-column';
-import Loading from 'packages/loading';
+import { deepClone, deepMerge } from 'topevery-element-ui/utils/index.new.js';
+import ElTable from 'topevery-element-ui/packages/table';
+import ElTableColumn from 'topevery-element-ui/packages/table-column';
+import Loading from 'topevery-element-ui/packages/loading';
 
 export default {
   name: 'CubeTable',
