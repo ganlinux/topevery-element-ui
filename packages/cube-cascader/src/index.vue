@@ -20,10 +20,10 @@
 <script>
 
 import ElCascader from 'topevery-element-ui/packages/cascader';
-import request from 'topevery-element-ui/utils/request';
-import { deepMerge, noEmptyChildren } from 'topevery-element-ui/utils/index.new.js';
-import { isObject } from 'topevery-element-ui/utils/types';
-import emitter from 'topevery-element-ui/mixins/emitter';
+import request from 'topevery-element-ui/src/utils/request';
+import { deepMerge, noEmptyChildren } from 'topevery-element-ui/src/utils/index.new.js';
+import { isObject } from 'topevery-element-ui/src/utils/types';
+import emitter from 'topevery-element-ui/src/mixins/emitter';
 
 export default {
   name: 'CubeCascader',

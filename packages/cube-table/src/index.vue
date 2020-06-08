@@ -115,7 +115,7 @@
 
 <script>
 
-import { deepClone, deepMerge } from 'topevery-element-ui/utils/index.new.js';
+import { deepClone, deepMerge } from 'topevery-element-ui/src/utils/index.new.js';
 import ElTable from 'topevery-element-ui/packages/table';
 import ElTableColumn from 'topevery-element-ui/packages/table-column';
 import Loading from 'topevery-element-ui/packages/loading';

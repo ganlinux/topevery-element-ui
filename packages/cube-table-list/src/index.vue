@@ -67,9 +67,9 @@
 <script>
 
 import debounce from 'throttle-debounce/debounce';
-import request from 'topevery-element-ui/utils/request';
-import { deepMerge } from 'topevery-element-ui/utils/index.new';
-import emitter from 'topevery-element-ui/mixins/emitter';
+import request from 'topevery-element-ui/src/utils/request';
+import { deepMerge } from 'topevery-element-ui/src/utils/index.new';
+import emitter from 'topevery-element-ui/src/mixins/emitter';
 
 import CubeSearchBar from 'topevery-element-ui/packages/cube-search-bar';
 import CubeTable from 'topevery-element-ui/packages/cube-table';

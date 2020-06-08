@@ -59,9 +59,9 @@
 
 <script>
 
-import Popup from 'topevery-element-ui/utils/popup';
-import Migrating from 'topevery-element-ui/mixins/migrating';
-import emitter from 'topevery-element-ui/mixins/emitter';
+import Popup from 'topevery-element-ui/src/utils/popup';
+import Migrating from 'topevery-element-ui/src/mixins/migrating';
+import emitter from 'topevery-element-ui/src/mixins/emitter';
 import debounce from 'throttle-debounce/debounce';
 
 export default {
