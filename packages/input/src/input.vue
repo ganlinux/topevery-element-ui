@@ -184,7 +184,7 @@
       label: String,
       clearable: {
         type: Boolean,
-        default: true
+        default: false
       },
       showPassword: {
         type: Boolean,

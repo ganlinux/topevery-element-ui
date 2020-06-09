@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-05-22 11:51:38
- * @LastEditTime: 2020-05-22 14:22:47
+ * @LastEditTime: 2020-06-09 20:54:28
  * @LastEditors: Do not edit
  * @Description: 
  * @FilePath: /topevery-element-ui-v2/packages/cube-title/src/index.vue
@@ -13,18 +13,24 @@
       v-if="$slots.title"
     >
       <div class="title tag">
-        <slot name="title" class="title-name" />
+        <slot
+          name="title"
+          class="title-name"
+        />
       </div>
-      <div
-        @click="visible=!visible"
-        class="canCollapse"
-        v-if="canCollapse"
-      >
-      <span class="collapse-text" > {{ visible ? '收起' :'展开'}} </span>
-        <i
-          :class="visible?'is-active':''"
-          class="el-collapse-item__arrow el-icon-arrow-right"
-        ></i>
+      <div class="title-right">
+        <slot name="right" />
+        <div
+          @click="visible=!visible"
+          class="canCollapse"
+          v-if="canCollapse"
+        >
+          <span class="collapse-text"> {{ visible ? '收起' :'展开'}} </span>
+          <i
+            :class="visible?'is-active':''"
+            class="el-collapse-item__arrow el-icon-arrow-right"
+          ></i>
+        </div>
       </div>
     </div>
 

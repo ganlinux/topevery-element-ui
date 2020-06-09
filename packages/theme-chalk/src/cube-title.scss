@@ -29,6 +29,11 @@
                 background: #2f86f6;
             }
         }
+
+        .title-right{
+            display: flex;
+            align-items: center;
+        }
     }
     .el-collapse-item__arrow {
         margin: 0 8px 0 auto;
@@ -44,6 +49,7 @@
         padding: .625rem;
     }
     .canCollapse {
+        margin-left: 6px;
         color: #2f86f6;
         font-size: .75rem;
         display: inline-block;

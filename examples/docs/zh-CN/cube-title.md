@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-05-22 11:02:08
- * @LastEditTime: 2020-05-22 14:31:47
+ * @LastEditTime: 2020-06-09 20:57:09
  * @LastEditors: Do not edit
  * @Description: 
  * @FilePath: /topevery-element-ui-v2/examples/docs/zh-CN/cube-title.md
@@ -78,6 +78,7 @@
         <div v-if="dialogVisible" style="padding: 10px;">
           <Cube-Title :canCollapse="true" v-for="k in titleList">
               <div slot="title"> {{ k }} </div>
+              <el-button slot="right" type="primary" size="mini" >车辆调入</el-button>
               <div v-for="(item,index) in 5">
                   这里是一些常规业务内容信息描述这里是一些常规业务内容信息描述
               </div>
