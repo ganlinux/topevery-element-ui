@@ -22,6 +22,7 @@
     :cell-class-name="cellClassName"
     :expand-row-keys="expandKeysArray"
     @row-click="tableRowClick"
+    @row-dblclick="dbtableRowClick"
     @expand-change="expandChange"
   >
     <template v-for="(column, index) in initConfig.columns">
@@ -376,6 +377,9 @@ export default {
     },
     tableRowClick(row) {
       this.$emit('tableRowClick', row);
+    },
+    dbtableRowClick(row) {
+      this.$emit('dbtableRowClick', row);
     }
   }
 };

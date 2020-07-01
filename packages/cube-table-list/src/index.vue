@@ -27,6 +27,7 @@
         :height="initConfig.table.calcTableHeight ? height-(initConfig.table.prefixHeight) : initConfig.table.tableHeight || 'auto'"
         :load-more="initConfig.table.loadType ==='list' ? debounceLoadMoreFn : ()=>{} "
         @tableRowClick="tableRowClick"
+        @dbtableRowClick="dbtableRowClick"
         @expandChange="expandChange"
       >
         <template
@@ -111,6 +112,7 @@ export default {
           data: []
         },
         table: {
+          immediateLoad: true, // 是否组件穿件就加载
           tableDataType: 'page', // 后台返回数据结构 默认是分页 list不分页列表数据结构
           rowKey: 'id', // 展开表格唯一标识（展开唯一 + 滚动加载判断是否重复）
           expandOnly: true, // 是否展开唯一
@@ -153,6 +155,8 @@ export default {
         // }
         this.$nextTick(() => {
           setTimeout(() => {
+            const { immediateLoad } = this.initConfig.table;
+            if (!immediateLoad) return;
             this.fetchList();
           }, 200);
         });
@@ -284,6 +288,9 @@ export default {
     },
     tableRowClick(row) {
       this.$emit('tableRowClick', row);
+    },
+    dbtableRowClick(row) {
+      this.$emit('dbtableRowClick', row);
     },
     expandChange(row, expandedRows) {
       this.$emit('expandChange', row, expandedRows);

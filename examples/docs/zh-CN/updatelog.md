@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-05-30 12:25:29
- * @LastEditTime: 2020-06-05 15:45:37
+ * @LastEditTime: 2020-07-01 19:28:39
  * @LastEditors: Do not edit
  * @Description: 
  * @FilePath: /topevery-element-ui-v2/examples/docs/zh-CN/updatelog.md
@@ -27,3 +27,14 @@ Vue.use(Element, {
 - 2020年06月05日 - 0.0.30
 
 新增业务级联组件cube-select-cascad，配置化快速实现业务数据二级联动。
+
+
+- 2020年07月01日 - 0.0.33
+
+列表组件添加row双击表格行事件
+
+列表组件新增配置默认设置项immediateLoad:true是否组件创建就加载数据
+
+弹窗组件设置默认默认项ESC不关闭。点击遮罩层不关闭
+
+cube-cascader 添加可删除

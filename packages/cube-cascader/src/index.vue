@@ -1,7 +1,7 @@
 <!-- 选择组件 提供分页检索选择应数据量大列表卡顿以及分页接口数据选择 -->
 <template>
   <el-cascader
-    :clearable="false"
+    :clearable="true"
     v-model="selectValue"
     :disabled="disabled"
     :filterable="defaultConfig.filterable"
