@@ -13,10 +13,10 @@
       :placeholder="placeholder2"
       :clearable="defaultConfig.clearable"
       @focus="focus"
-      @blur="blur"
       @clear="clear"
       @input="input"
     >
+      <!-- @blur="blur" -->
       <div
         v-if="defaultConfig.tipButtonVisible"
         slot="append"
@@ -237,11 +237,9 @@ export default {
           this.fetchTableData();
         }
       }
-
       // if (this.validateEvent) {
       //   this.dispatch('ElFormItem', 'el.form.blur', [this.value])
       // }
-
       this.$emit('focus');
     },
     blur() {
@@ -257,6 +255,7 @@ export default {
     },
     miss() {
       this.visible = false;
+      this.$refs.tree.filter('');
       const { recordSelect } = this;
       const { keyName } = this.defaultConfig;
       if (recordSelect) {

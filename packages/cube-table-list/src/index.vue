@@ -24,6 +24,7 @@
         :config="initConfig.table"
         :rowKey="initConfig.table.rowKey"
         :expandOnly="initConfig.table.expandOnly"
+        :initSeletTheFirst="initConfig.table.initSeletTheFirst"
         :height="initConfig.table.calcTableHeight ? height-(initConfig.table.prefixHeight) : initConfig.table.tableHeight || 'auto'"
         :load-more="initConfig.table.loadType ==='list' ? debounceLoadMoreFn : ()=>{} "
         @tableRowClick="tableRowClick"
@@ -112,6 +113,7 @@ export default {
           data: []
         },
         table: {
+          initSeletTheFirst: false, // 是否加载完成就默认选择第一个数据
           immediateLoad: true, // 是否组件穿件就加载
           tableDataType: 'page', // 后台返回数据结构 默认是分页 list不分页列表数据结构
           rowKey: 'id', // 展开表格唯一标识（展开唯一 + 滚动加载判断是否重复）
@@ -131,7 +133,7 @@ export default {
         },
         pagination: {
           pageSizes: [10, 30, 50, 70, 100], // 默认分页可选择的每页显示的页数
-          size: 10, // 分页每页默认显示50条
+          size: 30, // 分页每页默认显示50条
           currentPage: 1, // 当前默认第一页
           total: 0 // 总条数
         }
@@ -200,6 +202,12 @@ export default {
         background: loadingBackground
       });
     },
+    afterLoadSelectFirstFn(list = []) {
+      const { initSeletTheFirst } = this.initConfig.table;
+      if (list.length && initSeletTheFirst) {
+        this.$refs['CubeTable'].setCurrent(list[0]);
+      }
+    },
     fetchTableData(searchParams = {}, page = 0) {
       const { url, method } = this.initConfig;
       if (!url) return;
@@ -215,7 +223,6 @@ export default {
       const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data';
       const { data, success, pageList, totalList } = this.$FETCH;
       request({ url, method: method, [paramsKey]: params }).then((response) => {
-        console.log(response, 'data');
         if (this.createLoading) {
           this.createLoading.close();
         }
@@ -229,8 +236,13 @@ export default {
             const result = response[data];
             if (Array.isArray(result[pageList]) && result[pageList].length) {
               if (loadType === 'page') {
-                this.initConfig.table.data = result[pageList] || [];
+                const reusltList = result[pageList] || [];
+                this.initConfig.table.data = reusltList;
                 this.initConfig.pagination.total = result[totalList] || 0;
+                // 默认选择第一个数据
+                if (reusltList.length) {
+                  this.afterLoadSelectFirstFn();
+                }
               } else {
                 // 判断rowKey是否在数据中存在
                 if (!result[pageList][0][rowKey]) {
@@ -249,7 +261,12 @@ export default {
           } else {
             const result = response[data];
             if (Array.isArray(result) && result.length) {
-              this.initConfig.table.data = result || [];
+              const reusltList = result[pageList] || [];
+              this.initConfig.table.data = reusltList;
+              // 默认选择第一个数据
+              if (reusltList.length) {
+                this.afterLoadSelectFirstFn();
+              }
             }
           }
         }

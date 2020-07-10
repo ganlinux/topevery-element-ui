@@ -97,6 +97,7 @@ import CubeUpload from '../packages/cube-upload/index.js';
 import CubeTitle from '../packages/cube-title/index.js';
 import CubeScrollTo from '../packages/cube-scroll-to/index.js';
 import CubeSelectCascade from '../packages/cube-select-cascade/index.js';
+import CubeMoreType from '../packages/cube-more-type/index.js';
 import locale from 'topevery-element-ui/src/locale';
 import CollapseTransition from 'topevery-element-ui/src/transitions/collapse-transition';
 import Cookies from 'js-cookie';
@@ -193,6 +194,7 @@ const components = [
   CubeUpload,
   CubeTitle,
   CubeSelectCascade,
+  CubeMoreType,
   CollapseTransition
 ];
 
@@ -240,7 +242,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  version: '0.0.33',
+  version: '0.0.34',
   locale: locale.use,
   i18n: locale.i18n,
   install,
@@ -341,5 +343,6 @@ export default {
   CubeUpload,
   CubeTitle,
   CubeScrollTo,
-  CubeSelectCascade
+  CubeSelectCascade,
+  CubeMoreType
 };

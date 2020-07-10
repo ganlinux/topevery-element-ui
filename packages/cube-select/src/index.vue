@@ -359,6 +359,7 @@ export default {
     input(e) {
       const { isStaticOptions } = this.defaultConfig;
       if (!isStaticOptions) {
+        this.defaultConfig.pagination.currentPage = 1;
         this.inputChange();
       } else {
         this.doFilterTable(e);

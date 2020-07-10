@@ -9,7 +9,7 @@
 :::demo 当`cube-table`元素中注入`data`作为表格数据源，注入`columns`为表格指定渲染`label`属性来对表头，用`key`属性来定义渲染字段。
 ```html
   <template>
-    <cube-Table :config="config" />
+    <cube-Table :initSeletTheFirst="true" @tableRowClick="tableRowClick" :config="config" />
   </template>
   <script>
     export default {
@@ -25,6 +25,12 @@
               { label: '地址',key: 'address' },
             ]
           }
+        }
+      },
+      methods: {
+        tableRowClick(row) {
+          console.log(row);
+          this.$message({ message: '开启了默认选择第一个数据', type: 'success' });
         }
       }
     }

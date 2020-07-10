@@ -1,6 +1,6 @@
 <template>
   <div class="echarts-container">
-    <el-row :gutter="15">
+    <el-row :gutter="15" v-if="0">
       <el-col
         :xs="24"
         :sm="24"
@@ -99,6 +99,8 @@
         </el-card>
       </el-col>
     </el-row>
+
+    <CubeMoreType></CubeMoreType>
   </div>
 </template>
 

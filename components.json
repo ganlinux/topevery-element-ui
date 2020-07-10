@@ -96,5 +96,6 @@
   "cube-upload": "./packages/cube-upload/index.js",
   "cube-title": "./packages/cube-title/index.js",
   "cube-scroll-to": "./packages/cube-scroll-to/index.js",
-  "cube-select-cascade": "./packages/cube-select-cascade/index.js"
+  "cube-select-cascade": "./packages/cube-select-cascade/index.js",
+  "cube-more-type": "./packages/cube-more-type/index.js"
 }
