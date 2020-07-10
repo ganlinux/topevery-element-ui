@@ -22,6 +22,65 @@
           config:[
             [
               { type: 'input', value: null, key: 'inputKey', placeholder: '输入框' },
+              {
+                type: 'cubeMoreType',
+                value: null,
+                key: 'cubeMoreType',
+                config: {
+                  placeholder: '其他查询', // 占位符号
+                  inputWidth: '220px', // 输入框宽度
+                  size: 'small', // 输入框大小
+                  options: [
+                      {
+                        title: '公厕情况',
+                        keyCode: 'basicArr1',
+                        ids: [],
+                        list: [
+                          { value: '11', label: '正常' },
+                          { value: '22', label: '维修' },
+                          { value: '33', label: '在建' },
+                          { value: '44', label: '拆迁' }
+                        ]
+                      },
+                      {
+                        title: '产权类型',
+                        keyCode: 'basicArr2',
+                        ids: [],
+                        list: [
+                          { value: '21', label: '自有' },
+                          { value: '24', label: '政用' }
+                        ]
+                      },
+                      {
+                        title: '收费情况',
+                        keyCode: 'basicArr3',
+                        ids: [],
+                        list: [
+                          { value: '21', label: '免费' },
+                          { value: '24', label: '收费' }
+                        ]
+                      },
+                      {
+                        title: '障碍室情况',
+                        keyCode: 'basicArr4',
+                        ids: [],
+                        list: [
+                          { value: '21', label: '有障碍室' },
+                          { value: '24', label: '无障碍室' }
+                        ]
+                      },
+                      {
+                        title: '母婴室情况',
+                        keyCode: 'basicArr2',
+                        ids: [],
+                        list: [
+                          { value: '21', label: '有母婴室' },
+                          { value: '24', label: '无母婴室' }
+                        ]
+                      }
+                    ]
+                }
+              },
               { type: 'option', value: null, key: 'optionKey', placeholder: '下拉框', options: [
                 { value: '1', label: '未到期' },
                 { value: '2', label: '已到期' },

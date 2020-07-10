@@ -8,6 +8,18 @@
           :key="index"
           class="left"
         >
+
+          <!-- 其他类型 -->
+          <template v-if="item.type === 'cubeMoreType'">
+            <div class="cubeMoreType">
+              <CubeMoreType
+                v-model="item.value"
+                :class="item.class ? item.class :'w180' "
+                :config="item.config || {} "
+              />
+            </div>
+          </template>
+
           <!-- 输入框 -->
           <template v-if="item.type === 'input'">
             <el-input
@@ -220,7 +232,7 @@
 <script>
 
 //  常量类型
-const commonlyTypes = ['input', 'select', 'option', 'cascader', 'cubeCascader', 'date', 'datetime', 'date-month'];
+const commonlyTypes = ['input', 'select', 'option', 'cascader', 'cubeCascader', 'date', 'datetime', 'date-month', 'cubeMoreType'];
 
 const timeRangeTime = ['daterange', 'datetimerange', 'monthrange'];
 //  特殊类型
@@ -235,6 +247,7 @@ import ElDropdown from 'topevery-element-ui/packages/dropdown';
 import ElDropdownItem from 'topevery-element-ui/packages/dropdown-item';
 import ElDropdownMenu from 'topevery-element-ui/packages/dropdown-menu';
 import DatePicker from 'topevery-element-ui/packages/date-picker';
+import CubeMoreType from 'topevery-element-ui/packages/cube-more-type';
 
 import CubeSelect from 'topevery-element-ui/packages/cube-select';
 import CubeSelectTree from 'topevery-element-ui/packages/cube-select-tree';
@@ -244,6 +257,7 @@ export default {
   name: 'CubeSearchBar',
   componentName: 'CubeSearchBar',
   components: {
+    CubeMoreType,
     ElButton,
     ElInput,
     ElSelect,

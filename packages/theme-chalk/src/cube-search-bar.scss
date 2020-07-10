@@ -27,11 +27,21 @@
     height: 0;
   }
 
+  // .cubeMoreType{
+  //   margin: 0 4px;
+  //   margin-top: 10px;
+  // }
+
   .left {
     float: left;
     height: 40px;
 
+    .cubeMoreType{
+      margin-left: 4px;
+    }
+    
     .cube-select,
+    .cubeMoreType,
     .cube-select-tree,
     >div {
       margin-right: 4px;
