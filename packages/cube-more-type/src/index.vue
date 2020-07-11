@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-07-08 15:32:45
- * @LastEditTime: 2020-07-10 19:42:51
+ * @LastEditTime: 2020-07-11 10:25:51
  * @LastEditors: Do not edit
  * @Description: 
  * @FilePath: /topevery-element-ui-v2/packages/cube-more-type/src/index.vue
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+
 import { deepMerge } from 'topevery-element-ui/src/utils/index.new';
 import ElInput from 'topevery-element-ui/packages/input';
 import ElPopover from 'topevery-element-ui/packages/popover';
@@ -89,6 +90,7 @@ export default {
   },
   data() {
     return {
+      visible: false,
       selectList: '',
       // 默认参数
       defaultConfig: {
