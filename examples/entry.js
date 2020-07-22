@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-05-22 11:02:08
- * @LastEditTime: 2020-05-25 14:33:11
+ * @LastEditTime: 2020-07-22 10:21:08
  * @LastEditors: Do not edit
  * @Description:
  * @FilePath: /topevery-element-ui-v2/examples/entry.js
@@ -13,6 +13,7 @@ import VueRouter from 'vue-router';
 import Element from 'main/index.js';
 import hljs from 'highlight.js';
 import echarts from 'echarts/lib/echarts';
+import request from 'main/utils/request';
 
 import routes from './route.config';
 import demoBlock from './components/demo-block';
@@ -72,9 +73,10 @@ Vue.prototype.$mockList = list.data;
 Vue.prototype.$mockPage = page.data;
 Vue.prototype.$mockSection = section.data;
 Vue.prototype.$echarts = echarts;
+Vue.prototype.$request = request;
 
 // 设置文档调试url
-const $baseURL = localStorage.getItem('$baseURL') ? JSON.parse(localStorage.getItem('$baseURL')) : 'http://221.10.126.230:5002' ;
+const $baseURL = localStorage.getItem('$baseURL') ? JSON.parse(localStorage.getItem('$baseURL')) : 'http://hw-topevery-dev-ui:49526' ;
 console.log($baseURL, '$baseURL-调试');
 Vue.prototype.$baseURL = $baseURL;
 

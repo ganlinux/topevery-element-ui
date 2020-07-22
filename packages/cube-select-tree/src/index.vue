@@ -62,7 +62,7 @@
 <script>
 
 import debounce from 'throttle-debounce/debounce';
-import request from 'topevery-element-ui/src/utils/request';
+// import request from 'topevery-element-ui/src/utils/request';
 import { deepMerge } from 'topevery-element-ui/src/utils/index.new';
 import { isObject } from 'topevery-element-ui/src/utils/types';
 import emitter from 'topevery-element-ui/src/mixins/emitter';
@@ -311,10 +311,15 @@ export default {
       // const params = Object.keys(extraParam).length ? { ...extraParam } : null
       const params = isObject(extraParam) ? { ...extraParam } : {};
       const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data';
-      request({ url, method: method, [paramsKey]: params }).then((data) => {
+      if (!this.$request) {
+        console.error('请在vue原型链中注入$request请求方法');
+        return;
+      }
+      this.$request({ url, method: method, [paramsKey]: params }).then((res) => {
         this.loading = false;
-        if (data.success) {
-          const result = data.data;
+        const response = res.data;
+        if (response.success) {
+          const result = response.data;
           if (Array.isArray(result)) {
             this.options = result || [];
             if (focusOnload) {

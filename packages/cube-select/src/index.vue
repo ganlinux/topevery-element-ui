@@ -42,6 +42,7 @@
           :row-style="rowStyle"
           element-loading-text="数据加载中..."
           @row-click="rowClick"
+          :show-header="defaultConfig.showHeader"
         >
           <el-table-column
             label="序号"
@@ -95,7 +96,7 @@
 <script>
 import Clickoutside from 'topevery-element-ui/src/utils/clickoutside';
 import debounce from 'throttle-debounce/debounce';
-import request from 'topevery-element-ui/src/utils/request';
+// import request from 'topevery-element-ui/src/utils/request';
 import { deepMerge } from 'topevery-element-ui/src/utils/index.new';
 import { isObject, isArray } from 'topevery-element-ui/src/utils/types';
 import emitter from 'topevery-element-ui/src/mixins/emitter';
@@ -187,6 +188,7 @@ export default {
         isNoPage: false, // 是否是分页 默认是分页
         tableHeight: 250,
         headerAlign: 'center',
+        showHeader: true, // 是否显示表头
         column: [
           { key: 'name', label: '名称' },
           { key: 'code', label: '编码' }
@@ -298,7 +300,7 @@ export default {
       }, 0);
     },
     blur() {
-      this.selectValue = '';
+      // this.selectValue = '';
       this.$emit('blur');
     },
     clear() {
@@ -310,6 +312,7 @@ export default {
       this.$emit('clear');
     },
     miss() {
+      this.selectValue = '';
       this.visible = false;
       const { recordSelect } = this;
       const { keyName } = this.defaultConfig;
@@ -394,9 +397,14 @@ export default {
       const pageParams = { pageIndex: currentPage, pageSize: size };
       const params = isNoPage ? { ...searchParams2extraParams } : { ...pageParams, ...searchParams2extraParams };
       const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data';
-      request({ url, method: method.toUpperCase(), [paramsKey]: params }).then((res) => {
+      if (!this.$request) {
+        console.error('请在vue原型链中注入$request请求方法');
+        return;
+      }
+      this.$request({ url, method: method.toUpperCase(), [paramsKey]: params }).then((res) => {
         this.loading = false;
-        const { data, success } = res;
+        const response = res.data;
+        const { data, success } = response;
         if (success) {
           const result = data;
           if (isNoPage) {

@@ -69,7 +69,7 @@
 <script>
 
 import debounce from 'throttle-debounce/debounce';
-import request from 'topevery-element-ui/src/utils/request';
+// import request from 'topevery-element-ui/src/utils/request';
 import { deepMerge } from 'topevery-element-ui/src/utils/index.new';
 import emitter from 'topevery-element-ui/src/mixins/emitter';
 
@@ -222,10 +222,15 @@ export default {
       }
       const paramsKey = method.toUpperCase() !== 'POST' ? 'params' : 'data';
       const { data, success, pageList, totalList } = this.$FETCH;
-      request({ url, method: method, [paramsKey]: params }).then((response) => {
+      if (!this.$request) {
+        console.error('请在vue原型链中注入$request请求方法');
+        return;
+      }
+      this.$request({ url, method: method, [paramsKey]: params }).then((res) => {
         if (this.createLoading) {
           this.createLoading.close();
         }
+        const response = res.data;
         if (response[success]) {
           // 判断标识 数据结构是否是分页数据结构
           if (!['list', 'page'].includes(tableDataType)) {

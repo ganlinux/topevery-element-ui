@@ -1,6 +1,6 @@
 {
   "name": "topevery-element-ui",
-  "version": "0.0.35",
+  "version": "0.0.37",
   "description": "A Component Library for Vue.js.",
   "main": "lib/topevery-element-ui.common.js",
   "license": "MIT",
@@ -65,6 +65,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-component": "^1.1.1",
     "babel-plugin-istanbul": "^4.1.1",
     "babel-plugin-module-resolver": "^2.2.0",
     "babel-plugin-syntax-jsx": "^6.18.0",

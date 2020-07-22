@@ -351,6 +351,7 @@
         size: 'small', // 输入框 size medium / small / mini 
         isNoPage: false, // 是否是分页 默认是分页
         tableHeight: 250, // 弹窗选择表格高度
+        showHeader: true, // 是否显示表头
         headerAlign: 'center', // 表头对齐方式
         column: [ // 自定义表格显示内容
           { key: 'name', label: '名称' },

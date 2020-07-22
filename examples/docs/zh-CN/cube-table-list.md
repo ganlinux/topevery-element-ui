@@ -41,7 +41,7 @@
   export default {
     data() {
         // 仅仅文档内使用 开发或者正式环境请填写完整url
-        const baseURL = this.$baseURL
+        const baseURL = 'http://hw-topevery-dev-ui:49526' || this.$baseURL
         return {
             centerDialogVisible:false,
             config: {

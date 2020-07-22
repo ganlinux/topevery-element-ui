@@ -30,21 +30,21 @@
 <script>
   export default {
       data() {
-          return {
-            cubeSelect:'',
-            config:{
-                keyName: 'label',
-                keyCode: 'id',
-                method: 'GET',
-                // url: '/static/tree.json',
-                url:'https://easy-mock.com/mock/5eba3414a2293e5119c96985/map/getSectionTree',
-                placeholder: '标段选择',
-                treeDefaultProps: {
-                    children: 'children',
-                    label: 'label'
-                }
+        const baseURL = 'http://hw-topevery-dev-ui:49526' || this.$baseURL
+        return {
+        cubeSelect:'',
+        config:{
+            keyName: 'label',
+            keyCode: 'id',
+            method: 'GET',
+            url: `${baseURL}/map/getSectionTree`,
+            placeholder: '标段选择',
+            treeDefaultProps: {
+                children: 'children',
+                label: 'label'
             }
-          }
+        }
+        }
       },
   }
 
@@ -69,24 +69,24 @@
 <script>
   export default {
       data() {
-          return {
-            cubeSelect:'',
-            extraParam:{
-                type:1
-            },
-            config:{
-                keyName: 'label',
-                keyCode: 'id',
-                method: 'GET',
-                // url: '/static/tree.json',
-                url:'https://easy-mock.com/mock/5eba3414a2293e5119c96985/map/getSectionTree',
-                placeholder: '标段选择',
-                treeDefaultProps: {
-                    children: 'children',
-                    label: 'label'
-                }
+        const baseURL = 'http://hw-topevery-dev-ui:49526' || this.$baseURL
+        return {
+        cubeSelect:'',
+        extraParam:{
+            type:1
+        },
+        config:{
+            keyName: 'label',
+            keyCode: 'id',
+            method: 'GET',
+            url: `${baseURL}/map/getSectionTree`,
+            placeholder: '标段选择',
+            treeDefaultProps: {
+                children: 'children',
+                label: 'label'
             }
-          }
+        }
+        }
       },
   }
 

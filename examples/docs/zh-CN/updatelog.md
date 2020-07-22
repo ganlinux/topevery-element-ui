@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-05-30 12:25:29
- * @LastEditTime: 2020-07-01 19:28:39
+ * @LastEditTime: 2020-07-22 11:12:08
  * @LastEditors: Do not edit
  * @Description: 
  * @FilePath: /topevery-element-ui-v2/examples/docs/zh-CN/updatelog.md
@@ -38,3 +38,11 @@ Vue.use(Element, {
 弹窗组件设置默认默认项ESC不关闭。点击遮罩层不关闭
 
 cube-cascader 添加可删除
+
+- 2020年07月22日
+
+"0.0.35" 作为分界线（接口拦截还在组件中）
+
+"0.0.36" 测试版本接口方法放到vue原型对象中
+
+"0.0.37" 测试版本接口方法放到vue原型对象中+fix cube-select

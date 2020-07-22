@@ -37,7 +37,7 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   response => {
-    const result = response.data;
+    const result = response;
     // const { success, msg } = result;
     // if (success) {
     //   return result;

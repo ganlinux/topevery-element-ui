@@ -125,6 +125,7 @@ export default {
   data() {
     return {
       closed: false,
+      rendered: true,
       key: 0,
       percentage: 0.80, // 高度占屏幕的百分比
       maxHeight: 'auto'
@@ -175,9 +176,10 @@ export default {
     if (this.visible) {
       this.rendered = true;
       this.open();
+      this.addResize();
       if (this.appendToBody) {
         document.body.appendChild(this.$el);
-        // this.addResize();
+        // this.addResize()
       }
     }
   },
@@ -233,9 +235,9 @@ export default {
     addResize() {
       const { fullscreen, resizeHeight } = this;
       if (!resizeHeight && !fullscreen) {
+        this.computedHeight();
         this.resizeHeight = debounce(200, () => { this.computedHeight(); });
         window.addEventListener('resize', this.resizeHeight);
-        this.resizeHeight();
       }
     },
     removeResize() {
@@ -250,7 +252,9 @@ export default {
     },
     afterEnter() {
       this.$emit('opened');
-      this.addResize();
+      setTimeout(() => {
+        this.addResize();
+      }, 200);
     },
     afterLeave() {
       this.$emit('closed');
