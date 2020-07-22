@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-05-30 12:25:29
- * @LastEditTime: 2020-07-22 11:12:08
+ * @LastEditTime: 2020-07-22 11:12:36
  * @LastEditors: Do not edit
  * @Description: 
  * @FilePath: /topevery-element-ui-v2/examples/docs/zh-CN/updatelog.md
@@ -45,4 +45,4 @@ cube-cascader 添加可删除
 
 "0.0.36" 测试版本接口方法放到vue原型对象中
 
-"0.0.37" 测试版本接口方法放到vue原型对象中+fix cube-select
+"0.0.37" 测试版本接口方法放到vue原型对象中+fix cube-select + .babelrc修改
