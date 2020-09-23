@@ -21,7 +21,7 @@
         return {
           config:[
             [
-              { type: 'input', value: null, key: 'inputKey', placeholder: '输入框' },
+              { type: 'input', value: null, initValue:'shiliangl', key: 'inputKey', placeholder: '输入框' },
               {
                 type: 'cubeMoreType',
                 value: null,

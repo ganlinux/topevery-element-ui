@@ -1,13 +1,13 @@
 <template>
   <div>
     <CubeTableList :config="config" :extra-param="extraParam" @expandChange="expandChange">
-      <template slot="expand">
+      <!-- <template slot="expand">
         <CubeTableList :config="config2" :extra-param="extraParam" @expandChange="expandChange2">
           <template slot="expand">
             <CubeTableList :config="config3" :extra-param="extraParam3" />
           </template>
         </CubeTableList>
-      </template>
+      </template> -->
     </CubeTableList>
   </div>
 </template>
@@ -26,14 +26,14 @@ export default {
         sectionId: '', beginDate: '', endDate: ''
       },
       config: {
-        url: 'http://221.10.126.230:5002/fenceAlarmSetting/getFenceAlarmRecordSearch',
+        url: 'https://beibei.topevery.com:16780/api.hw/person/getPersonListPage',
         search: {
           data: [
             [
-              {
-                type: 'option', value: null, key: 'sectionId', placeholder: '请选择标段', class: 'w180', options: []
-              },
-              { type: 'multiple-date', value: [], key1: 'beginDate', key2: 'endDate', placeholder1: '开始日期', placeholder2: '结束日期' },
+              { type: 'input', value: null, key: 'personName', placeholder: '请选择标段' },
+              // {
+              //   type: 'option', value: null, key: 'workType', placeholder: '请选择标段', class: 'w180', options: []
+              // },
               { type: 'search', name: '查询' },
               { type: 'reset', name: '重置' }
             ],
@@ -46,7 +46,7 @@ export default {
           tableExpand: true,
           tableHeight: 400,
           calcTableHeight: true,
-          loadType: 'list',
+          // loadType: 'list',
           listKey: 'fenceAlarmId',
           prefixHeight: 0,
           columns: [

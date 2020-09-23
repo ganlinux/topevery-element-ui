@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-05-30 12:25:29
- * @LastEditTime: 2020-07-22 11:12:36
+ * @LastEditTime: 2020-09-23 09:30:56
  * @LastEditors: Do not edit
  * @Description: 
  * @FilePath: /topevery-element-ui-v2/examples/docs/zh-CN/updatelog.md
@@ -46,3 +46,35 @@ cube-cascader 添加可删除
 "0.0.36" 测试版本接口方法放到vue原型对象中
 
 "0.0.37" 测试版本接口方法放到vue原型对象中+fix cube-select + .babelrc修改
+
+
+- 2020年09月23日
+"0.0.38" fix cube-Table-List 分页检索重置问题。和初始值问题
+
+```
+///顶部检索组件 添加时间可配置 pickerOptions
+{
+    type: 'daterange',
+    value: null,
+    initValue: [
+     '2020-09-23',
+     '2020-09-23'
+    ],
+    key1: 'beginDate',
+    key2: 'endDate',
+    placeholder1: '开始日期',
+    placeholder2: '结束日期'
+}
+
+{
+    value: null,
+    type: 'date',
+    key: 'carNo',
+    placeholder: '时间',
+    pickerOptions: {
+        disabledDate(time) {
+            return time.getTime() + (1000 * 60 * 60 * 24) > Date.now() ;
+        }
+    }
+}           
+```

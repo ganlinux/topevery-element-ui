@@ -26,7 +26,7 @@
               v-model="item.value"
               :class="item.class ? item.class :'w180' "
               :size="size"
-              clearable
+              :clearable="item.clearable"
               :placeholder="item.placeholder|| '请输入'"
               @keyup.enter.native="search"
             />
@@ -38,7 +38,7 @@
               v-model="item.value"
               :class="item.class?item.class:'w90'"
               :size="size"
-              clearable
+              :clearable="item.clearable"
               filterable
               :placeholder="item.placeholder|| '请选择'"
               :multiple="item.multiple"
@@ -89,9 +89,9 @@
           <!-- 日期选择 -->
           <template v-if="item.type === 'date'">
             <el-date-picker
+              :class="item.class?item.class:'w140'"
               :picker-options="item.pickerOptions || datePickerOptions"
               v-model="item.value"
-              :style="{width:'134px'}"
               :size="size"
               type="date"
               :value-format="item.format || 'yyyy-MM-dd'"
@@ -101,6 +101,7 @@
 
           <!-- daterange 日期范围-->
           <template v-if="item.type === 'daterange'">
+            {{ item.value }}
             <el-date-picker
               v-model="item.value"
               :size="size"

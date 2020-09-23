@@ -262,6 +262,9 @@ export default {
                 }
                 this.initConfig.pagination.total = result[totalList] || 0;
               }
+            } else {
+              this.initConfig.table.data = [];
+              this.initConfig.pagination.total = 0;
             }
           } else {
             const result = response[data];
@@ -281,11 +284,11 @@ export default {
         }
       });
     },
-    handlerReset() {
+    handlerReset(searchParams) {
       this.initConfig.table.data = [];
       this.initConfig.pagination.total = 0;
       this.initConfig.pagination.currentPage = 1;
-      this.fetchTableData();
+      this.fetchTableData(searchParams);
     },
     debounceLoadMoreFn() {
       let { currentPage } = this.initConfig.pagination;
