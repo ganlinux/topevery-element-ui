@@ -101,7 +101,6 @@
 
           <!-- daterange 日期范围-->
           <template v-if="item.type === 'daterange'">
-            {{ item.value }}
             <el-date-picker
               v-model="item.value"
               :size="size"
